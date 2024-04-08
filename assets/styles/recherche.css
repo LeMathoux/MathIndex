@@ -1,0 +1,74 @@
+.blockblanc form{
+    margin-top: 50px;
+    margin-left: 40px;
+}
+
+.blockblanc form select, input[type="text"] {
+    margin-bottom: 10px;
+    width: 292px;
+    height: 56px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    color: #666666;
+}
+
+.blockblanc input[type="submit"] {
+    margin-bottom: 10px;
+    background-color: #F6F6F6;
+    color:#757575;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    width: 208px;
+    height: 56px;
+    border: none;
+}
+
+
+.blockblanc h2{
+    color: #1b3168;
+    margin-left: 42px;
+}
+
+.blockblanc table {
+    border-collapse: collapse;
+    width: 83%;
+    margin-top: 20px;
+    margin-left: 42px;
+    border-radius: 30px;
+}
+
+.blockblanc th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.blockblanc th {
+    background-color: #f2f2f2;
+}
+
+.titre2 {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    color: #666666;
+    font-size: 16px;
+}
+.titre2 span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+.blockblanc .titre3 {
+    color: #1b3168;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 30px;
+}

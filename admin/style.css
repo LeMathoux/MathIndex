@@ -1,0 +1,89 @@
+body{
+    margin: 0px;
+    margin-right: 0px;
+    overflow-x: hidden;
+}
+.contenaire{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+}
+.font{
+    font-family: "Epilogue", sans-serif; 
+}
+.partie_gauche{
+    position: static;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    width: 16.5%;
+    height: 920px;
+    background-color: white;
+    box-shadow: 8px 8px 25px rgba(187, 183, 183, 0.442); /* effet d'ombre */   
+}
+.partie_droite{
+    display: flex;
+    flex-direction: column;
+    width: 83.5%;
+    height: auto;
+    background-color: #EFF2F4;
+}
+.header{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 91.6px;
+    background-color: white;
+}
+.titre{
+    width: 138.6px;
+    height: 29px;
+    font-size: 28.85px;
+    font-weight: 700;
+    margin-left: 3.5%;
+    margin-top: 58.6px;
+    line-height: 24.57px;
+    margin-right: auto;
+    margin-bottom: 27.34px;
+    color:#1B3168;
+}
+.blockblanc{
+    display: flex;
+    flex-direction: column;
+    width: 94.0%;
+    height: 654.6px;
+    margin-bottom:auto;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7.36px;
+    background-color: white;
+}
+.mentionlegales{
+    font-size: 20px;
+    color: #000000;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+}
+.mentionlegales {
+    margin-left: 30px;
+    margin-top: 31.3px;
+    margin-bottom: 9px;
+}
+
+.mentionlegales-text {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 20px;
+}
+.ajout{
+    display: flex;
+    flex-direction: column;
+    margin-left: 3%;
+    margin-bottom: 50px;
+}
+.ajout p{
+    margin-left: 0px;
+}
