@@ -13,75 +13,67 @@
     <?php
     include "requetes/formulaire_connexion.php";
     ?>
-    <body class="font">
-    <div class="contenaire">
-        <div class="partie_gauche">
-            <div class="logo">
-                <img alt="logo" src="assets/images/logo-st-vincent.png">
-                <div class="logo-titre">
-                    <span class="titre">Math Index</span>
-                    <span class="sous-titre">Lycée Saint-Vincent - Senlis</span>
-                </div>
-            </div>
-            <div class="navigation">
-                <a href="index.php" class="bouton-menu1"><img src="assets/images/icone-home.png" alt="Home"><strong>Accueil</strong></a>
-                <a href="Recherche.php" class="bouton-menu2"><img src="assets/images/icone-search.png" alt="search">Recherche</a>
-                <a href="Mathematique.php" class="bouton-menu3"><img src="assets/images/icone-fonction.png" alt="fonction">Exercices</a>
-                <div class="nouveaux-menus" style="display: none;margin-top: 10px;">
-                <a href="#" class="bouton-menu3"><img src="assets/images/icone_liste_gris.svg" alt="leading">Mes exercices</a>
-                    <a href="Soumettre.html" class="bouton-menu3"><img src="icone_soumettre.svg" alt="envoyer">Soumettre</a>
-                </div>
+<body>
+    <nav class="barre-navigation">
+        <div class="ensembles-logo">
+            <img alt="logo" src="assets/images/Logo.svg">
+            <div class="ensembles-logo-titre ">
+            <span class="titre">Math Index</span>
+            <span class="sous-titre">Lycée Saint-Vincent -Senlis</span>
             </div>
         </div>
-        <div class="partie_droite">
-            <div class="header">
-                <?php
-                    if (session_status() == PHP_SESSION_NONE) {
-                        session_start();
-                    }
+        <div class="navigation">
+            <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
+            <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
+            <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
+        </div>
+    </nav>
+    <header>
+        <div class="header-droite">
+            <?php
+           
+            if (session_status() == PHP_SESSION_NONE) {
+            }
 
-                    if(isset($_SESSION["account"])){
-                        $lastname=$_SESSION['account']['last_name'];
-                        $firstname=$_SESSION['account']['first_name'];
-                        $role=$_SESSION['account']['role'];
-                        echo "<div class='compte'>$lastname $firstname ($role)
-                        <div class='deconnexion'>
-                                <a href='admin/authentification/logout.php'><h2>se deconnecter</h2></a>
-                            </div>
-                        </div>";
-                    }
-                    else{
-                        echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone-login.png' alt='login'>Connexion</a>";
-                    }
-                ?>
-            </div>
-            <h1 class="titre">Connexion</h1>
-            <div class="carre-blanc">
-                <p>Cet espace est réservé aux enseignants du lycée Saint-Vincent - Senlis. Si vous n’avez pas encore de compte, veuillez effectuer votre demande directement en envoyant un email à contact@lyceestvincent.net.</p>
-                <form class="formulaire" method="post">
-                    <div>
-                        <label for="email"> Email : </label> <input  id="email" type="email" name="email" placeholder="Saisissez votre adresse email" value= <?= displayValue('email') ?>></input>
-                        <?php displayErrors($errors, 'email'); ?>
-                    </div>
-                    <div>
-                        <label for="password"> Mot de passe : </label> <input type="password" name="password" placeholder="Saisissez votre mot de passe" value=<?= displayValue('mdp') ?>></input>
-                        <?php displayErrors($errors, 'password'); ?>
-                    </div>
-                    <div style="display: flex;">
+            if(isset($_SESSION["account"])){
+                $lastname=$_SESSION['account']['last_name'];
+                $firstname=$_SESSION['account']['first_name'];
+                $role=$_SESSION['account']['role'];
+                echo "<div class='compte'>$lastname $firstname ($role)</div>
+                    </div>";
+                }
+                else{
+                echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
+                }
+            ?>
+        </div>
+    </header>
+    <div class="contenu">
+        <h1>Connexion</h1>
+        <div class="carre-blanc">
+            <p>Cet espace est réservé aux enseignants du lycée Saint-Vincent - Senlis. Si vous n’avez pas encore de compte, veuillez effectuer votre<br>demande directement en envoyant un email à <span class="contact-email">contact@lyceestvincent.net</span>.</p>
+            <form class="formulaire" method="post">
+                <label for="email">Email :</label>
+                <input type="email" name="email" placeholder="Saisissez votre adresse email"></input>
+                <br>
+                <label for="password">Mot de passe :</label>
+                <input type="password" name="password" placeholder="Saisissez votre mot de passe"></input>
+                <br>
+                <div style="display: flex;">
                     <input type="submit" value="Connexion">
                     <a href="mdp.php">Mot de passe oublié ?</a>
                 </div>
-                </form>
-            </div>
-            <div class="mentionlegales">
-                <div class="mentionlegales-text">Mentions légales</div>
-                <div class="mentionlegales-text">•</div>
-                <div class="mentionlegales-text">Contact</div>
-                <div class="mentionlegales-text">•</div>
-                <div class="mentionlegales-text">Lycée Saint-Vincent</div>
-            </div>
+            </form>
         </div>
     </div>
-    
+    <footer>
+        <div class="mentionlegales">
+            <div class="mentionlegales-text">Mentions légales</div>
+            <div class="mentionlegales-text">•</div>
+            <div class="mentionlegales-text">Contact</div>
+            <div class="mentionlegales-text">•</div>
+            <div class="mentionlegales-text">Lycée Saint-Vincent</div>
+        </div>
+    </footer>   
 </body>
 </html>
