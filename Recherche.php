@@ -203,7 +203,7 @@ header {
             margin-right: 10px;
         }
 
-        .form-group input[type="text"] {
+.form-group input[type="text"] {
             display: block;
             margin-top: 5px;
             border:2px solid #F6F6F6;
@@ -211,9 +211,9 @@ header {
             height:56px;
             border-radius:8px;
             color:#666666;
-        }
+}
 
-        .form-group select {
+.form-group select {
             display: block;
             margin-top: 5px;
             border:2px solid #F6F6F6;
@@ -221,9 +221,9 @@ header {
             height:63px;
             border-radius:8px;
             color:#666666;
-        }
+}
 
-        .carre-blanc  input[type="submit"] {
+.carre-blanc  input[type="submit"] {
             margin-top: 10px;
             margin-left: 0;
             width:172px;
@@ -234,15 +234,15 @@ header {
             color: #757575;
             font-size:16px;
             border:none;
-        }
+}
 
-        .carre-blanc  p{
+.carre-blanc  p{
             color: #1B3168;
             margin-left: 42px;
             font-size:20px;
-        }
+}
 
-table {
+.carre-blanc table {
     border-collapse: collapse;
     width: 1240px;
     height:44px;
@@ -253,28 +253,24 @@ table {
     margin-top:45px;
 }
 
-th {
-   text-align:left;
-}
-
- th, td {
+.carre-blanc th, td {
     padding: 8px;
     border-bottom: 1px solid #E7E7E7; /* Bordure basse des cellules */
 }
 
-
-th {
+.carre-blanc th {
     background-color: #F0F0F0;
     color:#464646;
+    text-align:left;
 }
 
-form a{
+.carre-blanc td a{
     text-decoration:none;
     color:#74828F;
     margin-right: 5px;
 }
 
-table img{
+.carre-blanc img{
     margin-right:5px;
     position: relative;
     top: 5px;
@@ -416,98 +412,96 @@ footer {
             
             <table>
                 <tr>
-                    <th>Nom</th>
-                    <th>Thématique</th>
-                    <th>Difficulté</th>
-                    <th>Mots clés</th>
-                    <th>Durée</th>
-                    <th>Fichiers</th>
-                    <!-- Ajoutez d'autres en-têtes de colonne selon votre structure de base de données -->
+                <th>Nom</th>
+                <th>Thématique</th>
+                <th>Difficulté</th>
+                <th>Durée</th>
+                <th>Mots clés</th>
+                <th>Fichier</th>
                 </tr>
-    
                 <?php
-// Définir la variable $result en dehors de la condition
-$result = null;
+                    // Définir la variable $result en dehors de la condition
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "mathindex";
 
-// Vérifier si au moins un champ est rempli
-if (!empty($_GET['thematique']) || !empty($_GET['difficulte']) || !empty($_GET['mot_cle'])) {
-    // Effectuer la recherche
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        // Connexion à la base de données (assurez-vous d'avoir vos propres informations de connexion)
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "exercice_db";
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Création de la connexion
-        $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
-        // Vérifier la connexion
-        if ($conn->connect_error) {
-            die("Échec de la connexion : " . $conn->connect_error);
-        }
+                    // Construction de la requête SQL de base
+                    $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.path AS exercice_path, file_correction.path AS correction_path
+                    FROM exercise
+                    LEFT JOIN thematic ON exercise.thematic_id = thematic.id
+                    LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                    LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id";
 
-        // Construction de la requête SQL de base
-        $sql = "SELECT exercise.name AS name, exercise.duration AS duration, exercise.difficulty AS difficulty, exercise.keywords AS keywords, thematic.name AS thematic FROM exercise LEFT JOIN thematic ON exercise.thematic_id = thematic.id WHERE 1";
+                    // Check if any conditions are present and add the WHERE clause accordingly
+                    if (!empty($where_conditions)) {
+                        $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
+                    }
 
-        // Récupérer les valeurs des champs de recherche
-        $thematique = isset($_GET['thematique']) ? $_GET['thematique'] : '';
-        $difficulte = isset($_GET['difficulte']) ? $_GET['difficulte'] : '';
-        $mot_cle = isset($_GET['mot_cle']) ? $_GET['mot_cle'] : '';
+                    $result = null;
+                    if (empty($_GET['thematique']) && empty($_GET['difficulte']) && empty($_GET['mot_cle'])) {
+                        echo "<tr><td colspan='6'>Effectuez une recherche pour afficher les résultats</td></tr>";
+                    } else{
+                        // Récupérer les valeurs des champs de recherche
+                        $thematique = isset($_GET['thematique']) ? $_GET['thematique'] : '';
+                        $difficulte = isset($_GET['difficulte']) ? $_GET['difficulte'] : '';
+                        $mot_cle = isset($_GET['mot_cle']) ? $_GET['mot_cle'] : '';
 
-        // Ajouter les conditions de recherche en fonction des champs remplis
-        if (!empty($thematique)) {
-            $sql .= " AND thematic.name = '$thematique'";
-        }
-        if (!empty($difficulte)) {
-            $sql .= " AND exercise.difficulty = '$difficulte'";
-        }
-        if (!empty($mot_cle)) {
-            $sql .= " AND exercise.keywords LIKE '%$mot_cle%'";
-        }
+                        // Construire la condition WHERE en fonction des champs remplis dans le formulaire
+                        $where_conditions = [];
+                        if (!empty($thematique)) {
+                            $where_conditions[] = "thematic.name = '$thematique'";
+                        }
+                        if (!empty($difficulte)) {
+                            $where_conditions[] = "exercise.difficulty = '$difficulte'";
+                        }
+                        if (!empty($mot_cle)) {
+                            $where_conditions[] = "exercise.keywords LIKE '%$mot_cle%'";
+                        }
 
-        // Exécuter la requête SQL
-        $result = $conn->query($sql);
-    }
-}
-?>
-              
-                <?php
-                    // Afficher les résultats de la recherche dans un tableau HTML
-                    if ($result !== null && $result->num_rows > 0) {
+                        // Si au moins une condition est spécifiée, ajoutez le WHERE à la requête SQL
+                        if (!empty($where_conditions)) {
+                            $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
+                        }
+                        // Exécuter la requête SQL
+                        $result = $conn->query($sql_all_exercices);
+
+                        // Afficher le nombre d'exercices trouvés
                         $num_exercices = $result->num_rows;
-                                        echo "<p><strong>$num_exercices exercices trouvés</strong> </p>";
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row["name"] . "</td>";
-                            echo "<td>" . $row["thematic"] . "</td>";
-                            echo "<td>" . 'Niveau ' . $row["difficulty"] . "</td>";
-                            echo '<td>';
-                            $keywords = explode(',', $row['keywords']);
-                            $count = 0;
-                            foreach ($keywords as $keyword) {
-                                $count++;
-                                if ($count == 2) {
-                                    echo '<span class="keyword">' . $keyword . '</span>';
-                                } else {
+                        echo "<p><strong>$num_exercices exercices trouvés</strong></p>";
+
+                        if ($result !== null && $result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["exercise_name"] . "</td>";
+                                echo "<td>" . $row["thematic_name"] . "</td>";
+                                echo "<td>" . 'Niveau ' . $row["difficulty"] . "</td>";
+                                echo "<td>" . $row["duration"] . 'h00' . "</td>";
+                                echo '<td>';
+                                $keywords = explode(',', $row['keywords']);
+                                foreach ($keywords as $keyword) {
                                     echo '<span class="keyword">' . $keyword . '</span>';
                                 }
+                                echo '</td>';
+                                echo "<td><img src='assets/images/icone_download.svg'><a href='" . $row["exercice_path"] . "'>Exercice</a><img src='assets/images/icone_download.svg'><a href='" . $row["correction_path"] . "'>Corrigé</a></td>";
+                                echo "</tr>";
                             }
-                            echo '</td>';
-                            echo "<td>" . $row["duration"] . 'h00' . "</td>";  
-                            echo "<td>";
-                            echo "<img src='assets/images/icone_download.svg' alt='Exercice'>Exercice";
-                            echo "<img src='assets/images/icone_download.svg' alt='Corrigé'>Corrigé";
-                            echo "</td>";                        
+                        } else {
+                            echo "<tr><td colspan='5'>Aucun exercice trouvé</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='5'>Veuillez effectuer une recherche</td></tr>";
+                        // Close the database connection
+                        $conn->close();
                     }
-                
                 ?>
             </table>
-        
-
         </div>
     </div>
     
