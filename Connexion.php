@@ -56,7 +56,7 @@
                 ?>
             </div>
             <h1 class="titre">Connexion</h1>
-            <div class="blockblanc">
+            <div class="carre-blanc">
                 <p>Cet espace est réservé aux enseignants du lycée Saint-Vincent - Senlis. Si vous n’avez pas encore de compte, veuillez effectuer votre demande directement en envoyant un email à contact@lyceestvincent.net.</p>
                 <form class="formulaire" method="post">
                     <div>
