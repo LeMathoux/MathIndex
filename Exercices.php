@@ -243,7 +243,7 @@ header {
             padding: 8px;
             text-align: left;
             color: #464646;
-        }
+}
 
 .carre-blanc td a{
     text-decoration:none;
@@ -397,7 +397,7 @@ footer {
             <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
-                    <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
                 <?php endif; ?>
             </div>
         </div>
@@ -439,7 +439,7 @@ footer {
                     <tbody>
                         <?php
                         // Requête SQL pour récupérer les trois dernières nouveautés en fonction des dates
-                        $sql_nouveautes = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.path AS exercice_path, file_correction.path AS correction_path
+                        $sql_nouveautes = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                         FROM exercise
                         LEFT JOIN thematic ON exercise.thematic_id = thematic.id
                         LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
@@ -449,7 +449,7 @@ footer {
                         $result_nouveautes = $conn->query($sql_nouveautes);
 
                         if ($result_nouveautes->num_rows > 0) {
-                            // Afficher chaque exercice dans une ligne du tableau
+                            // Affiche chaque exercice dans une ligne du tableau
                             while ($row = $result_nouveautes->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $row["exercise_name"] . "</td>";
@@ -462,7 +462,14 @@ footer {
                                     echo '<span class="mot_cle">' . $keyword . '</span>';
                                 }
                                 echo '</td>';
-                                echo "<td><img src='assets/images/icone_download.svg'><a href='" . $row["exercice_path"] . "'>Exercice</a><img src='assets/images/icone_download.svg'><a href='" . $row["correction_path"] . "'>Corrigé</a></td>";
+                                echo "<td>";
+                                echo "<img src='assets/images/icone_download.svg'>
+                                      <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' target='_blank'>Exercice</a>";
+                                if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                    echo "<br><img src='assets/images/icone_download.svg'>
+                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' target='_blank'>Corrigé</a>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -476,79 +483,79 @@ footer {
                 <table border="1">
                     <thead>
                         <tr>
-                        <th>Nom</th>
-                        <th>Thématique</th>
-                        <th>Difficulté</th>
-                        <th>Durée</th>
-                        <th>Mots clés</th>
-                        <th>Fichiers</th>
+                            <th>Nom</th>
+                            <th>Thématique</th>
+                            <th>Difficulté</th>
+                            <th>Durée</th>
+                            <th>Mots clés</th>
+                            <th>Fichiers</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        // Requête SQL pour récupérer tous les exercices avec pagination
-                        $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.path AS exercice_path, file_correction.path AS correction_path
-                        FROM exercise
-                        LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                        LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
-                        LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id
-                        LIMIT $exercices_par_page OFFSET $offset";
+                       
+                            $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
+                            FROM exercise
+                            LEFT JOIN thematic ON exercise.thematic_id = thematic.id
+                            LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                            LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id
+                            LIMIT $exercices_par_page OFFSET $offset";
 
-                        $result_all_exercices = $conn->query($sql_all_exercices);
+                            $result_all_exercices = $conn->query($sql_all_exercices);
 
-                        if ($result_all_exercices->num_rows > 0) {
-                        // Afficher chaque exercice dans une ligne du tableau
-                        while ($row = $result_all_exercices->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row["exercise_name"] . "</td>";
-                            echo "<td>" . $row["thematic_name"] . "</td>";
-                            echo "<td>".'Niveau '. $row["difficulty"] . "</td>";
-                            echo "<td>" . $row["duration"] .'h00'."</td>";
-                            echo '<td>';
-                            $keywords = explode(',', $row['keywords']);
-                            foreach ($keywords as $keyword) {
-                                echo '<span class="mot_cle">' . $keyword . '</span>';
+                            if ($result_all_exercices->num_rows > 0) {
+                            // Affiche chaque exercice dans une ligne du tableau
+                            while ($row = $result_all_exercices->fetch_assoc()) {
+                                echo "<tr>";
+                                    echo "<td>" . $row["exercise_name"] . "</td>";
+                                    echo "<td>" . $row["thematic_name"] . "</td>";
+                                    echo "<td>".'Niveau '. $row["difficulty"] . "</td>";
+                                    echo "<td>" . $row["duration"] .'h00'."</td>";
+                                    echo '<td>';
+                                    $keywords = explode(',', $row['keywords']);
+                                    foreach ($keywords as $keyword) {
+                                        echo '<span class="mot_cle">' . $keyword . '</span>';
+                                    }
+                                    echo '</td>';
+                                    echo "<td>";
+                                    echo "<img src='assets/images/icone_download.svg'>
+                                          <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' target='_blank'>Exercice</a>";
+                                    if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                        echo "<br><img src='assets/images/icone_download.svg'>
+                                              <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' target='_blank'>Corrigé</a>";
+                                    }
+                                    echo "</td>";
+                                    echo "</tr>";
                             }
-                            echo '</td>';
-                            echo "<td><img src='assets/images/icone_download.svg'><a href='" . $row["exercice_path"] . "'>Exercice</a><img src='assets/images/icone_download.svg'><a href='" . $row["correction_path"] . "'>Corrigé</a></td>";
-                            echo "</tr>";
-                        }
-                        } else {
-                        echo "Aucun résultat trouvé.";
-                        }
+                            } 
                         ?>
                     </tbody>
                 </table>
 
-            <!-- Pagination -->
-            <div class="pagination">
-                <?php
-                // Afficher le bouton gauche de pagination
-                if ($page > 1) {
-                    echo "<a href='Exercices.php?page=".($page - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
-                } else {
-                    echo "<span class='pagination-bouton-gauche'>&lt;</span>";
-                }
+                <!-- Pagination -->
+                <div class="pagination">
+                    <?php
+                        if ($page > 1) {
+                            echo "<a href='Exercices.php?page=".($page - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                        } else {
+                            echo "<span class='pagination-bouton-gauche'>&lt;</span>";
+                        }
 
-                // Afficher les numéros de page
-                for ($i=1; $i<=$total_pages; $i++) {
-                    if ($i == $page) {
-                        echo "<span class='page-actuel'>$i</span>";
-                    } else {
-                        echo "<a href='Exercices.php?page=".$i."' class='pagination-lien'>$i</a>";
-                    }
-                }
+                        for ($i=1; $i<=$total_pages; $i++) {
+                            if ($i == $page) {
+                                echo "<span class='page-actuel'>$i</span>";
+                            } else {
+                                echo "<a href='Exercices.php?page=".$i."' class='pagination-lien'>$i</a>";
+                            }
+                        }
 
-                // Afficher le bouton droit de pagination
-                if ($page < $total_pages) {
-                    echo "<a href='Exercices.php?page=".($page + 1)."' class='pagination-bouton-droite'>&gt;</a>";
-                } else {
-                    echo "<span class='pagination-bouton-droite'>&gt;</span>";
-                }
-                ?>
-            </div>
-
-
+                        if ($page < $total_pages) {
+                            echo "<a href='Exercices.php?page=".($page + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                        } else {
+                            echo "<span class='pagination-bouton-droite'>&gt;</span>";
+                        }
+                    ?>
+                </div>
         </div>
     </div>
     <footer>

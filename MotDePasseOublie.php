@@ -1,8 +1,9 @@
 <?php
         $username = 'root';
-		$password = 'root';
+		$password = '';
+        $name = 'mathindex';
 		try {
-			$mysqlClient = new PDO('mysql:host=localhost:8889; dbname=mathindex', $username, $password);
+			$mysqlClient = new PDO("mysql:host=127.0.0.1; dbname=$name", $username, $password);
 		}
 		catch (PDOException $e) {
 			die('Erreur '. $e->getMessage());
@@ -85,49 +86,64 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="assets/styles/mdp.css" rel="stylesheet" />
-    <title>Document</title>
+    <link href="assets/styles/mot_de_passe.css" rel="stylesheet">
+    <title>Mot de passe</title>
 </head>
 <body>
-    <div class="contenaire">
-        <div class="partie_gauche">
-            <div class="barre-navigation">
-                <div class="logo">
-                    <img alt="logo" src="assets/images/logo-st-vincent.png">
-                    <div class="logo-titre">
-                        <span class="titre">Math Index</span>
-                        <span class="sous-titre">Lycée Saint-Vincent - Senlis</span>
-                    </div>
-                </div>
-                <div class="navigation">
-                    <a href="index.php" class="bouton-menu1"><img src="assets/images/icone-home.png" alt="Home"><strong>Accueil</strong></a>
-                    <a href="#" class="bouton-menu"><img src="assets/images/icone-search.png" alt="search">Recherche</a>
-                    <a href="#" class="bouton-menu"><img src="assets/images/icone-fonction.png" alt="fonction">Mathématique</a>
-                </div>
+    <nav class="barre-navigation">
+        <div class="ensembles-logo">
+            <img alt="logo" src="assets/images/Logo.svg">
+            <div class="ensembles-logo-titre ">
+            <span class="titre">Math Index</span>
+            <span class="sous-titre">Lycée Saint-Vincent -Senlis</span>
             </div>
         </div>
-        <div class="partie_droite">
-            <header>
-                <a href='Connexion.php' class='connexion'><img src='assets/images/icone-login.png' alt='login'>Connexion</a>
-            </header>
-            <h1 class="titre_categorie">Mot de passe oublié</h1>
-            <div class="blockblanc">
-                <p class="description">Veuillez renseigner votre adresse mail pour demander un nouveau mot de passe.</p>
+        <div class="navigation">
+            <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
+            <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
+            <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
+        </div>
+    </nav>
+    <header>
+        <div class="header-droite">
+            <?php
+           
+            if (session_status() == PHP_SESSION_NONE) {
+            }
+
+            if(isset($_SESSION["account"])){
+                $lastname=$_SESSION['account']['last_name'];
+                $firstname=$_SESSION['account']['first_name'];
+                $role=$_SESSION['account']['role'];
+                echo "<div class='compte'>$lastname $firstname ($role)</div>";
+                }
+                else{
+                echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
+                }
+            ?>
+        </div>
+    </header>
+    <div class="contenu">
+        <h1>Mot de passe oublié</h1>
+            <div class="carre-blanc">
+                <p>Veuillez renseigner votre adresse mail pour demander un nouveau mot de passe.</p>
                 <form name="mdpoublie" method="POST">
-                        <label for="email">Email :</label>
-                        <div>
-                            <input placeholder="Saisissez votre adresse mail" type="email" id="email" name="email">
+                    <label for="email">Email :</label>
+                    <div>
+                        <input placeholder="Saisissez votre adresse mail" type="email" id="email" name="email">
                             <?php displayErrors($errors, 'email');
                             if (isset($informations)) { 
                             echo '<p class="reponse">'. $reponse .'</p>';
                             } ?>
-                        </div>
+                    </div>
                     
                     <button>
 						<span>Envoyer</span>
 					</button>
                 </form>
             </div>
+        </div>
+        <footer>
             <div class="mentionlegales">
                 <div class="mentionlegales-text">Mentions légales</div>
                 <div class="mentionlegales-text">•</div>
@@ -135,9 +151,8 @@
                 <div class="mentionlegales-text">•</div>
                 <div class="mentionlegales-text">Lycée Saint-Vincent</div>
             </div>
-
-            </div>
+        </footer>
     </div>
-    
+        
 </body>
 </html>
