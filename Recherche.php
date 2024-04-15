@@ -312,64 +312,6 @@ footer {
     border:none;
 }
 
-@media only screen and (max-width: 768px) {
-    .barre-navigation{
-        display: none;
-    }
-
-    .header-droite{
-        display:flex;
-        align-items:center;
-    }
-
-    .hamburger-menu {
-        display: block;
-        position: absolute;
-        right:660px;
-        border: none;
-        background-color: white;
-        color: #1B3168;
-        font-size: 30px;
-       }
-
-    .show {
-  display: flex;
-}
-
-.contenu h1{
-    margin-left:0;
-    text-align:center;
-}
-
-.carre-blanc{
-    left:50%;
-}
-
-.carre-blanc form{
-    text-align:center;
-    margin-left:0;
-}
-
-.form-group select{
-    width:155px;
-}
-
-.form-group input[type="text"] {
-    width:155px;
-}
-
-.carre-blanc table{
-    width:562px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-
-.mentionlegales{
-    margin-left:17%;
-}
-}
-
   </style>
 <body>
     <nav class="barre-navigation">
@@ -388,14 +330,13 @@ footer {
             <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
-                    <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
                 <?php endif; ?>
             </div>
         </div>
     </nav>
     <header>
         <div class="header-droite">
-            <button class="hamburger-menu">&#9776;</button>
         <?php
         if (session_status() == PHP_SESSION_NONE) {
         }
@@ -576,13 +517,3 @@ footer {
     
 </body>
 </html>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const barreNavigation = document.querySelector('.barre-navigation');
-
-    hamburgerMenu.addEventListener('click', function() {
-        barreNavigation.classList.toggle('show');
-    });
-});
-</script>
