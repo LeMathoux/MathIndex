@@ -45,6 +45,9 @@ session_start();
 .barre-navigation ul li {
   padding: 10px 20px;
 }
+.hamburger-menu {
+        display: none;
+}
 
 .barre-navigation strong{
     margin-left:6px;
@@ -185,9 +188,10 @@ header {
     top: 605px;
     left: 58%;
     transform: translate(-50%, -50%);
+    overflow-x: auto; 
 }
 
-.carre-blanc  form {
+.carre-blanc form {
             margin: 0 auto;
             margin-left: 42px;
             margin-top: 55px;
@@ -236,7 +240,7 @@ header {
             border:none;
 }
 
-.carre-blanc  p{
+.carre-blanc p{
             color: #1B3168;
             margin-left: 42px;
             font-size:20px;
@@ -277,7 +281,6 @@ header {
 }
 
 footer {
-  padding: 20px 0;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -309,9 +312,67 @@ footer {
     border:none;
 }
 
+@media only screen and (max-width: 768px) {
+    .barre-navigation{
+        display: none;
+    }
+
+    .header-droite{
+        display:flex;
+        align-items:center;
+    }
+
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        right:660px;
+        border: none;
+        background-color: white;
+        color: #1B3168;
+        font-size: 30px;
+       }
+
+    .show {
+  display: flex;
+}
+
+.contenu h1{
+    margin-left:0;
+    text-align:center;
+}
+
+.carre-blanc{
+    left:50%;
+}
+
+.carre-blanc form{
+    text-align:center;
+    margin-left:0;
+}
+
+.form-group select{
+    width:155px;
+}
+
+.form-group input[type="text"] {
+    width:155px;
+}
+
+.carre-blanc table{
+    width:562px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.mentionlegales{
+    margin-left:17%;
+}
+}
+
   </style>
 <body>
-<nav class="barre-navigation">
+    <nav class="barre-navigation">
         <div class="ensembles-logo">
             <img alt="logo" src="assets/images/Logo.svg">
             <div class="ensembles-logo-titre ">
@@ -334,6 +395,7 @@ footer {
     </nav>
     <header>
         <div class="header-droite">
+            <button class="hamburger-menu">&#9776;</button>
         <?php
         if (session_status() == PHP_SESSION_NONE) {
         }
@@ -353,15 +415,6 @@ footer {
     </header>
     <div class="contenu">
         <h1>Rechercher un exercice</h1>
-        <footer>
-            <div class="mentionlegales">
-            <div class="mentionlegales-text">Mentions légales</div>
-            <div class="mentionlegales-text">•</div>
-            <div class="mentionlegales-text">Contact</div>
-            <div class="mentionlegales-text">•</div>
-            <div class="mentionlegales-text">Lycée Saint-Vincent</div>
-            </div>
-        </footer>
         <div class="carre-blanc">
             <form method="GET">
                 <div class="form-group">
@@ -435,7 +488,7 @@ footer {
                     }
 
                     // Construction de la requête SQL de base
-                    $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.path AS exercice_path, file_correction.path AS correction_path
+                    $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                     FROM exercise
                     LEFT JOIN thematic ON exercise.thematic_id = thematic.id
                     LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
@@ -491,7 +544,14 @@ footer {
                                     echo '<span class="keyword">' . $keyword . '</span>';
                                 }
                                 echo '</td>';
-                                echo "<td><img src='assets/images/icone_download.svg'><a href='" . $row["exercice_path"] . "'>Exercice</a><img src='assets/images/icone_download.svg'><a href='" . $row["correction_path"] . "'>Corrigé</a></td>";
+                                echo "<td>";
+                                echo "<img src='assets/images/icone_download.svg'>
+                                      <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' target='_blank'>Exercice</a>";
+                                if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                    echo "<img src='assets/images/icone_download.svg'>
+                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' target='_blank'>Corrigé</a>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -503,8 +563,26 @@ footer {
                 ?>
             </table>
         </div>
+        <footer>
+            <div class="mentionlegales">
+                <div class="mentionlegales-text">Mentions légales</div>
+                <div class="mentionlegales-text">•</div>
+                <div class="mentionlegales-text">Contact</div>
+                <div class="mentionlegales-text">•</div>
+                <div class="mentionlegales-text">Lycée Saint-Vincent</div>
+            </div>
+        </footer>
     </div>
     
 </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const barreNavigation = document.querySelector('.barre-navigation');
 
+    hamburgerMenu.addEventListener('click', function() {
+        barreNavigation.classList.toggle('show');
+    });
+});
+</script>
