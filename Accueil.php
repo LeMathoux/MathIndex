@@ -237,7 +237,7 @@ footer {
         <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
         <div class="deconnexion">
           <?php if(isset($_SESSION["account"])): ?>
-            <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+            <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
           <?php endif; ?>
         </div>
     </div>
