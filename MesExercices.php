@@ -1,12 +1,6 @@
 <?php
-$username = 'root';
-    $password = 'root';
-		try {
-			$mysqlClient = new PDO('mysql:host=localhost:8889; dbname=MathIndex', $username, $password);
-		}
-		catch (PDOException $e) {
-			die('Erreur '. $e->getMessage());
-		}
+include_once 'requetes/configdb.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,7 +8,7 @@ $username = 'root';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accueil</title>
-  <link rel="stylesheet" href="MesExercices.css" />
+  <link rel="stylesheet" href="assets/styles/MesExercices.css" />
 </head>
 <body>
   <nav class="barre-navigation">
@@ -31,7 +25,7 @@ $username = 'root';
         <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
         <?php 
             if(isset($_SESSION["account"]) &&(($_SESSION["account"]['role'] === 'Administrateur') || ($_SESSION["account"]['role'] === 'Contributeur'))){
-                echo '<li><a href="#" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                echo '<li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
                 <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>';
             } 
         ?>
