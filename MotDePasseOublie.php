@@ -1,234 +1,94 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion</title>
-  <style>
-   body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #eff2f4;
-}
-
-.barre-navigation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 297px;
-  background-color: #FFFFFF;
-  padding-top: 15px;
-  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  display: flex; 
-  flex-direction: column; 
-}
-
-.barre-navigation li {
-  list-style: none;
-  margin-left: 16px;
-  line-height:2;
-}
-
-.navigation{
-    padding-top:75px;
-}
-
-.barre-navigation ul li {
-  padding: 10px 20px;
-}
-
-.barre-navigation strong{
-    margin-left:6px;
-}
-
-.barre-navigation a.accueil-liens  {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-}
-
-.barre-navigation a.recherche-liens  {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-}
-
-.barre-navigation a.fonctions-liens  {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-}
-
-.barre-navigation a img {
-    margin-right: 10px;
-}
-
-.ensembles-logo  {
-  display: flex;
-  position: relative;
-  margin-left: 15px;
-}
-
-        .ensembles-logo-titre img{
-            width: 32px;
-            height: 34px;
-        }
-
-        .ensembles-logo-titre {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-left: 15px;
-        }
-
-        .ensembles-logo-titre .titre{
-            color: #1B3168;
-            font-size: 26px;
-        }
-
-        .ensembles-logo-titre .sous-titre {
-            font-size: 17px;
-            font-weight: 500;
-            color: #5D7285;
-        }
-
-header {
-  background-color: #FFFFFF;
-  position: relative;
-  width: 100%;
-  height: 96px;
-}
-
-.header-droite {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-.header-droite a {
-  text-decoration: none;
-  color: #333;
-  padding: 10px 20px;
-  display: flex;
-    align-items: center;
-}
-
-.header-droite img{
-    margin-right: 10px;
-    width: 21px;
-    height: 20px;
-}
-
-.contenu {
-  padding-top: 35px;
-}
-
-.contenu h1{
-    margin-left: 19%;
-    color: #1B3168;
-    font-size:28px;
-}
-
-.carre-blanc {
-    width: 1518px;
-    height: 762px;
-    background-color: #FFFFFF;
-    border-radius: 7.36px;
-    position: absolute;
-    top: 605px;
-    left: 58%;
-    transform: translate(-50%, -50%);
-}
-
-.carre-blanc p{
-    font-size: 22px;
-    padding-left: 50px;
-    padding-top: 24px;
-}
-
-.carre-blanc .contact-email {
-    color: #1B3168; /* Changer la couleur en bleu */
-}
-
-.carre-blanc form{
-    padding-top: 40px;
-    padding-left: 50px;
-}
-
-.carre-blanc label{
-    color: #666666;
-    font-size: 16px;
-}
-
-.carre-blanc input[type="email"],
-.carre-blanc input[type="password"]{
-    display: block;
-    margin-bottom: 15px;
-    width: 459px;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #F6F6F6;
-}
-
-.carre-blanc input[type="submit"] {
-    background-color:#F6F6F6;
-    color: #757575;
-    cursor: pointer;
-    border: none;
-    width: 172px;
-    height: 56px;
-    font-size: 16px;
-    border-radius: 8px;
-}
-
-.carre-blanc a {
-    text-decoration: none;
-    color: #757575;
-    gap: 52px;
-    margin-left: 113px;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-}
-
-footer {
-  padding: 20px 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-.mentionlegales {
-  font-size: 20px;
-  color: #000000;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  margin-left: 350px;
-  margin-top: 31.3px;
-  margin-bottom: 9px;
-}
-
-.mentionlegales-text {
-  display: inline-block;
-  margin: 0 10px;
-  font-size: 20px;
-}
-
-  </style>
-</head>
 <?php
-    include "requetes/formulaire_connexion.php";
-    ?>
+        $username = 'root';
+		$password = '';
+        $name = 'mathindex';
+		try {
+			$mysqlClient = new PDO("mysql:host=127.0.0.1; dbname=$name", $username, $password);
+		}
+		catch (PDOException $e) {
+			die('Erreur '. $e->getMessage());
+		}
+    /**
+     * @param array $errors
+     * @param string $field
+     * @return array
+     */
+    function addMessageIfValueIsEmpty(array $errors, string $field): array
+    {
+        if (empty($_POST[$field])) {
+            $errors[$field][] = sprintf('Le champ "%s" doit être renseigné.', $field);
+        }
+
+        return $errors;
+    }
+
+    function displayErrors(array $errors, string $field): void
+    {
+
+        if (isset($errors[$field])) {
+            foreach ($errors[$field] as $error) {
+                echo '<p class="error">' . $error . '</p>';
+            }
+        }
+    }
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) === false) {
+
+        // Ok des données sont transmises.
+        $errors = addMessageIfValueIsEmpty($errors, 'email');
+
+        $query = "SELECT email FROM user";
+        $stmt = $mysqlClient->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetch();
+            
+        if (!in_array($_POST['email'], $result) ){
+            $errors['email'][] = 'L\'email renseigné n\'est pas connue.</br>Veuillez réessayer.';
+        }
+        
+        if (empty($errors)) {
+        	$informations = [
+				'email' => htmlspecialchars($_POST['email']),
+        	];
+            $query ="SELECT first_name ,last_name FROM user WHERE email=:email";
+            $stmt = $mysqlClient->prepare($query);
+            $stmt->bindParam(":email", $informations['email']);
+		    $stmt->execute();
+            $result = $stmt->fetch();
+
+            
+             // Adresse e-mail de destination
+             $destinataire = 'decauxallan60@gmail.com';
+
+             // Sujet de l'e-mail
+             $sujet = 'MathIndex :'. $result['last_name'] . $result['first_name']. 'demande un changement de mot de passe';
+             
+             // Contenu de l'e-mail
+             $contenu = 'Adresse email de la personne : '. $informations['email'] .'</br></br>Après changement, merci de notifier l\'utilisateur de son nouveau mot de passe.';
+             
+             $entetes = '$result[last_name] $result[first_name] demande un changement de mot de passe.';
+             // Envoyer l'e-mail
+             if (mail($destinataire, $sujet, $contenu, $entetes)) {
+                 // Redirection après l'envoi du message
+                 $reponse = 'Vos informations ont bien été envoyées';
+             } else {
+                 // En cas d'échec de l'envoi de l'e-mail
+                 $reponse = 'Une erreur s\'est produite lors de l\'envoi du message.';
+             }
+        }
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="assets/styles/mot_de_passe.css" rel="stylesheet">
+    <title>Mot de passe</title>
+</head>
 <body>
     <nav class="barre-navigation">
         <div class="ensembles-logo">
@@ -264,32 +124,35 @@ footer {
         </div>
     </header>
     <div class="contenu">
-        <h1>Connexion</h1>
-        <div class="carre-blanc">
-            <p>Cet espace est réservé aux enseignants du lycée Saint-Vincent - Senlis. Si vous n’avez pas encore de compte, veuillez effectuer votre<br>demande directement en envoyant un email à <span class="contact-email">contact@lyceestvincent.net</span>.</p>
-            <form class="formulaire" method="post">
-                <label for="email">Email :</label>
-                <input type="email" name="email" placeholder="Saisissez votre adresse email"></input>
-                <br>
-                <label for="password">Mot de passe :</label>
-                <input type="password" name="password" placeholder="Saisissez votre mot de passe"></input>
-                <br>
-                <div style="display: flex;">
-                    <input type="submit" value="Connexion">
-                    <a href="Mot_de_passe.php">Mot de passe oublié ?</a>
-                </div>
-            </form>
+        <h1>Mot de passe oublié</h1>
+            <div class="carre-blanc">
+                <p>Veuillez renseigner votre adresse mail pour demander un nouveau mot de passe.</p>
+                <form name="mdpoublie" method="POST">
+                    <label for="email">Email :</label>
+                    <div>
+                        <input placeholder="Saisissez votre adresse mail" type="email" id="email" name="email">
+                            <?php displayErrors($errors, 'email');
+                            if (isset($informations)) { 
+                            echo '<p class="reponse">'. $reponse .'</p>';
+                            } ?>
+                    </div>
+                    
+                    <button>
+						<span>Envoyer</span>
+					</button>
+                </form>
+            </div>
         </div>
+        <footer>
+            <div class="mentionlegales">
+                <div class="mentionlegales-text">Mentions légales</div>
+                <div class="mentionlegales-text">•</div>
+                <div class="mentionlegales-text">Contact</div>
+                <div class="mentionlegales-text">•</div>
+                <div class="mentionlegales-text">Lycée Saint-Vincent</div>
+            </div>
+        </footer>
     </div>
-    <footer>
-        <div class="mentionlegales">
-            <div class="mentionlegales-text">Mentions légales</div>
-            <div class="mentionlegales-text">•</div>
-            <div class="mentionlegales-text">Contact</div>
-            <div class="mentionlegales-text">•</div>
-            <div class="mentionlegales-text">Lycée Saint-Vincent</div>
-        </div>
-    </footer>
-  
+        
 </body>
 </html>
