@@ -517,13 +517,3 @@ footer {
     
 </body>
 </html>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const barreNavigation = document.querySelector('.barre-navigation');
-
-    hamburgerMenu.addEventListener('click', function() {
-        barreNavigation.classList.toggle('show');
-    });
-});
-</script>
