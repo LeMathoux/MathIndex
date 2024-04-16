@@ -1,13 +1,5 @@
 <?php
-        $username = 'root';
-		$password = '';
-        $name = 'mathindex';
-		try {
-			$mysqlClient = new PDO("mysql:host=127.0.0.1; dbname=$name", $username, $password);
-		}
-		catch (PDOException $e) {
-			die('Erreur '. $e->getMessage());
-		}
+        include_once 'requetes/configdb.php';
     /**
      * @param array $errors
      * @param string $field
@@ -58,17 +50,19 @@
 
             
              // Adresse e-mail de destination
-             $destinataire = 'decauxallan60@gmail.com';
+             $to = 'dauguet.mathis@gmail.com';
 
              // Sujet de l'e-mail
-             $sujet = 'MathIndex :'. $result['last_name'] . $result['first_name']. 'demande un changement de mot de passe';
+             $subject = 'MathIndex :'. $result['last_name'] . $result['first_name']. 'demande un changement de mot de passe';
              
              // Contenu de l'e-mail
-             $contenu = 'Adresse email de la personne : '. $informations['email'] .'</br></br>Après changement, merci de notifier l\'utilisateur de son nouveau mot de passe.';
+             $message = 'Adresse email de la personne : '. $informations['email'] .'</br></br>Après changement, merci de notifier l\'utilisateur de son nouveau mot de passe.';
              
-             $entetes = '$result[last_name] $result[first_name] demande un changement de mot de passe.';
+             $headers  = array(
+                'From' => 'user@mathindex.com'
+            );
              // Envoyer l'e-mail
-             if (mail($destinataire, $sujet, $contenu, $entetes)) {
+             if (mail($to, $subject, $message, $headers)) {
                  // Redirection après l'envoi du message
                  $reponse = 'Vos informations ont bien été envoyées';
              } else {
@@ -86,7 +80,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="assets/styles/mot_de_passe.css" rel="stylesheet">
+    <link href="assets/styles/MotDePasseOublie.css" rel="stylesheet">
     <title>Mot de passe</title>
 </head>
 <body>

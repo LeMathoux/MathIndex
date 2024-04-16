@@ -114,18 +114,7 @@ session_start();
                 </tr>
                 <?php
                     // Définir la variable $result en dehors de la condition
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "mathindex";
-
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
+                    include_once 'requetes/configdb.php';
 
                     // Construction de la requête SQL de base
                     $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
