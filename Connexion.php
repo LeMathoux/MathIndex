@@ -59,6 +59,11 @@
                 <label for="password">Mot de passe :</label>
                 <input type="password" name="password" placeholder="Saisissez votre mot de passe"></input>
                 <br>
+                <?php
+                if(empty($result) && $_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) === false){
+                echo "email ou mot de passe incorrect";
+                }
+                ?>
                 <div style="display: flex;">
                     <input type="submit" value="Connexion">
                     <a href="mdp.php">Mot de passe oublié ?</a>

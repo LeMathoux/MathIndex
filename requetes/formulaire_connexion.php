@@ -1,7 +1,6 @@
 <?php
 
     session_start();
-
     function addMessageIfValueIsEmpty(array $errors, string $field): array
         {
             if (empty($_POST[$field])) {
@@ -52,14 +51,10 @@
             $stmt->execute();
             $result = $stmt->fetch();
             var_dump($result);
-            if(empty($result)){
-                echo "email ou mot de passe incorrect";
-            }
-            else{
+            if(!empty($result)){
                 $_SESSION['account'] = $result;
                 header("Location: Accueil.php");
             }
-            
         }
     }
 

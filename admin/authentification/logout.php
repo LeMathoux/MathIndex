@@ -6,5 +6,5 @@
     session_destroy();
 	
     // Redirige vers la page de connexion
-    header("Location: ../../index.php");
+    header("Location: ../../Accueil.php");
 ?>
