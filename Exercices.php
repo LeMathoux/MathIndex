@@ -1,18 +1,7 @@
 <?php 
 session_start();
 // Connexion à la base de données (à remplacer avec vos informations de connexion)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mathindex";
-
-// Création de la connexion
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérification de la connexion
-if ($conn->connect_error) {
-    die("La connexion a échoué : " . $conn->connect_error);
-}
+include_once 'requetes/configdb.php';
 
 // Pagination
 $exercices_par_page = 5;
