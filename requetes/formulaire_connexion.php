@@ -37,16 +37,7 @@
 
         if (empty($errors)) {
 
-            $username = 'root';
-            $password = '';
-            $name = 'mathindex';
-            try
-            {
-                $mysqlClient = new PDO("mysql:host=127.0.0.1; dbname=$name", $username, $password);
-            }
-            catch (Exception $e){
-                die('Erreur : ' . $e->getMessage());
-            }
+            include_once 'requetes/configdb.php';
 
             $informations = [
                 'email' => htmlspecialchars($_POST['email']),
@@ -66,7 +57,7 @@
             }
             else{
                 $_SESSION['account'] = $result;
-                header("Location: index.php");
+                header("Location: Accueil.php");
             }
             
         }
