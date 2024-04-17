@@ -180,7 +180,7 @@ $is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Ad
                                       <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<img src='assets/images/icone_download.svg'>
-                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
+                                          <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";

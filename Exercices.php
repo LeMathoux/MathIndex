@@ -20,7 +20,6 @@ $total_exercices = $row_total_exercices['total'];
 // Calculer le nombre total de pages
 $total_pages = ceil($total_exercices / $exercices_par_page);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -78,18 +77,18 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
         <h1>Exercices</h1>
         <div class="carre-blanc">
             <h2>Nouveautés</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
+            <table border="1">
+                <thead>
+                    <tr>
                         <th>Nom</th>
                         <th>Thématique</th>
                         <th>Difficulté</th>
                         <th>Durée</th>
                         <th>Mots clés</th>
                         <th>Fichier</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    </tr>
+                </thead>
+                <tbody>
                         <?php
                         // Requête SQL pour récupérer les trois dernières nouveautés en fonction des dates
                         $sql_nouveautes = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
@@ -120,7 +119,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                       <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<br><img src='assets/images/icone_download.svg'>
-                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
+                                          <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
@@ -129,23 +128,22 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             echo "Aucune nouveauté trouvée.";
                         }
                         ?>
-                    </tbody>
-                </table>
-
-                <h2>Tous les exercices</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Thématique</th>
-                            <th>Difficulté</th>
-                            <th>Durée</th>
-                            <th>Mots clés</th>
-                            <th>Fichiers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                </tbody>
+            </table>
+            <h2>Tous les exercices</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Thématique</th>
+                        <th>Difficulté</th>
+                        <th>Durée</th>
+                        <th>Mots clés</th>
+                        <th>Fichiers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                        
                             $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                             FROM exercise
@@ -175,18 +173,18 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                           <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                     if ($row["correction_original_name"] && $row["correction_extension"]) {
                                         echo "<br><img src='assets/images/icone_download.svg'>
-                                              <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
+                                              <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
                             }
                             } 
-                        ?>
-                    </tbody>
-                </table>
+                    ?>
+                </tbody>
+            </table>
 
                 <!-- Pagination -->
-                <div class="pagination">
+            <div class="pagination">
                     <?php
                         if ($page > 1) {
                             echo "<a href='Exercices.php?page=".($page - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
@@ -208,7 +206,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             echo "<span class='pagination-bouton-droite'>&gt;</span>";
                         }
                     ?>
-                </div>
+            </div>
         </div>
     </div>
     <footer>
