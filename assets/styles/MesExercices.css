@@ -220,21 +220,42 @@ body {
   }
   .nom{
     height: 60px;
-    width: 300px;
+    width: 350px;
     border-top: #dadada 1px solid;
   }
   .thematiques{
-    width: 200px;
+    width: 300px;
     border-top: #dadada 1px solid;
   }
-  .fichiers{
-    width: 290px;
-    border-top: #dadada 1px solid;
+    .fichiers{
+      width: 290px;
+      border-top: #dadada 1px solid;
+    }
+  .fichiers a{
+      text-decoration: none;
+      font-size: 18px;
+      color: #757575;
+      margin-left: 10px;
   }
-  .actions{
-    width: 250px;
-    border-top: #dadada 1px solid;
+  .fichiers img{
+    margin-left: 10px;
   }
+    .actions{
+      width: 300px;
+      border-top: #dadada 1px solid;
+      display: flex;
+    }
+    .actions a{
+      text-decoration: none;
+      font-size: 18px;
+      color: #757575;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+    }
+    .actions img{
+      margin-left: 20px;
+    }
   thead p{
     color: black;
   }
@@ -249,4 +270,93 @@ body {
     display: flex;
     align-items: center;
     text-decoration:none;
+}
+.carre-blanc .pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a{
+  margin: 0 5px;
+  width:24px;
+  height:24px;
+  color: black;
+  border: 1px solid #DFE3E8;
+  border-radius:4px;
+  text-decoration:none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+span.page-actuel{
+border: 1px solid black; /* Ajout de la bordure par défaut */
+margin: 0 5px;
+width: 24px;
+height: 24px;
+border-radius: 5px;
+color: black;
+text-decoration: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.pagination .page-actuel:hover {
+border: 1px solid black; 
+}
+
+a.pagination-bouton-gauche{
+border: 1px solid #DFE3E8;
+margin: 0 5px;
+width: 24px;
+height: 24px;
+border-radius: 5px;
+color: #C4CDD5;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content: center;
+}
+
+span.pagination-bouton-gauche{
+border:none;
+margin: 0 5px;
+width: 26px;
+height: 26px;
+border-radius: 5px;
+color: #C4CDD5;
+background-color:#919EAB;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content: center;
+}
+
+span.pagination-bouton-droite{
+border:none;
+margin: 0 5px;
+width: 26px;
+height: 26px;
+border-radius: 5px;
+color: #C4CDD5;
+background-color:#919EAB;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content: center;
+}
+
+a.pagination-bouton-droite{
+border: 1px solid #DFE3E8;
+margin: 0 5px;
+width: 24px;
+height: 24px;
+border-radius: 5px;
+color: #C4CDD5;
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content: center;
 }
