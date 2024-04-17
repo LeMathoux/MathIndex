@@ -3,7 +3,10 @@ session_start();
 // Connexion à la base de données (à remplacer avec vos informations de connexion)
 include_once 'requetes/configdb.php';
 
+// Vérifiez si l'utilisateur est connecté et est un admin
+$is_admin = isset($_SESSION["account"]) && $_SESSION["account"]["role"] === "Administrateur";
 // Pagination
+
 $exercices_par_page = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $exercices_par_page;
