@@ -1,7 +1,7 @@
 <?php 
 session_start();
 // Vérifie si l'utilisateur est connecté et est un admin
-$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur" || $_SESSION["account"]["role"] === "Administrateur");
+$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
