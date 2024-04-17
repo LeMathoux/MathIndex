@@ -115,7 +115,6 @@ session_start();
                     <th>Fichier</th>
                 </tr>
                 <?php
-                    // Définir la variable $result en dehors de la condition
                     include_once 'requetes/configdb.php';
 
                     // Construction de la requête SQL de base
@@ -125,7 +124,6 @@ session_start();
                     LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
                     LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id";
 
-                    // Check if any conditions are present and add the WHERE clause accordingly
                     if (!empty($where_conditions)) {
                         $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                     }
@@ -151,11 +149,10 @@ session_start();
                             $where_conditions[] = "exercise.keywords LIKE '%$mot_cle%'";
                         }
 
-                        // Si au moins une condition est spécifiée, ajoutez le WHERE à la requête SQL
                         if (!empty($where_conditions)) {
                             $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                         }
-                        // Exécuter la requête SQL
+                        // Exécute la requête SQL
                         $result = $conn->query($sql_all_exercices);
 
                         // Affiche le nombre d'exercices trouvés
@@ -193,7 +190,8 @@ session_start();
                         } else {
                             echo "<tr><td colspan='5'>Aucun exercice trouvé</td></tr>";
                         }
-                        // Close the database connection
+                        
+                        //fermeture de la base
                         $conn->close();
                     }
                 ?>
