@@ -6,9 +6,313 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='assets/styles/recherche.css' rel='stylesheet'/>
     <title>Recherche</title>
 </head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #eff2f4;
+}
+
+.barre-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 297px;
+  background-color: #FFFFFF;
+  padding-top: 15px;
+  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  display: flex; /* Ajout */
+  flex-direction: column; /* Ajout */
+  align-items: center; /* Ajout */
+}
+
+.barre-navigation li {
+  list-style: none;
+  margin-left: 16px;
+  line-height:2;
+}
+
+.navigation{
+    padding-top:75px;
+}
+
+.barre-navigation ul li {
+  padding: 10px 20px;
+}
+.hamburger-menu {
+        display: none;
+}
+
+.barre-navigation strong{
+    margin-left:6px;
+}
+
+.barre-navigation a.accueil-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+}
+
+.barre-navigation a.recherche-liens {
+    background-color: #F6F6F6;
+    color: #1B3168;
+    width: 253.38px;
+    height: 38.64px;
+    padding: 0px 7.32px 0px 7.32px;
+    border-radius: 3.66px;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+}
+
+.barre-navigation a.fonctions-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+}
+
+.barre-navigation a.mesexercices-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+}
+
+.barre-navigation a.soumettre-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+}
+
+.deconnexion .deconnexion-liens{
+  color: #757575;
+  display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-size:14px;
+    background-color:#F6F6F6;
+    width:253px;
+    height:38px;
+  }
+
+.deconnexion{
+  margin-top: 239%;
+}
+
+.barre-navigation a img {
+    margin-right: 10px;
+}
+
+.ensembles-logo  {
+  display: flex;
+  position: relative;
+  margin-left: 15px;
+}
+
+        .ensembles-logo-titre img{
+            width: 32px;
+            height: 34px;
+        }
+
+        .ensembles-logo-titre {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .ensembles-logo-titre .titre{
+            color: #1B3168;
+            font-size: 26px;
+        }
+
+        .ensembles-logo-titre .sous-titre {
+            font-size: 17px;
+            font-weight: 500;
+            color: #5D7285;
+        }
+
+header {
+  background-color: #FFFFFF;
+  position: relative;
+  width: 100%;
+  height: 96px;
+}
+
+.header-droite {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.header-droite a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 20px;
+  display: flex;
+    align-items: center;
+}
+
+.header-droite img{
+    margin-right: 10px;
+    width: 21px;
+    height: 20px;
+}
+
+.contenu {
+  padding-top: 15px;
+}
+
+.contenu h1{
+    margin-left: 19%;
+    color: #1B3168;
+    font-size:28px;
+}
+
+.carre-blanc  {
+    width: 79%;
+    height: 832px;
+    background-color: #FFFFFF;
+    border-radius: 7.36px;
+    position: absolute;
+    top: 605px;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    overflow-x: auto; 
+}
+
+.carre-blanc form {
+            margin: 0 auto;
+            margin-left: 42px;
+            margin-top: 55px;
+        }
+
+        .carre-blanc label{
+            color:#666666;
+            font-size:16px;
+        }
+
+        .carre-blanc  .form-group {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+.form-group input[type="text"] {
+            display: block;
+            margin-top: 5px;
+            border:2px solid #F6F6F6;
+            width:242px;
+            height:56px;
+            border-radius:8px;
+            color:#666666;
+}
+
+.form-group select {
+            display: block;
+            margin-top: 5px;
+            border:2px solid #F6F6F6;
+            width:242px;
+            height:63px;
+            border-radius:8px;
+            color:#666666;
+}
+
+.carre-blanc  input[type="submit"] {
+            margin-top: 10px;
+            margin-left: 0;
+            width:172px;
+            height: 56px;
+            border-radius:8px;
+            padding:16px;
+            background-color:#F6F6F6;
+            color: #757575;
+            font-size:16px;
+            border:none;
+}
+
+.carre-blanc p{
+            color: #1B3168;
+            margin-left: 42px;
+            font-size:20px;
+}
+
+.carre-blanc table {
+    border-collapse: collapse;
+    width: 1240px;
+    height:44px;
+    border-radius: 8px; /* Arrondir les bords du tableau */
+    overflow: hidden; /* Pour cacher les coins arrondis débordants */
+    border: 1px solid #E7E7E7; /* Bordure du tableau */
+    margin-left:43px;
+    margin-top:45px;
+}
+
+.carre-blanc th, td {
+    padding: 8px;
+    border-bottom: 1px solid #E7E7E7; /* Bordure basse des cellules */
+}
+
+.carre-blanc th {
+    background-color: #F0F0F0;
+    color:#464646;
+    text-align:left;
+}
+
+.carre-blanc td a{
+    text-decoration:none;
+    color:#74828F;
+    margin-right: 5px;
+}
+
+.carre-blanc img{
+    margin-right:5px;
+    position: relative;
+    top: 5px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.mentionlegales {
+  font-size: 20px;
+  color: #000000;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-left: 350px;
+  margin-top: 31.3px;
+  margin-bottom: 9px;
+}
+
+.mentionlegales-text {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.keyword {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: #DBDBDB;
+    border:none;
+}
+
+  </style>
 <body>
     <nav class="barre-navigation">
         <div class="ensembles-logo">
@@ -22,11 +326,8 @@ session_start();
             <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search.svg"><strong>Recherche</strong></a></li>
             <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
-            <?php 
-            if(isset($_SESSION["account"]) &&(($_SESSION["account"]['role'] === 'Administrateur') || ($_SESSION["account"]['role'] === 'Contributeur'))){
-                echo '<li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>';
-            } ?>
+            <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+            <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
                     <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
@@ -114,7 +415,18 @@ session_start();
                 </tr>
                 <?php
                     // Définir la variable $result en dehors de la condition
-                    include_once 'requetes/configdb.php';
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "mathindex";
+
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
                     // Construction de la requête SQL de base
                     $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
@@ -175,10 +487,10 @@ session_start();
                                 echo '</td>';
                                 echo "<td>";
                                 echo "<img src='assets/images/icone_download.svg'>
-                                      <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' target='_blank'>Exercice</a>";
+                                      <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<img src='assets/images/icone_download.svg'>
-                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' target='_blank'>Corrigé</a>";
+                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
