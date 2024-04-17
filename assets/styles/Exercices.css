@@ -100,7 +100,7 @@ body {
 }
 
 .deconnexion{
-    margin-top: 230%;
+    margin-top: 232%;
 }
 
 .barre-navigation a img {
@@ -247,8 +247,16 @@ header {
     margin-right: 5px;
 }
 
-.carre-blanc td.nom, .carre-blanc td.thematique, .carre-blanc td.difficulte {
-    color: #74828F; /* Gris */
+.carre-blanc td:nth-child(1) {
+    color: #74828F;
+}
+
+.carre-blanc td:nth-child(2) {
+    color: #74828F;
+}
+
+.carre-blanc td:nth-child(3) {
+    color: #74828F;
 }
 
 .carre-blanc td img{
