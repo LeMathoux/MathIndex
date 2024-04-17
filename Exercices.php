@@ -65,7 +65,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
             $lastname=$_SESSION['account']['last_name'];
             $firstname=$_SESSION['account']['first_name'];
             $profile_picture = isset($_SESSION['account']['profile_picture']) ? $_SESSION['account']['profile_picture'] : 'chemin/vers/image_par_defaut.jpg';
-            echo "<div class='compte'>$lastname $firstname <img src='$profile_picture' alt='photo de profil' class='profile-picture'></div>";
+            echo "<div class='compte'>$lastname $firstname <img src='$profile_picture' alt='photo de profil' class='profil-image'></div>";
             }
             else{
             echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
