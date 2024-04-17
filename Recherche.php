@@ -1,7 +1,5 @@
 <?php 
 session_start();
-// Vérifie si l'utilisateur est connecté et est un admin
-$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,11 +22,14 @@ $is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Ad
         <div class="navigation">
             <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search.svg"><strong>Recherche</strong></a></li>
-            <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
-            <?php if ($is_admin): ?>
-                <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+            <li><a href="Exercices.php" class="fonctions-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Exercices.php' ? 'active' : ''; ?>"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
+            <?php if(isset($_SESSION["account"])): ?>
+                <?php if($_SESSION["account"]["role"] == "admin" || $_SESSION["account"]["role"] == "contributeur"): ?>
+                    <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                    <li><a href="Soumettre-information_generales.php" class="soumettre-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Soumettre-information_generales.php' ? 'active' : ''; ?>"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+                <?php endif; ?>
             <?php endif; ?>
+
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
                     <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
@@ -107,12 +108,11 @@ $is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Ad
             
             <table>
                 <tr>
-                <th>Nom</th>
-                <th>Thématique</th>
-                <th>Difficulté</th>
-                <th>Durée</th>
-                <th>Mots clés</th>
-                <th>Fichier</th>
+                    <th>Nom</th>
+                    <th>Difficulté</th>
+                    <th>Mots clés</th>
+                    <th>Durée</th>
+                    <th>Fichier</th>
                 </tr>
                 <?php
                     // Définir la variable $result en dehors de la condition
@@ -158,29 +158,34 @@ $is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Ad
                         // Exécuter la requête SQL
                         $result = $conn->query($sql_all_exercices);
 
-                        // Afficher le nombre d'exercices trouvés
+                        // Affiche le nombre d'exercices trouvés
                         $num_exercices = $result->num_rows;
-                        echo "<p><strong>$num_exercices exercices trouvés</strong></p>";
+                        if ($num_exercices > 1) {
+                            echo "<p><strong>$num_exercices exercices trouvés</strong></p>";
+                        } elseif ($num_exercices == 1) {
+                            echo "<p><strong>$num_exercices exercice trouvé</strong></p>";
+                        } else {
+                            echo "<p><strong>Aucun exercice trouvé</strong></p>";
+                        }    
 
                         if ($result !== null && $result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $row["exercise_name"] . "</td>";
-                                echo "<td>" . $row["thematic_name"] . "</td>";
                                 echo "<td>" . 'Niveau ' . $row["difficulty"] . "</td>";
-                                echo "<td>" . $row["duration"] . 'h00' . "</td>";
                                 echo '<td>';
                                 $keywords = explode(',', $row['keywords']);
                                 foreach ($keywords as $keyword) {
                                     echo '<span class="keyword">' . $keyword . '</span>';
                                 }
                                 echo '</td>';
+                                echo "<td>" . $row["duration"] . 'h00' . "</td>";
                                 echo "<td>";
                                 echo "<img src='assets/images/icone_download.svg'>
                                       <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<img src='assets/images/icone_download.svg'>
-                                          <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
+                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";

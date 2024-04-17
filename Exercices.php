@@ -3,8 +3,6 @@ session_start();
 // Connexion à la base de données (à remplacer avec vos informations de connexion)
 include_once 'requetes/configdb.php';
 
-// Vérifiez si l'utilisateur est connecté et est un admin
-$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur");
 // Pagination
 
 $exercices_par_page = 5;
@@ -42,10 +40,12 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
         <div class="navigation">
             <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
-            <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions.svg"><strong>Exercices</strong></a></li>
-            <?php if ($is_admin): ?>
-                <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+            <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions.svg">Exercices</a></li>
+            <?php if(isset($_SESSION["account"])): ?>
+                <?php if($_SESSION["account"]["role"] == "admin" || $_SESSION["account"]["role"] == "contributeur"): ?>
+                    <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                    <li><a href="Soumettre-information_generales.php" class="soumettre-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Soumettre-information_generales.php' ? 'active' : ''; ?>"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+                <?php endif; ?>
             <?php endif; ?>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
