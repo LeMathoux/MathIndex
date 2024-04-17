@@ -24,7 +24,7 @@ session_start();
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search.svg"><strong>Recherche</strong></a></li>
             <li><a href="Exercices.php" class="fonctions-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Exercices.php' ? 'active' : ''; ?>"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
             <?php if(isset($_SESSION["account"])): ?>
-                <?php if($_SESSION["account"]["role"] == "admin" || $_SESSION["account"]["role"] == "contributeur"): ?>
+                <?php if($_SESSION["account"]["role"] === "Administrateur" || $_SESSION["account"]["role"] === "Contributeur"): ?>
                     <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
                     <li><a href="Soumettre-information_generales.php" class="soumettre-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Soumettre-information_generales.php' ? 'active' : ''; ?>"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
                 <?php endif; ?>
