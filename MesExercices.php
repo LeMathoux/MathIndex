@@ -1,6 +1,25 @@
 <?php
 include_once 'requetes/configdb.php';
 session_start();
+if(!isset($_SESSION['account']['id'])){
+  header("Location: Connexion.php");
+  exit(); 
+}
+$exercices_par_page = 7;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $exercices_par_page;
+
+// Sécuriser l'ID de l'utilisateur connecté
+$id = isset($_SESSION['account']['id']) ? intval($_SESSION['account']['id']) : 0;
+
+// Requête pour obtenir le nombre total d'exercices
+$sql_total_exercices = "SELECT COUNT(*) AS total FROM exercise";
+$result_total_exercices = $conn->query($sql_total_exercices);
+$row_total_exercices = $result_total_exercices->fetch_assoc();
+$total_exercices = $row_total_exercices['total'];
+
+// Calculer le nombre total de pages
+$total_pages = ceil($total_exercices / $exercices_par_page);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,12 +44,6 @@ session_start();
         <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
         <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
         <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
-        <?php 
-            if($_SESSION["account"]['role'] === 'Administrateur'){
-                echo '<li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>';
-            } 
-        ?>
         <div class="deconnexion">
             <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
         </div>
@@ -41,8 +54,8 @@ session_start();
       <?php
           $lastname=$_SESSION['account']['last_name'];
           $firstname=$_SESSION['account']['first_name'];
-          $role=$_SESSION['account']['role'];
-          echo "<div class='compte'><p>$lastname $firstname ($role)</p></div>";
+          $iduser=$_SESSION['account']['id'];
+          echo "<div class='compte'><p>$lastname $firstname</p></div>";
       ?>
     </div>
     
@@ -58,36 +71,70 @@ session_start();
                 <td><p>Fichiers</p></td>
                 <td><p>Actions</p></td>
             </thead>
-            <tr>
-                <td class="nom"><p>Exo suite</p></td>
-                <td class="thematiques"><p>Suites</p></td>
-                <td class="fichiers"><p>Exercices Corrigé</p></td>
-                <td class="actions"><p>Modifier Supprimer</p></td>
-            </tr>
             <?php
-                $id=$_SESSION['account']['id'];
-                $sql = "SELECT * FROM exercise WHERE id = $id ";
-                $req = $mysqlClient->query($sql);
-                while ($rep = $req->fetch()) {
-                $id = $rep['id'];
+            $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension, exercise.id AS exercise_id
+                                  FROM exercise
+                                  LEFT JOIN thematic ON exercise.thematic_id = thematic.id
+                                  LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                                  LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id
+                                  WHERE created_by_id = $iduser
+                                  LIMIT $exercices_par_page OFFSET $offset";
 
-                ?>
-                <tr>
-                <td class="nom"><?php echo $rep['name'];?></td>
-                <td class="thematiques"<?php echo $rep['thematic_id'];?></td>
-                <td class="fichiers">
-                  <a href="Exercices/"></a>
-                </td>
-                <td class="actions">
+            $result_all_exercices = $conn->query($sql_all_exercices);
 
-                </td>
-                </tr>
-                <?php
+            if ($result_all_exercices->num_rows > 0) {
+              while ($row = $result_all_exercices->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td class='nom'><p>" . $row["exercise_name"] . "</p></td>";
+                echo "<td class='thematiques'><p>" . $row["thematic_name"] . "</p></td>";
+                echo "<td class='fichiers'>";
+                echo "<img src='assets/images/icone_download.svg'>
+                      <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
+                if ($row["correction_original_name"] && $row["correction_extension"]) {
+                  echo "<img src='assets/images/icone_download.svg'>
+                        <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
                 }
-                ?>
-
-
+                echo "</td>";
+                echo "<td class='actions'>";
+                echo "<img src='assets/images/icone_modifier_gris.svg'>
+                      <p><a href=''>Modifier</a></p>";
+                echo "<img src='assets/images/icone_poubelle_gris.svg'>
+                      <p><a href=''>Supprimer</a></p>";
+                echo "</td>";
+                echo "</tr>";
+              }
+            } 
+            $sql_no_exercices = "SELECT COUNT(*) AS NbreEx FROM exercise WHERE created_by_id = $iduser";
+            $result_no_exercice = $conn->query($sql_no_exercices);
+            if ($result_no_exercice = 0) {
+              echo "<p>Vous n'avez pas ajouté d'exercices.</p>";
+            }
+            ?>
         </table>
+        <?php echo $result_no_exercice; ?>
+        <div class="pagination">
+                    <?php
+                        if ($page > 1) {
+                            echo "<a href='MesExercices.php?page=".($page - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                        } else {
+                            echo "<span class='pagination-bouton-gauche'>&lt;</span>";
+                        }
+
+                        for ($i=1; $i<=$total_pages; $i++) {
+                            if ($i == $page) {
+                                echo "<span class='page-actuel'>$i</span>";
+                            } else {
+                                echo "<a href='MesExercices.php?page=".$i."' class='pagination-lien'>$i</a>";
+                            }
+                        }
+
+                        if ($page < $total_pages) {
+                            echo "<a href='MesExercices.php?page=".($page + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                        } else {
+                            echo "<span class='pagination-bouton-droite'>&gt;</span>";
+                        }
+                    ?>
+                </div>
     </div>
   </div>
   <footer>
