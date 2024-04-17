@@ -31,7 +31,7 @@ $is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Ad
             <?php endif; ?>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
-                    <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
                 <?php endif; ?>
             </div>
         </div>

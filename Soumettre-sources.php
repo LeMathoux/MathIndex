@@ -71,7 +71,7 @@ unset($_SESSION['error']);
             <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg"><strong>Soumettre</strong></a></li>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
-                    <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
                 <?php endif; ?>
             </div>
         </div>
