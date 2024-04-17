@@ -119,7 +119,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                       <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<br><img src='assets/images/icone_download.svg'>
-                                          <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
+                                          <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
@@ -173,7 +173,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                           <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
                                     if ($row["correction_original_name"] && $row["correction_extension"]) {
                                         echo "<br><img src='assets/images/icone_download.svg'>
-                                              <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
+                                              <a href='assets/Corrige/" . $row["correction_original_name"]. "." . $row["correction_extension"] . "' download>Corrigé</a>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
