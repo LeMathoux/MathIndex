@@ -95,6 +95,8 @@ body {
     background-color:#F6F6F6;
     width:253px;
     height:38px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
 }
 
 .deconnexion{

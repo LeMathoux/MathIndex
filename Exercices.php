@@ -4,7 +4,7 @@ session_start();
 include_once 'requetes/configdb.php';
 
 // Vérifiez si l'utilisateur est connecté et est un admin
-$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur" || $_SESSION["account"]["role"] === "Administrateur");
+$is_admin = isset($_SESSION["account"]) && ($_SESSION["account"]["role"] === "Administrateur");
 // Pagination
 
 $exercices_par_page = 5;
@@ -50,7 +50,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
             <?php endif; ?>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
-                    <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
                 <?php endif; ?>
             </div>
         </div>
