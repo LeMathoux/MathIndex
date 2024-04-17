@@ -6,6 +6,9 @@ $username = "root";
 $password = "";
 $dbname = "mathindex";
 
+// Vérifiez si l'utilisateur est connecté et est un admin
+$is_admin = isset($_SESSION["account"]) && $_SESSION["account"]["role"] === "admin";
+
 // Création de la connexion
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -393,8 +396,10 @@ footer {
             <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
             <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions.svg"><strong>Exercices</strong></a></li>
-            <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-            <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+            <?php if ($is_admin): ?>
+                <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+            <?php endif; ?>
             <div class="deconnexion">
                 <?php if(isset($_SESSION["account"])): ?>
                     <li><a href="logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
