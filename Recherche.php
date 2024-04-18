@@ -24,7 +24,7 @@ session_start();
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search.svg"><strong>Recherche</strong></a></li>
             <li><a href="Exercices.php" class="fonctions-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Exercices.php' ? 'active' : ''; ?>"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
             <?php if(isset($_SESSION["account"])): ?>
-                <?php if($_SESSION["account"]["role"] === "Administrateur" || $_SESSION["account"]["role"] === "Contributeur"): ?>
+                <?php if($_SESSION["account"]["role"] == "admin" || $_SESSION["account"]["role"] == "contributeur"): ?>
                     <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
                     <li><a href="Soumettre-information_generales.php" class="soumettre-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Soumettre-information_generales.php' ? 'active' : ''; ?>"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
                 <?php endif; ?>
@@ -115,6 +115,7 @@ session_start();
                     <th>Fichier</th>
                 </tr>
                 <?php
+                    // Définir la variable $result en dehors de la condition
                     include_once 'requetes/configdb.php';
 
                     // Construction de la requête SQL de base
@@ -124,6 +125,7 @@ session_start();
                     LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
                     LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id";
 
+                    // Check if any conditions are present and add the WHERE clause accordingly
                     if (!empty($where_conditions)) {
                         $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                     }
@@ -149,10 +151,11 @@ session_start();
                             $where_conditions[] = "exercise.keywords LIKE '%$mot_cle%'";
                         }
 
+                        // Si au moins une condition est spécifiée, ajoutez le WHERE à la requête SQL
                         if (!empty($where_conditions)) {
                             $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                         }
-                        // Exécute la requête SQL
+                        // Exécuter la requête SQL
                         $result = $conn->query($sql_all_exercices);
 
                         // Affiche le nombre d'exercices trouvés
@@ -190,8 +193,7 @@ session_start();
                         } else {
                             echo "<tr><td colspan='5'>Aucun exercice trouvé</td></tr>";
                         }
-                        
-                        //fermeture de la base
+                        // Close the database connection
                         $conn->close();
                     }
                 ?>
