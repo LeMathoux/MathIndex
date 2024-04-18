@@ -99,12 +99,12 @@ body {
     font-weight: 400;
 }
 
-.deconnexion img{
-   margin-right: 5px;
-}
-
 .deconnexion{
     margin-top: 232%;
+}
+
+.barre-navigation a img {
+    margin-right: 10px;
 }
 
 .ensembles-logo  {
@@ -164,6 +164,10 @@ header {
     align-items: center;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
+}
+
+.header-droite img {
+   margin-right: 5px;
 }
 
 .header-droite .compte {
