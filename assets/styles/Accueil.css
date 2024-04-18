@@ -156,6 +156,10 @@ header {
   transform: translateY(-50%);
 }
 
+.header-droite img {
+   margin-right: 5px;
+}
+
 .header-droite a.connexion {
     text-decoration: none;
     color: #333;

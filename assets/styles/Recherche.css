@@ -31,6 +31,7 @@ body {
   .barre-navigation ul li {
     padding: 10px 20px;
   }
+
   .hamburger-menu {
       display: none;
   }
@@ -151,6 +152,10 @@ body {
       right: 20px;
       transform: translateY(-50%);
   }
+
+.header-droite a img {
+   margin-right: 5px;
+}
   
   .header-droite a {
       text-decoration: none;
@@ -161,7 +166,7 @@ body {
       font-family: 'Poppins', sans-serif;
       font-weight: 400;
   }
-  
+ 
   .header-droite .compte {
       text-decoration: none;
       color: #333;
