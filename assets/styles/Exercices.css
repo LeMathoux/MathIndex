@@ -99,12 +99,12 @@ body {
     font-weight: 400;
 }
 
-.deconnexion{
-    margin-top: 175%;
+.deconnexion img{
+   margin-right: 5px;
 }
 
-.barre-navigation a img {
-    margin-right: 10px;
+.deconnexion{
+    margin-top: 232%;
 }
 
 .ensembles-logo  {
