@@ -82,7 +82,7 @@ body {
   }
   
   .deconnexion{
-    margin-top: 253%;
+    margin-top: 175%;
   }
   
   .barre-navigation a img {
@@ -252,3 +252,21 @@ body {
     margin: 0 10px;
     font-size: 20px;
   }
+
+  .barre-navigation a.mesexercices-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+}
+
+.barre-navigation a.soumettre-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+}
