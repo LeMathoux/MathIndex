@@ -178,13 +178,12 @@ body {
       font-weight: 400;
   }
   
-  .header-droite .profil-image{
-      margin-right: 10px;
-      width: 21px;
-      height: 20px;
-      border-radius: 50%;
-      margin-left: 5px;
-  }
+  .header-droite .profil-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
   
   .contenu {
       padding-top: 15px;
