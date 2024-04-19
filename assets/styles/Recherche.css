@@ -31,7 +31,6 @@ body {
   .barre-navigation ul li {
     padding: 10px 20px;
   }
-
   .hamburger-menu {
       display: none;
   }
@@ -99,10 +98,12 @@ body {
       background-color:#F6F6F6;
       width:253px;
       height:38px;
+      font-family: 'Poppins', sans-serif;
+    font-weight: 400;
   }
   
   .deconnexion{
-      margin-top: 175%;
+      margin-top: 232%;
   }
   
   .barre-navigation a img {
@@ -153,9 +154,9 @@ body {
       transform: translateY(-50%);
   }
 
-.header-droite a img {
-   margin-right: 5px;
-}
+  .header-droite img {
+    margin-right: 5px;
+ } 
   
   .header-droite a {
       text-decoration: none;
@@ -166,7 +167,7 @@ body {
       font-family: 'Poppins', sans-serif;
       font-weight: 400;
   }
- 
+  
   .header-droite .compte {
       text-decoration: none;
       color: #333;
@@ -181,6 +182,8 @@ body {
       margin-right: 10px;
       width: 21px;
       height: 20px;
+      border-radius: 50%;
+      margin-left: 5px;
   }
   
   .contenu {
@@ -297,12 +300,10 @@ body {
       font-size: 14px
   }
   
-  .carre-blanc th:nth-child(1),
   .carre-blanc td:nth-child(1) {
       color: #74828F;
   }
   
-  .carre-blanc th:nth-child(2),
   .carre-blanc td:nth-child(2) {
       color: #74828F;
   }

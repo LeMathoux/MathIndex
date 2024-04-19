@@ -41,18 +41,19 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
             <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
             <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
             <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions.svg">Exercices</a></li>
+            
             <?php if(isset($_SESSION["account"])): ?>
-                <?php if($_SESSION["account"]["role"] == "admin" || $_SESSION["account"]["role"] == "contributeur"): ?>
+                <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
                     <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                    <li><a href="Soumettre-information_generales.php" class="soumettre-liens <?php echo basename($_SERVER['PHP_SELF']) == 'Soumettre-information_generales.php' ? 'active' : ''; ?>"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+                    <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
                 <?php endif; ?>
-            <?php endif; ?>
-            <div class="deconnexion">
-                <?php if(isset($_SESSION["account"])): ?>
+                <div class="deconnexion">
                     <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
+
         </div>
+
     </nav>
     <header>
         <div class="header-droite">
