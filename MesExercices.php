@@ -20,6 +20,38 @@ $total_exercices = $row_total_exercices['total'];
 
 // Calculer le nombre total de pages
 $total_pages = ceil($total_exercices / $exercices_par_page);
+
+if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
+  $id_exercise = $_GET['id'];
+
+  $sql_recup_info = "SELECT exercice_file_id, correction_file_id
+                      FROM exercise
+                      WHERE id = $id_exercise";
+  $stmt = $conn->prepare($sql_recup_info);
+  $stmt->execute();
+  $result_recup_info = $stmt->get_result();
+
+  if ($result_recup_info->num_rows > 0) {
+      $row2 = $result_recup_info->fetch_assoc();
+      $file_ex = $row2["exercice_file_id"];
+      $file_corr = $row2["correction_file_id"];
+
+      $sql_supp = "DELETE FROM exercise WHERE id = $id_exercise";
+      $stmt_supp = $conn->prepare($sql_supp);
+ 
+      $stmt_supp->execute();
+      
+      $sql_supp2 = "DELETE FROM file WHERE id=$file_ex OR id=$file_corr ";
+      $stmt_supp2 = $conn->prepare($sql_supp2);
+      $stmt_supp2->execute();
+
+      if (isset($_GET['page'])) {
+        header("Location: ./MesExercices.php?page=" . $_GET['page']);
+    } else {
+        header("Location: ./MesExercices.php");
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -106,13 +138,13 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                       echo "</td>";
                       echo "<td class='actions'>";
                       echo "<img src='assets/images/icone_modifier_gris.svg'>
-                            <p><a href=''>Modifier</a></p>";
+                            <p><a href='.Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
                       echo "<img src='assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page'])) {
-                        echo "<p><a href='?page=".$_GET['page']."&action=delete'>Supprimer</a></p>";
+                        echo "<p><a href='?page=".$_GET['page']."&action=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
                       }
                       else {
-                        echo "<p><a href='?action=delete'>Supprimer</a></p>";
+                        echo "<p><a href='?action=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
                       }
                       echo "</td>";
                      echo "</tr>";
@@ -162,12 +194,13 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
             <?php
             if (isset($_GET['page'])) {
               echo '<a href="?page='.$_GET['page'].'"class="annuler_btn">Annuler</a>';
+              echo '<a href="?page='.$_GET['page'].'&confirmed=true&id='.$_GET['id'].'"class="confirmer_btn">Confirmer</a>';
             }
             else {
               echo '<a href="./MesExercices.php" class="annuler_btn">Annuler</a>';
+              echo '<a href="?confirmed=true&id='.$_GET['id'].'"class="confirmer_btn">Confirmer</a>';
             } 
             ?>
-           <a href="?confirmed=true" class="confirmer_btn">Confirmer</a> 
           </div>
         </div>
     <?php
