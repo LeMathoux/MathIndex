@@ -107,8 +107,13 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                       echo "<td class='actions'>";
                       echo "<img src='assets/images/icone_modifier_gris.svg'>
                             <p><a href=''>Modifier</a></p>";
-                      echo "<img src='assets/images/icone_poubelle_gris.svg'>
-                            <p><a href='?page=".$_GET['page']."&action=delete'>Supprimer</a></p>";
+                      echo "<img src='assets/images/icone_poubelle_gris.svg'>";
+                      if (isset($_GET['page'])) {
+                        echo "<p><a href='?page=".$_GET['page']."&action=delete'>Supprimer</a></p>";
+                      }
+                      else {
+                        echo "<p><a href='?action=delete'>Supprimer</a></p>";
+                      }
                       echo "</td>";
                      echo "</tr>";
                     }
@@ -142,6 +147,32 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
           </div>
         <?php } ?>
     </div>
+    <?php
+    if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+      ?>
+        <div class="confirmation">
+          <div class="contenu_confirmation">
+            <div class="info_confirmation">
+              <div class="fond_image"><img src="assets/images/icone_valider.svg"></div>
+              <div>
+                <h2>Confirmez la suppression</h2>
+                <p>Êtes-vous certain de vouloir supprimer cet exercice ?</p>
+              </div>
+            </div>
+            <?php
+            if (isset($_GET['page'])) {
+              echo '<a href="?page='.$_GET['page'].'"class="annuler_btn">Annuler</a>';
+            }
+            else {
+              echo '<a href="./MesExercices.php" class="annuler_btn">Annuler</a>';
+            } 
+            ?>
+           <a href="?confirmed=true" class="confirmer_btn">Confirmer</a> 
+          </div>
+        </div>
+    <?php
+    }
+    ?>
   </div>
   <footer>
     <div class="mentionlegales">
@@ -152,17 +183,6 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
       <div class="mentionlegales-text">Lycée Saint-Vincent</div>
     </div>
   </footer>
-  <?php
-    if (isset($_GET['action']) && $_GET['action'] === 'delete') {
-        echo '<div class="modal">';
-        echo '<div class="modal-content">';
-        echo '<p>Voulez-vous vraiment supprimer cet élément ?</p>';
-        echo '<a href="?confirmed=true" class="confirm-btn">Oui</a>';
-        echo '<a href="?confirmed=false" class="cancel-btn">Annuler</a>';
-        echo '</div>';
-        echo '</div>';
-    }
-    ?>
 </body>
 </html>
 
