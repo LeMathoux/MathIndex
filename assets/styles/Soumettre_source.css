@@ -179,9 +179,12 @@ header {
     font-weight: 400;
 }
 
-.header-droite .profil-image{
+.header-droite .profil-image {
     margin-right: 10px;
-    width: 21px;
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    margin-left: 5px;
 }
 
 .contenu {
