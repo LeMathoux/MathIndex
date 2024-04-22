@@ -82,7 +82,7 @@ body {
   }
   
   .deconnexion{
-    margin-top: 175%;
+    margin-top: 253%;
   }
   
   .barre-navigation a img {
@@ -157,7 +157,7 @@ body {
     margin-right: 5px;
   }
   
-  .header-droite .compte {
+.header-droite .compte {
       text-decoration: none;
       color: #333;
       padding: 10px 20px;
@@ -165,13 +165,14 @@ body {
       align-items: center;
       font-family: 'Poppins', sans-serif;
       font-weight: 400;
-  }
+}
   
-  .profil-image {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      margin-left: 5px;
+  .header-droite .profil-image {
+    margin-right: 10px;
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    margin-left: 5px;
   }
   
   .contenu {
@@ -252,21 +253,4 @@ body {
     margin: 0 10px;
     font-size: 20px;
   }
-
-  .barre-navigation a.mesexercices-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
-}
-
-.barre-navigation a.soumettre-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
-}
+  

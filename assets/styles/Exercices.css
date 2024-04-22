@@ -100,7 +100,7 @@ body {
 }
 
 .deconnexion{
-    margin-top: 175%;
+    margin-top: 232%;
 }
 
 .barre-navigation a img {
@@ -181,8 +181,9 @@ header {
 }
 
 .header-droite .profil-image {
-    width: 30px;
-    height: 30px;
+    margin-right: 10px;
+    width: 39px;
+    height: 39px;
     border-radius: 50%;
     margin-left: 5px;
 }
