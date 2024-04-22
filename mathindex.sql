@@ -60,8 +60,8 @@ CREATE TABLE `exercise` (
   `origin_information` text DEFAULT NULL,
   `created_by_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `id_file_exercice` int(11) DEFAULT NULL,
-  `id_file_correction` int(11) DEFAULT NULL,
+  `exercice_file_id` int(11) DEFAULT NULL,
+  `correction_file_id` int(11) DEFAULT NULL,
   `origin_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -171,7 +171,8 @@ CREATE TABLE `user` (
   `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `profile_photo_file` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
