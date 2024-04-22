@@ -1,17 +1,12 @@
 <?php
-session_start();  // Start the session
+session_start();  
 
-// Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mathindex";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+include 'requetes/configdb.php'; 
 
 // Vérification de la connexion
-if ($conn->connect_error) {
-    die("Erreur de connexion: " . $conn->connect_error);
+if (!$mysqlClient) {
+    die("Erreur de connexion: Impossible de se connecter à la base de données.");
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,33 +14,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom_livre = isset($_POST['nom_livre']) ? $_POST['nom_livre'] : '';
     $info_supplementaires = isset($_POST['info_supplementaires']) ? $_POST['info_supplementaires'] : '';
 
-    $sql_exercice = "INSERT INTO exercise (origin_id, origin_name, origin_information) VALUES ('$origin_id', '$nom_livre', '$info_supplementaires')";
+    $sql_exercice = "INSERT INTO exercise (origin_id, origin_name, origin_information) VALUES (:origin_id, :nom_livre, :info_supplementaires)";
+    $stmt = $mysqlClient->prepare($sql_exercice);
+    $stmt->bindParam(':origin_id', $origin_id);
+    $stmt->bindParam(':nom_livre', $nom_livre);
+    $stmt->bindParam(':info_supplementaires', $info_supplementaires);
 
-    if ($conn->query($sql_exercice) === TRUE) {
-        $last_id = $conn->insert_id;
+    if ($stmt->execute()) {
+        $last_id = $mysqlClient->lastInsertId();
         $reset_auto_increment = "ALTER TABLE exercise AUTO_INCREMENT = " . ($last_id + 1);
-        $conn->query($reset_auto_increment);
+        $mysqlClient->query($reset_auto_increment);
 
         $_SESSION['message'] = "Soumission réussie";
         header("Location: Soumettre_fichiers.php");
         exit();
     } else {
-        $_SESSION['error'] = "Erreur lors de l'insertion dans la table exercices: " . $conn->error;
+        $_SESSION['error'] = "Erreur lors de l'insertion dans la table exercices: " . $stmt->errorInfo()[2];
         header("Location: test.php");
         exit();
     }
 }
 
-$conn->close();
-
-// Set $message and $error variables from session
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 
-// Clear the session messages
 unset($_SESSION['message']);
 unset($_SESSION['error']);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -79,19 +76,19 @@ unset($_SESSION['error']);
     <header>
         <div class="header-droite">
         <?php
-        if (session_status() == PHP_SESSION_NONE) {
-        }
+          if (session_status() == PHP_SESSION_NONE) {
+          }
 
-        if(isset($_SESSION["account"])){
+          if(isset($_SESSION["account"])){
             $lastname=$_SESSION['account']['last_name'];
             $firstname=$_SESSION['account']['first_name'];
-            $profile_picture = isset($_SESSION['account']['profile_picture']) ? $_SESSION['account']['profile_picture'] : 'chemin/vers/image_par_defaut.jpg';
-            echo "<div class='compte'>$lastname $firstname <img src='$profile_picture' alt='photo de profil' class='profil-image'></div>";
-            }
-            else{
+            $role=$_SESSION['account']['role'];
+            $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
+            echo "<div class='compte'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+        } else {
             echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
-            }
-        ?>
+        }
+      ?>
         </div>
         
     </header>
