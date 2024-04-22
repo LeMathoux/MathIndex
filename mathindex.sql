@@ -199,8 +199,8 @@ ALTER TABLE `exercise`
   ADD PRIMARY KEY (`id`),
   ADD KEY `classroom_id` (`classroom_id`),
   ADD KEY `thematic_id` (`thematic_id`),
-  ADD KEY `fk_id_file_exercice` (`exercice_file_id`),
-  ADD KEY `fk_id_file_correction` (`correction_file_id`),
+  ADD KEY `fk_exercice_file_id` (`exercice_file_id`),
+  ADD KEY `fk_correction_file_id` (`correction_file_id`),
   ADD KEY `fk_exercise_origin` (`origin_id`);
 
 --
