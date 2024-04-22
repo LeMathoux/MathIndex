@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : lun. 15 avr. 2024 à 12:46
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Hôte : localhost:8889
+-- Généré le : lun. 22 avr. 2024 à 12:54
+-- Version du serveur : 5.7.39
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `classroom` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `classroom`
@@ -57,19 +57,19 @@ CREATE TABLE `exercise` (
   `difficulty` int(11) DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
   `origin_name` varchar(100) DEFAULT NULL,
-  `origin_information` text DEFAULT NULL,
+  `origin_information` text,
   `created_by_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `exercice_file_id` int(11) DEFAULT NULL,
   `correction_file_id` int(11) DEFAULT NULL,
   `origin_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `exercise`
 --
 
-INSERT INTO `exercise` (`id`, `name`, `classroom_id`, `thematic_id`, `chapter`, `keywords`, `difficulty`, `duration`, `origin_name`, `origin_information`, `created_by_id`, `date`, `id_file_exercice`, `id_file_correction`, `origin_id`) VALUES
+INSERT INTO `exercise` (`id`, `name`, `classroom_id`, `thematic_id`, `chapter`, `keywords`, `difficulty`, `duration`, `origin_name`, `origin_information`, `created_by_id`, `date`, `exercice_file_id`, `correction_file_id`, `origin_id`) VALUES
 (1, 'Systèmes d\'équations linéaires', 2, 1, 'Algèbre', 'systèmes d\'équations linéaires, algèbre linéaire', 2, 1, 'Livre de Mathématique', 'Exercice sur la résolution de systèmes d\'équations linéaires.', 1, '2024-04-01', 1, 2, 1),
 (2, 'Fractales et auto-similarité', 3, 2, 'Géométrie', 'fractales, auto-similarité, géométrie fractale', 5, 2, 'Manuel scolaire', 'Exercice sur les fractales et l\'auto-similarité en géométrie.', 1, '2024-04-02', 3, 4, 2),
 (3, 'Congruences modulo n', 2, 2, 'Arithmétique', 'congruences, arithmétique modulaire, théorie des nombres', 6, 1, 'Livre de Mathématique', 'Exercice sur les congruences modulo n en théorie des nombres.', 1, '2024-04-02', 1, 2, 1),
@@ -96,7 +96,7 @@ CREATE TABLE `file` (
   `original_name` varchar(255) DEFAULT NULL,
   `extension` varchar(10) NOT NULL,
   `size` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `file`
@@ -117,7 +117,7 @@ INSERT INTO `file` (`id`, `name`, `original_name`, `extension`, `size`) VALUES
 CREATE TABLE `origin` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `origin`
@@ -138,7 +138,7 @@ INSERT INTO `origin` (`id`, `name`) VALUES
 CREATE TABLE `thematic` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `thematic`
@@ -172,15 +172,15 @@ CREATE TABLE `user` (
   `first_name` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `profile_photo_file` varchar(255)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `profile_photo_file` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `last_name`, `first_name`, `role`, `password`) VALUES
-(1, 'melisande.onana@orange.fr', 'Mélisande', 'Onana', 'admin', 'motdepasse123');
+INSERT INTO `user` (`id`, `email`, `last_name`, `first_name`, `role`, `password`, `profile_photo_file`) VALUES
+(1, 'melisande.onana@orange.fr', 'Mélisande', 'Onana', 'admin', 'motdepasse123', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -199,8 +199,8 @@ ALTER TABLE `exercise`
   ADD PRIMARY KEY (`id`),
   ADD KEY `classroom_id` (`classroom_id`),
   ADD KEY `thematic_id` (`thematic_id`),
-  ADD KEY `fk_id_file_exercice` (`id_file_exercice`),
-  ADD KEY `fk_id_file_correction` (`id_file_correction`),
+  ADD KEY `fk_id_file_exercice` (`exercice_file_id`),
+  ADD KEY `fk_id_file_correction` (`correction_file_id`),
   ADD KEY `fk_exercise_origin` (`origin_id`);
 
 --
@@ -277,8 +277,8 @@ ALTER TABLE `user`
 ALTER TABLE `exercise`
   ADD CONSTRAINT `fk_classroom_id` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`id`),
   ADD CONSTRAINT `fk_exercise_origin` FOREIGN KEY (`origin_id`) REFERENCES `origin` (`id`),
-  ADD CONSTRAINT `fk_id_file_correction` FOREIGN KEY (`id_file_correction`) REFERENCES `file` (`id`),
-  ADD CONSTRAINT `fk_id_file_exercice` FOREIGN KEY (`id_file_exercice`) REFERENCES `file` (`id`),
+  ADD CONSTRAINT `fk_id_file_correction` FOREIGN KEY (`correction_file_id`) REFERENCES `file` (`id`),
+  ADD CONSTRAINT `fk_id_file_exercice` FOREIGN KEY (`exercice_file_id`) REFERENCES `file` (`id`),
   ADD CONSTRAINT `fk_thematic_id` FOREIGN KEY (`thematic_id`) REFERENCES `thematic` (`id`);
 COMMIT;
 
