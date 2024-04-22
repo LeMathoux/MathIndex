@@ -1,6 +1,7 @@
 <?php 
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,19 +39,19 @@ session_start();
     <header>
         <div class="header-droite">
         <?php
-        if (session_status() == PHP_SESSION_NONE) {
-        }
+          if (session_status() == PHP_SESSION_NONE) {
+          }
 
-        if(isset($_SESSION["account"])){
+          if(isset($_SESSION["account"])){
             $lastname=$_SESSION['account']['last_name'];
             $firstname=$_SESSION['account']['first_name'];
+            $role=$_SESSION['account']['role'];
             $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-            echo "<div class='compte'>$lastname $firstname <img src='assets/photos de profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
-            }
-            else{
+            echo "<div class='compte'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+        } else {
             echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
-            }
-        ?>
+        }
+      ?>
         </div>
         
     </header>
@@ -113,17 +114,17 @@ session_start();
                     <th>Fichier</th>
                 </tr>
                 <?php
-                    // Définir la variable $result en dehors de la condition
+                    
                     include_once 'requetes/configdb.php';
 
                     // Construction de la requête SQL de base
                     $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                     FROM exercise
                     LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                    LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
-                    LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id";
+                    LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                    LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id";
 
-                    // Check if any conditions are present and add the WHERE clause accordingly
+                   
                     if (!empty($where_conditions)) {
                         $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                     }
@@ -132,12 +133,12 @@ session_start();
                     if (empty($_GET['thematique']) && empty($_GET['difficulte']) && empty($_GET['mot_cle'])) {
                         echo "<tr><td colspan='6'>Effectuez une recherche pour afficher les résultats</td></tr>";
                     } else{
-                        // Récupérer les valeurs des champs de recherche
+                        // Récupére les valeurs des champs de recherche
                         $thematique = isset($_GET['thematique']) ? $_GET['thematique'] : '';
                         $difficulte = isset($_GET['difficulte']) ? $_GET['difficulte'] : '';
                         $mot_cle = isset($_GET['mot_cle']) ? $_GET['mot_cle'] : '';
 
-                        // Construire la condition WHERE en fonction des champs remplis dans le formulaire
+                        // Construie la condition WHERE en fonction des champs remplis dans le formulaire
                         $where_conditions = [];
                         if (!empty($thematique)) {
                             $where_conditions[] = "thematic.name = '$thematique'";
@@ -153,11 +154,11 @@ session_start();
                         if (!empty($where_conditions)) {
                             $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                         }
-                        // Exécuter la requête SQL
-                        $result = $conn->query($sql_all_exercices);
+                        // Exécute la requête SQL
+                        $result = $mysqlClient->query($sql_all_exercices);
 
                         // Affiche le nombre d'exercices trouvés
-                        $num_exercices = $result->num_rows;
+                        $num_exercices = $result->rowCount();
                         if ($num_exercices > 1) {
                             echo "<p><strong>$num_exercices exercices trouvés</strong></p>";
                         } elseif ($num_exercices == 1) {
@@ -166,8 +167,10 @@ session_start();
                             echo "<p><strong>Aucun exercice trouvé</strong></p>";
                         }    
 
-                        if ($result !== null && $result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
+                        if ($result !== null && $result->rowCount() > 0) {
+
+                            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
                                 echo "<tr>";
                                 echo "<td>" . $row["exercise_name"] . "</td>";
                                 echo "<td>" . 'Niveau ' . $row["difficulty"] . "</td>";
@@ -191,8 +194,7 @@ session_start();
                         } else {
                             echo "<tr><td colspan='5'>Aucun exercice trouvé</td></tr>";
                         }
-                        // Close the database connection
-                        $conn->close();
+                       
                     }
                 ?>
             </table>
