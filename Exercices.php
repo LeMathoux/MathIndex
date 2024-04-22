@@ -1,18 +1,16 @@
 <?php 
 session_start();
-// Connexion à la base de données (à remplacer avec vos informations de connexion)
+
 include_once 'requetes/configdb.php';
-
 // Pagination
-
 $exercices_par_page = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $exercices_par_page;
 
 // Requête pour obtenir le nombre total d'exercices
 $sql_total_exercices = "SELECT COUNT(*) AS total FROM exercise";
-$result_total_exercices = $conn->query($sql_total_exercices);
-$row_total_exercices = $result_total_exercices->fetch_assoc();
+$result_total_exercices = $mysqlClient->query($sql_total_exercices);
+$row_total_exercices = $result_total_exercices->fetch(PDO::FETCH_ASSOC);
 $total_exercices = $row_total_exercices['total'];
 
 // Calculer le nombre total de pages
@@ -58,19 +56,19 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
     <header>
         <div class="header-droite">
         <?php
-        if (session_status() == PHP_SESSION_NONE) {
-        }
+          if (session_status() == PHP_SESSION_NONE) {
+          }
 
-        if(isset($_SESSION["account"])){
+          if(isset($_SESSION["account"])){
             $lastname=$_SESSION['account']['last_name'];
             $firstname=$_SESSION['account']['first_name'];
+            $role=$_SESSION['account']['role'];
             $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-            echo "<div class='compte'>$lastname $firstname <img src='assets/photos de profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
-            }
-            else{
+            echo "<div class='compte'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+        } else {
             echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
-            }
-        ?>
+        }
+      ?>
         </div>
         
     </header>
@@ -95,15 +93,17 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                         $sql_nouveautes = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                         FROM exercise
                         LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                        LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
-                        LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
+                        LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                        LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id
                         ORDER BY exercise.date DESC LIMIT 3";
 
-                        $result_nouveautes = $conn->query($sql_nouveautes);
+                        $result_nouveautes = $mysqlClient->query($sql_nouveautes);
 
-                        if ($result_nouveautes->num_rows > 0) {
+                        if ($result_nouveautes->rowCount() > 0) {
+
                             // Affiche chaque exercice dans une ligne du tableau
-                            while ($row = $result_nouveautes->fetch_assoc()) {
+                            while ($row = $result_nouveautes->fetch(PDO::FETCH_ASSOC)) {
+
                                 echo "<tr>";
                                 echo "<td>" . $row["exercise_name"] . "</td>";
                                 echo "<td>" . $row["thematic_name"] . "</td>";
@@ -149,15 +149,17 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                             FROM exercise
                             LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                            LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
-                        LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
+                            LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
+                            LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id
                             LIMIT $exercices_par_page OFFSET $offset";
 
-                            $result_all_exercices = $conn->query($sql_all_exercices);
+                            $result_all_exercices = $mysqlClient->query($sql_all_exercices);
 
-                            if ($result_all_exercices->num_rows > 0) {
+                            if ($result_all_exercices->rowCount() > 0) {
+
+
                             // Affiche chaque exercice dans une ligne du tableau
-                            while ($row = $result_all_exercices->fetch_assoc()) {
+                            while ($row = $result_all_exercices->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
                                     echo "<td>" . $row["exercise_name"] . "</td>";
                                     echo "<td>" . $row["thematic_name"] . "</td>";
@@ -224,7 +226,3 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
 </body>
 </html>
 
-<?php
-// Fermer la connexion à la base de données
-$conn->close();
-?>
