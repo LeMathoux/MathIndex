@@ -121,8 +121,8 @@ session_start();
                     $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, exercise.difficulty, exercise.duration, exercise.keywords, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension
                     FROM exercise
                     LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                    LEFT JOIN file AS file_exercice ON exercise.id_file_exercice = file_exercice.id
-                    LEFT JOIN file AS file_correction ON exercise.id_file_correction = file_correction.id";
+                    LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
+                    LEFT JOIN file AS file_correction ON exercise.exercice_file_id = file_correction.id";
 
                    
                     if (!empty($where_conditions)) {
