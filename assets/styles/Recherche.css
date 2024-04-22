@@ -31,9 +31,6 @@ body {
   .barre-navigation ul li {
     padding: 10px 20px;
   }
-  .hamburger-menu {
-      display: none;
-  }
   
   .barre-navigation strong{
       margin-left:6px;

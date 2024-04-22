@@ -67,6 +67,24 @@ body {
       font-family:'Popins', sans-serif;
       font-weight:400;
   }
+
+  .barre-navigation a.mesexercices-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+}
+
+.barre-navigation a.soumettre-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+}
   
   .deconnexion .deconnexion-liens{
       color: #757575;
@@ -82,7 +100,7 @@ body {
   }
   
   .deconnexion{
-    margin-top: 253%;
+    margin-top: 665px;
   }
   
   .barre-navigation a img {
