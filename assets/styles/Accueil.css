@@ -9,7 +9,7 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 297px;
+    width: 15%;
     background-color: #FFFFFF;
     padding-top: 15px;
     box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
@@ -39,7 +39,7 @@ body {
   .barre-navigation a.accueil-liens {
       background-color: #F6F6F6;
       color: #1B3168;
-      width: 253.38px;
+      width: 90%;
       height: 38.64px;
       padding: 0px 7.32px 0px 7.32px;
       border-radius: 3.66px;
@@ -48,6 +48,12 @@ body {
       text-decoration:none;
       font-family:'Popins', sans-serif;
       font-weight:700;
+  }
+
+  .barre-navigation a.fonctions-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
+    width: 90%;
+    background-color: #F6F6F6;
+    padding: 0px 7.32px 0px 7.32px;
   }
   
   .barre-navigation a.recherche-liens {
@@ -100,7 +106,8 @@ body {
   }
   
   .deconnexion{
-    margin-top: 665px;
+    position: fixed;
+    top : 94vh;
   }
   
   .barre-navigation a img {
@@ -194,11 +201,17 @@ body {
   }
   
   .contenu {
-    padding-top: 35px;
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 88vh;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .contenu h1{
-      margin-left: 19%;
+      margin-left: 3%;
       color: #1B3168;
       font-size: 28px;
       font-family: 'Epilogue', sans-serif;
@@ -206,20 +219,20 @@ body {
   }
   
   .carre-blanc {
-      width: 1518px;
-      height: 762px;
+      display: flex;
+      flex-direction: column;
+      width: 95%;
+      height: 650px;
       background-color: #FFFFFF;
       border-radius: 7.36px;
-      position: absolute;
-      top: 605px;
-      left: 58%;
-      transform: translate(-50%, -50%);
+      margin: 5px auto auto auto;
   }
   
+  
   .carre-blanc p{
-      font-size: 22px;
-      margin-top: 20px;
-      margin-left: 45px;
+      font-size: 23px;
+      width: 93%;
+      margin: 20px auto 0px auto;
       padding-top: 24px;
       line-height: 24.57px;
       font-family: 'Epilogue', sans-serif;
@@ -245,25 +258,18 @@ body {
     font-weight: 700;
     font-size:16;
   }
-  
-  footer {
-    padding: 20px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
+ 
   .mentionlegales {
     font-size: 20px;
     color: #000000;
-    width: 100%;
+    width: 85%;
     display: flex;
     flex-direction: row;
-    margin-left: 350px;
-    margin-top: 31.3px;
-    margin-bottom: 9px;
+    margin-left: 2%;
+    margin-top: auto;
+    margin-bottom: 20px;
     font-family:'Poppins', sans-serif;
-      font-weight: 400;
+    font-weight: 400;
   }
   
   .mentionlegales-text {
@@ -271,4 +277,71 @@ body {
     margin: 0 10px;
     font-size: 20px;
   }
-  
+  .menu_arriere{
+    display: flex;
+    flex-direction: row;
+    position: static;
+    height: auto;
+    width: 15%;
+}
+.grand_conteneur{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+@media screen and (max-width: 1866px){
+  .carre-blanc p{
+    font-size: 21px;
+    width: 93%;
+    margin: 20px auto 0px auto;
+    padding-top: 24px;
+    line-height: 24.57px;
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 400;
+  } 
+}
+@media screen and (max-width: 1705px){
+  .carre-blanc p{
+    font-size: 19px;
+    width: 93%;
+    margin: 20px auto 0px auto;
+    padding-top: 24px;
+    line-height: 24.57px;
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 400;
+  }
+}
+@media screen and (max-width: 1550px){
+  .carre-blanc p{
+    font-size: 17px;
+    width: 93%;
+    margin: 20px auto 0px auto;
+    padding-top: 24px;
+    line-height: 24.57px;
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 400;
+  } 
+}
+@media screen and (max-width: 1385px){
+  .carre-blanc p{
+    font-size: 15px;
+    width: 93%;
+    margin: 20px auto 0px auto;
+    padding-top: 24px;
+    line-height: 24.57px;
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 400;
+  } 
+}
+@media screen and (max-width: 1250px){
+  .carre-blanc p{
+    font-size: 12px;
+    width: 93%;
+    margin: 20px auto 0px auto;
+    padding-top: 24px;
+    line-height: 24.57px;
+    font-family: 'Epilogue', sans-serif;
+    font-weight: 400;
+  } 
+}
