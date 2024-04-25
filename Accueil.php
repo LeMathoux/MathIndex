@@ -53,30 +53,30 @@ session_start();
     </div>
     
   </header>
-  <div class="contenu">
-    <h1>Accueil</h1>
-    <div class="carre-blanc">
-        <p>Nous sommes ravis de vous accueillir sur <strong>Math Index</strong>, la plateforme mathématique exclusive du lycée Saint-Vincent Senlis. Développée<br>avec passion pour enrichir l'expérience éducative de nos étudiants, cette ressource en ligne offre un accès simplifié à une vaste<br> bibliothèque d'exercices mathématiques de qualité.</p>
-        <br>
-        <h2>Explorez les Avantages Spécifiques à Notre Lycée :</h2>
-        <ol>
-            <li>Exercices Personnalisés : Découvrez une collection soigneusement sélectionnée d'exercices qui complètent notre programme<br>éducatif, adaptés aux niveaux et aux besoins spécifiques en classe.</li>
-            <br>
-            <li>Soutien Pédagogique : <strong>Math Index</strong> sert de complément idéal à nos cours, offrant aux enseignants et aux étudiants un outil puissant<br> pour renforcer la compréhension des concepts mathématiques enseignés en classe.</li>
-            <br>
-            <li>Collaboration Communautaire : En tant que membre de notre lycée, participez à la communauté en partageant vos propres<br>exercices, collaborez avec d'autres enseignants et favorisez un environnement d'apprentissage collaboratif.</li>
-        </ol>
+  <div class='grand_conteneur'>
+    <div class='menu_arriere'></div>
+    <div class="contenu">
+      <h1>Accueil</h1>
+      <div class="carre-blanc">
+          <p>Nous sommes ravis de vous accueillir sur <strong>Math Index</strong>, la plateforme mathématique exclusive du lycée Saint-Vincent Senlis. Développée<br>avec passion pour enrichir l'expérience éducative de nos étudiants, cette ressource en ligne offre un accès simplifié à une vaste<br> bibliothèque d'exercices mathématiques de qualité.</p>
+          <br>
+          <h2>Explorez les Avantages Spécifiques à Notre Lycée :</h2>
+          <ol>
+              <li>Exercices Personnalisés : Découvrez une collection soigneusement sélectionnée d'exercices qui complètent notre programme<br>éducatif, adaptés aux niveaux et aux besoins spécifiques en classe.</li>
+              <br>
+              <li>Soutien Pédagogique : <strong>Math Index</strong> sert de complément idéal à nos cours, offrant aux enseignants et aux étudiants un outil puissant<br> pour renforcer la compréhension des concepts mathématiques enseignés en classe.</li>
+              <br>
+              <li>Collaboration Communautaire : En tant que membre de notre lycée, participez à la communauté en partageant vos propres<br>exercices, collaborez avec d'autres enseignants et favorisez un environnement d'apprentissage collaboratif.</li>
+          </ol>
+      </div>
+      <div class="mentionlegales">
+        <div class="mentionlegales-text">Mentions légales</div>
+        <div class="mentionlegales-text">•</div>
+        <div class="mentionlegales-text">Contact</div>
+        <div class="mentionlegales-text">•</div>
+        <div class="mentionlegales-text">Lycée Saint-Vincent</div>
+      </div>
     </div>
   </div>
-  <footer>
-    <div class="mentionlegales">
-      <div class="mentionlegales-text">Mentions légales</div>
-      <div class="mentionlegales-text">•</div>
-      <div class="mentionlegales-text">Contact</div>
-      <div class="mentionlegales-text">•</div>
-      <div class="mentionlegales-text">Lycée Saint-Vincent</div>
-    </div>
-  </footer>
-
 </body>
 </html>
