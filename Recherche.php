@@ -82,39 +82,56 @@ session_start();
             <h1>Rechercher un exercice</h1>
             <div class="carre-blanc">
                 <form method="GET">
+                    <?php
+                        if (isset($_GET['difficulte']))
+                        {
+                            $selecteur = $_GET['thematique'];
+                        }
+                        else{
+                            $selecteur = "";
+                        }
+                        ?>
                     <div class="form-group">
                         <label for="thematique">Thématique :</label>
                         <select id="thematique" name="thematique">
                             <option value="">Toutes</option>
-                            <option value="Algèbre linéaire">Algèbre linéaire</option>
-                            <option value="Géométrie des fractales">Géométrie des fractales</option>
-                            <option value="Théorie des nombres">Théorie des nombres</option>
-                            <option value="Calcul différentiel sur les variétés">Calcul différentiel sur les variétés</option>
-                            <option value="Algèbre linéaire avancée">Algèbre linéaire avancée</option>
-                            <option value="Géométrie non euclidienne">Géométrie non euclidienne</option>
-                            <option value="Analyse fonctionnelle">Analyse fonctionnelle</option>
-                            <option value="Théorie des graphes">Théorie des graphes</option>
-                            <option value="Cryptographie">Cryptographie</option>
-                            <option value="Analyse complexe avancée">Analyse complexe avancée</option>              
-                            <option value="Analyse complexe avancée">Calcul stochastique</option>
-                            <option value="Théorie des catégories">Théorie des catégories</option>
-                            <option value="Logique floue">Logique floue</option>
-                            <option value="Probabilités élémentaires">Probabilités élémentaires</option>
+                            <option value="Algèbre linéaire" <?php if($selecteur == "Algèbre linéaire") echo"selected" ?>>Algèbre linéaire</option>
+                            <option value="Géométrie des fractales" <?php if($selecteur == "Géométrie des fractales") echo"selected" ?>>Géométrie des fractales</option>
+                            <option value="Théorie des nombres" <?php if($selecteur == "Théorie des nombres") echo"selected" ?>>Théorie des nombres</option>
+                            <option value="Calcul différentiel sur les variétés" <?php if($selecteur == "Calcul différentiel sur les variétés") echo"selected" ?>>Calcul différentiel sur les variétés</option>
+                            <option value="Algèbre linéaire avancée" <?php if($selecteur == "Algèbre linéaire avancée") echo"selected" ?>>Algèbre linéaire avancée</option>
+                            <option value="Géométrie non euclidienne" <?php if($selecteur == "Géométrie non euclidienne") echo"selected" ?>>Géométrie non euclidienne</option>
+                            <option value="Analyse fonctionnelle" <?php if($selecteur == "Analyse fonctionnelle") echo"selected" ?>>Analyse fonctionnelle</option>
+                            <option value="Théorie des graphes" <?php if($selecteur == "Théorie des graphes") echo"selected" ?>>Théorie des graphes</option>
+                            <option value="Cryptographie" <?php if($selecteur == "Cryptographie") echo"selected" ?>>Cryptographie</option>
+                            <option value="Analyse complexe avancée" <?php if($selecteur == "Analyse complexe avancée") echo"selected" ?>>Analyse complexe avancée</option>              
+                            <option value="Analyse complexe avancée" <?php if($selecteur == "Analyse complexe avancée") echo"selected" ?>>Calcul stochastique</option>
+                            <option value="Théorie des catégories" <?php if($selecteur == "Théorie des catégories") echo"selected" ?>>Théorie des catégories</option>
+                            <option value="Logique floue" <?php if($selecteur == "Logique floue") echo"selected" ?>>Logique floue</option>
+                            <option value="Probabilités élémentaires" <?php if($selecteur == "Probabilités élémentaires") echo"selected" ?>>Probabilités élémentaires</option>
                         </select>
                     </div>
-
+                    <?php
+                    if (isset($_GET['difficulte']))
+                    {
+                        $selecteur = $_GET['difficulte'];
+                    }
+                    else{
+                        $selecteur = "";
+                    }
+                    ?>
                     <div class="form-group">
                         <label for="difficulte">Difficulté :</label>
                         <select id="difficulte" name="difficulte">
                             <option value="">Toutes</option>
-                            <option value="1">Niveau 1</option>
-                            <option value="2">Niveau 2</option>
-                            <option value="3">Niveau 3</option>
-                            <option value="4">Niveau 4</option>
-                            <option value="5">Niveau 5</option>
-                            <option value="6">Niveau 6</option>
-                            <option value="7">Niveau 7</option>
-                            <option value="8">Niveau 9</option>
+                            <option value="1" <?php if($selecteur == "1") echo"selected" ?>>Niveau 1</option>
+                            <option value="2" <?php if($selecteur == "2") echo"selected" ?>>Niveau 2</option>
+                            <option value="3" <?php if($selecteur == "3") echo"selected" ?>>Niveau 3</option>
+                            <option value="4" <?php if($selecteur == "4") echo"selected" ?>>Niveau 4</option>
+                            <option value="5" <?php if($selecteur == "5") echo"selected" ?>>Niveau 5</option>
+                            <option value="6" <?php if($selecteur == "6") echo"selected" ?>>Niveau 6</option>
+                            <option value="7" <?php if($selecteur == "7") echo"selected" ?>>Niveau 7</option>
+                            <option value="8" <?php if($selecteur == "8") echo"selected" ?>>Niveau 9</option>
                         </select>
                     </div>
 
