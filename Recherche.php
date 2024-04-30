@@ -9,7 +9,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='assets/styles/Recherche.css' rel='stylesheet'/>
     <title>Recherche</title>
-
 </head>
 <body>
     <nav class="barre-navigation">
@@ -97,11 +96,10 @@ session_start();
 
                 <div class="form-group">
                     <label for="mot_cle">Mot clé :</label>
-                    <input type="text" id="mot_cle" name="mot_cle" value="<?php echo isset($_GET['mot_cle']) ? $_GET['mot_cle'] : ''; ?>">
+                    <input type="text" id="mot_cle" name="mot_cle" value="">
                 </div>
 
                 <input type="submit" value="Rechercher">
-
                 
             </form>
             
@@ -132,7 +130,7 @@ session_start();
                         file_correction.extension AS correction_extension
                     FROM exercise
                     LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                    LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
+                    LEFT JOIN file AS file_exercice ON exercise.exercise_file_id = file_exercice.id
                     LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id";
                 
 
@@ -161,7 +159,6 @@ session_start();
                             $where_conditions[] = "exercise.keywords LIKE '%$mot_cle%'";
                         }
 
-                        // Si au moins une condition est spécifiée, ajoutez le WHERE à la requête SQL
                         if (!empty($where_conditions)) {
                             $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                         }
