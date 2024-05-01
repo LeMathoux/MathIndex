@@ -96,10 +96,12 @@ session_start();
 
                 <div class="form-group">
                     <label for="mot_cle">Mot clé :</label>
+                    <!-- Ne pas pré-remplir le champ avec la valeur saisie précédemment -->
                     <input type="text" id="mot_cle" name="mot_cle" value="">
                 </div>
 
                 <input type="submit" value="Rechercher">
+
                 
             </form>
             
@@ -159,6 +161,7 @@ session_start();
                             $where_conditions[] = "exercise.keywords LIKE '%$mot_cle%'";
                         }
 
+                        // Si au moins une condition est spécifiée, ajoutez le WHERE à la requête SQL
                         if (!empty($where_conditions)) {
                             $sql_all_exercices .= " WHERE " . implode(" AND ", $where_conditions);
                         }
