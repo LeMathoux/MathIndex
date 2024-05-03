@@ -147,50 +147,50 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                     echo "<img src='assets/images/icone_download.svg'>
                                     <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
 
-                                    if ($row["correction_original_name"] && $row["correction_extension"]) {
-                                        echo "<img src='assets/images/icone_download.svg'>
-                                        <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
-                                    }
-                                    echo "</td>";
-                                    echo "</tr>";
+                                if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                    echo "<img src='assets/images/icone_download.svg'>
+                                    <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
                                 }
-                            } else {
-                                echo "Aucune nouveauté trouvée.";
+                                echo "</td>";
+                                echo "</tr>";
                             }
-                            ?>
-                    </tbody>
-                </table>
-                <h2>Tous les exercices</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Thématique</th>
-                            <th>Difficulté</th>
-                            <th>Durée</th>
-                            <th>Mots clés</th>
-                            <th>Fichiers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        
-                                $sql_all_exercices = "SELECT exercise.name AS exercise_name,
-                                    thematic.name AS thematic_name, 
-                                    exercise.difficulty,
-                                    exercise.duration, exercise.keywords,
-                                    file_exercice.name AS exercice_name, 
-                                    file_exercice.original_name AS exercice_original_name, 
-                                    file_exercice.extension,
-                                    file_correction.name AS correction_name, 
-                                    file_correction.original_name AS correction_original_name, 
-                                    file_correction.extension AS correction_extension
-                                FROM exercise
-                                LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                                LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
-                                LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
-                                ORDER BY exercise.date DESC
-                                LIMIT $exercices_par_page OFFSET $offset";
+                        } else {
+                            echo "Aucune nouveauté trouvée.";
+                        }
+                        ?>
+                </tbody>
+            </table>
+            <h2>Tous les exercices</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Thématique</th>
+                        <th>Difficulté</th>
+                        <th>Durée</th>
+                        <th>Mots clés</th>
+                        <th>Fichiers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                       
+                            $sql_all_exercices = "SELECT exercise.name AS exercise_name,
+                                thematic.name AS thematic_name, 
+                                exercise.difficulty,
+                                exercise.duration, exercise.keywords,
+                                file_exercice.name AS exercice_name, 
+                                file_exercice.original_name AS exercice_original_name, 
+                                file_exercice.extension,
+                                file_correction.name AS correction_name, 
+                                file_correction.original_name AS correction_original_name, 
+                                file_correction.extension AS correction_extension
+                            FROM exercise
+                            LEFT JOIN thematic ON exercise.thematic_id = thematic.id
+                            LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
+                            LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
+                            ORDER BY exercise.date DESC
+                            LIMIT $exercices_par_page OFFSET $offset";
 
                                 $result_all_exercices = $mysqlClient->query($sql_all_exercices);
 
