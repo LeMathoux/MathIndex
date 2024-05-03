@@ -121,7 +121,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                 file_correction.extension AS correction_extension
                             FROM exercise
                             LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                            LEFT JOIN file AS file_exercice ON exercise.exercise_file_id = file_exercice.id
+                            LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
                             LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
                             ORDER BY exercise.date DESC LIMIT 3";
 
@@ -187,7 +187,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                     file_correction.extension AS correction_extension
                                 FROM exercise
                                 LEFT JOIN thematic ON exercise.thematic_id = thematic.id
-                                LEFT JOIN file AS file_exercice ON exercise.exercise_file_id = file_exercice.id
+                                LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
                                 LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
                                 ORDER BY exercise.date DESC
                                 LIMIT $exercices_par_page OFFSET $offset";
