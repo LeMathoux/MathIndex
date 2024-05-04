@@ -137,7 +137,7 @@ session_start();
 
                     <div class="form-group">
                         <label for="mot_cle">Mot clé :</label>
-                        <input type="text" id="mot_cle" name="mot_cle" value="<?php echo isset($_GET['mot_cle']) ? $_GET['mot_cle'] : ''; ?>">
+                        <input type="text" id="mot_cle" name="mot_cle" value="">
                     </div>
 
                     <input type="submit" value="Rechercher">
