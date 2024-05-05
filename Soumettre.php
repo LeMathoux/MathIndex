@@ -17,13 +17,23 @@ session_start();
   function getvalue(){
     document.getElementById('selectedfile').value=document.getElementById('hiddenfile').value;
   }
+  function getfile2(){
+    document.getElementById('hiddenfile2').click();
+  }
+  function getvalue2(){
+    document.getElementById('selectedfile2').value=document.getElementById('hiddenfile2').value;
+  }
 </script>
 <?php
+
 if (!isset($_SESSION['stockage'])){
   $_SESSION['stockage'] = array();
+  $_SESSION['stockage']['mode'] = 'ajout';
 }
+
 $_POST['suivant1'] = "none";
 $_POST['suivant2'] = "none";
+
 if((!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficulte']) && !empty($_POST['thematique']) && !empty($_POST['chapitre']))){
   $_POST['suivant1'] = "true";
   $_SESSION['stockage']['name'] = $_POST['name'];
@@ -34,15 +44,24 @@ if((!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficu
   $_SESSION['stockage']['thematique'] = $_POST['thematique'];
   $_SESSION['stockage']['chapitre'] = $_POST['chapitre'];
 }
-if(!empty($_POST['origine']) && !empty($_POST['Nom_source']) && !empty($_POST['thematique_origine'])){
+
+if(!empty($_POST['origine']) && !empty($_POST['Nom_source']) && !empty($_POST['information_sup'])){
   $_POST['suivant2'] = "true";
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['origine']=$_POST['origine'];
   $_SESSION['stockage']['Nom_source']=$_POST['Nom_source'];
-  $_SESSION['stockage']['thematique_origine']=$_POST['thematique_origine'];
+  $_SESSION['stockage']['information_sup']=$_POST['information_sup'];
+}
+
+if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['NewNameExercice']) && !empty($_POST['NewNameCorrige'])){
+  $_POST['suivant2'] = "true";
+  $_POST['suivant1'] = "none";
+  $_SESSION['stockage']['exercice']=$_POST['exercice'];
+  $_SESSION['stockage']['corrige']=$_POST['corrige'];
 }
 
 include_once("requetes/configdb.php");
+
 $sql_no_exercices = "SELECT name FROM classroom";
 $result_no_exercice = $conn->query($sql_no_exercices);
 $listeclasses = $result_no_exercice->fetch_all();
@@ -55,6 +74,140 @@ $sql_no_exercices = "SELECT name FROM origin";
 $result_no_exercice = $conn->query($sql_no_exercices);
 $listeorigines = $result_no_exercice->fetch_all();
 
+if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom_source']) && !empty($_SESSION['stockage']['name']) && !empty($_SESSION['stockage']['classe']) && !empty($_SESSION['stockage']['difficulte']) && !empty($_SESSION['stockage']['thematique']) && !empty($_SESSION['stockage']['chapitre']) && !empty($_FILES['exercice']) && !empty($_FILES['corrige'])){
+  
+  //var_dump($_POST['NewNameExercice']);
+  //var_dump($_POST['NewNameCorrige']);
+  $_SESSION['stockage']['NameExercice']= $_POST['NewNameExercice'];
+  $_SESSION['stockage']['NameCorrige']= $_POST['NewNameCorrige'];
+
+  //var_dump($_SESSION['stockage']);
+  $uploads_dir = './assets/Corriges';
+  $tmp_name = $_FILES["corrige"]["tmp_name"];
+  $name = basename($_FILES["corrige"]["name"]);
+  move_uploaded_file($tmp_name, "$uploads_dir/$name");
+
+  $uploads_dir = './assets/Exercices';
+  $tmp_name = $_FILES["exercice"]["tmp_name"];
+  $name = basename($_FILES["exercice"]["name"]);
+  move_uploaded_file($tmp_name, "$uploads_dir/$name");
+
+  $stmt = $mysqlClient->prepare("SELECT id FROM classroom WHERE name=:name;");
+  $stmt->bindParam(":name", $_SESSION['stockage']['classe']);
+  $stmt->execute();
+  $id_classe = $stmt->fetchAll();
+
+  $id_utilisateur = $_SESSION['account']['id'];
+
+  $stmt = $mysqlClient->prepare("SELECT id FROM thematic WHERE name=:name1;");
+  $stmt->bindParam(":name1", $_SESSION['stockage']['thematique']);
+  $stmt->execute();
+  $id_thematique = $stmt->fetchAll();
+
+  switch($_SESSION['stockage']['difficulte']){
+    case 'Niveau 1': 
+      $num_difficulte = 1;
+      break;
+
+    case 'Niveau 2':
+      $num_difficulte = 2;
+      break;
+
+    case 'Niveau 3':
+      $num_difficulte = 3;
+      break;
+
+    case 'Niveau 4':
+      $num_difficulte = 4;
+      break;
+
+    case 'Niveau 5': 
+      $num_difficulte = 5;
+      break;
+
+    case 'Niveau 6':
+      $num_difficulte = 6;
+      break;
+
+    case 'Niveau 7':
+      $num_difficulte = 7;
+      break;
+
+    case 'Niveau 8':
+      $num_difficulte = 8;
+      break;  
+  }
+
+  $stmt = $mysqlClient->prepare("SELECT id FROM origin WHERE name=:name2;");
+  $stmt->bindParam(":name2", $_SESSION['stockage']['origine']);
+  $stmt->execute();
+  $id_origine = $stmt->fetchAll();
+  //var_dump($_FILES);
+  $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
+  $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
+  $stmt->execute();
+  $elements = $stmt->fetchAll();
+
+  if(empty($elements)){
+    $stmt = $mysqlClient->prepare("INSERT INTO file (name, original_name, extension, size) VALUES(:name, :original_name, :extension, :size);");
+    $stmt->bindParam(":name", $_SESSION['stockage']['NameExercice']);
+    $stmt->bindParam(":original_name", $_FILES['exercice']['name']);
+    $stmt->bindParam(":extension", $_FILES['exercice']['type']);
+    $stmt->bindParam(":size", $_FILES['exercice']['size']);
+    $stmt->execute();
+
+    $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
+    $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
+    $stmt->execute();
+    $elements = $stmt;
+  }
+  $exercice_id = $elements;
+
+  $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
+  $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
+  $stmt->execute();
+  $elements = $stmt->fetchAll();
+
+  if(empty($elements)){
+    $stmt = $mysqlClient->prepare("INSERT INTO file (name, original_name, extension, size) VALUES(:name, :original_name, :extension, :size);");
+    $stmt->bindParam(":name", $_SESSION['stockage']['NameCorrige']);
+    $stmt->bindParam(":original_name", $_FILES['corrige']['name']);
+    $stmt->bindParam(":extension", $_FILES['corrige']['type']);
+    $stmt->bindParam(":size", $_FILES['corrige']['size']);
+    $stmt->execute();
+
+    $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
+    $stmt->bindParam(":name_ori", $_FILES['corrige']['name']);
+    $stmt->execute();
+    $elements = $stmt->fetchAll();
+  }
+  $correction_id = $elements;
+
+  $id_classe = intval($id_classe[0][0]);
+  $id_origine = intval($id_origine[0][0]);
+  $correction_id = intval($correction_id[0][0]);
+  $exercice_id = intval($exercice_id[0][0]);
+  $id_thematique = intval($id_thematique[0][0]);
+  $date=date("Y-n-j");
+  $stmt = $mysqlClient->prepare("INSERT INTO exercise (name, classroom_id, thematic_id, chapter, keywords,difficulty, duration, origin_id, exercice_file_id, correction_file_id, origin_information, created_by_id, date) VALUES(:name, :classroom_id, :thematic_id, :chapter, :keywords, :difficulty, :duration, :origin_id, :exercice_file_id, :correction_file_id, :origin_information, :created_by_id, :date); ");
+  $stmt->bindParam(":name", $_SESSION['stockage']['name']);
+  $stmt->bindParam(":classroom_id", $id_classe);
+  $stmt->bindParam(":thematic_id", $id_thematique);
+  $stmt->bindParam(":chapter", $_SESSION['stockage']['chapitre']);
+  $stmt->bindParam(":keywords", $_SESSION['stockage']['mots_clés']);
+  $stmt->bindParam(":difficulty", $num_difficulte);
+  $stmt->bindParam(":duration", $_SESSION['stockage']['durée']);
+  $stmt->bindParam(":origin_id", $id_origine);
+  $stmt->bindParam(":exercice_file_id", $exercice_id);
+  $stmt->bindParam(":correction_file_id", $correction_id);
+  $stmt->bindParam(":origin_information", $_SESSION['stockage']['information_sup']);
+  $stmt->bindParam(":created_by_id", $_SESSION['account']['id']);
+  $stmt->bindParam(":date", $date);
+  $stmt->execute();
+
+  ///detruit la session de stockage des valeurs.
+  $_SESSION['stockage'] = [];
+}
 ?>
 <body>
   <nav class="barre-navigation hidden">
@@ -142,18 +295,21 @@ $listeorigines = $result_no_exercice->fetch_all();
                             <select name="classe" id="classe">
                               <?php
                               foreach($listeclasses as $element){
-                                echo "<option value=$element[0]>$element[0]</option>";
+                                echo "<option value='$element[0]'>$element[0]</option>";
                               }
                               ?>
                             </select>
                         </label>
                         <label name='difficulte'> Difficulté*:
-                          <select name="thematique" id="thematique">
+                          <select name="difficulte" id="difficulte">
                             <option value="Niveau 1">Niveau 1</option>
                             <option value="Niveau 2">Niveau 2</option>
                             <option value="Niveau 3">Niveau 3</option>
                             <option value="Niveau 4">Niveau 4</option>
                             <option value="Niveau 5">Niveau 5</option>
+                            <option value="Niveau 6">Niveau 6</option>
+                            <option value="Niveau 7">Niveau 7</option>
+                            <option value="Niveau 8">Niveau 8</option>
                           </select>
                         </label>
                       </div>
@@ -162,7 +318,7 @@ $listeorigines = $result_no_exercice->fetch_all();
                           <select name="thematique" id="thematique">
                             <?php
                             foreach($listethematiques as $element){
-                              echo "<option value=$element[0]>$element[0]</option>";
+                              echo "<option value='$element[0]'>$element[0]</option>";
                             }
                             ?>
                           </select>
@@ -186,7 +342,7 @@ $listeorigines = $result_no_exercice->fetch_all();
                           <select name="origine" id="origine">
                             <?php
                             foreach($listeorigines as $element){
-                              echo "<option value=$element[0]>$element[0]</option>";
+                              echo "<option value='$element[0]'>$element[0]</option>";
                             }
                             ?>
                           </select>
@@ -206,12 +362,12 @@ $listeorigines = $result_no_exercice->fetch_all();
             <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if($_POST['suivant2'] === "true"){echo 'checked';}?>/> <label class='label1' for="tab-4">Fichiers</label>
                 <div class="content">
                   <h1>Fichiers</h1>
-                  <form method='post' name='Fichiers'>
+                  <form enctype="multipart/form-data" method='post' name='Fichiers'>
                       <div class='ligne'>
                         <label name='exercice'> Fiche exercice(PDF, word)*:
                           <div class='file'>
-                            <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="file" onChange="getvalue();"/>
-                            <input class="leFichier" type="text" id="selectedfile" value="Sélectionner un fichier à télécharger"/>
+                            <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="exercice" onChange="getvalue();"/>
+                            <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value="Sélectionner un fichier à télécharger"/>
                             <input class='bouton-upload' type="button" onclick="getfile();"/>
                           </div>
                         </label>
@@ -219,9 +375,9 @@ $listeorigines = $result_no_exercice->fetch_all();
                       <div class='ligne'>
                         <label name='corrige'> Fiche corrigé(PDF, word)*: 
                           <div class='file'>
-                              <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="file" onChange="getvalue();"/>
-                              <input class="leFichier" type="text" id="selectedfile" value="Sélectionner un fichier à télécharger"/>
-                              <input class='bouton-upload' type="button" onclick="getfile();"/>
+                              <input type="file" id="hiddenfile2" class="label-upload" style="display:none" name="corrige" onChange="getvalue2();"/>
+                              <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value="Sélectionner un fichier à télécharger"/>
+                              <input class='bouton-upload' type="button" onclick="getfile2();"/>
                             </div>
                         </label>
                       </div>
