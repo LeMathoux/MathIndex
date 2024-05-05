@@ -36,6 +36,24 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
       $file_ex = $row2["exercice_file_id"];
       $file_corr = $row2["correction_file_id"];
 
+      $sql_recup_info2 = "SELECT name, extension
+                          FROM file
+                          WHERE id = $file_ex
+                          OR id = $file_corr";
+      $stmt2 = $conn->prepare($sql_recup_info2);
+      $stmt2->execute();
+      $result_recup_info2 = $stmt2->get_result();
+
+      $row3 = $result_recup_info2->fetch_assoc();
+      $name_file = $row3["name"];
+      $ext_file = $row3["extension"];
+      while ($row3 = $result_recup_info2->fetch_assoc()) {
+        
+          unlink("assets/Exercices/".$name_file);
+          unlink("assets/Corrige/".$name_file);
+
+      }
+
       $sql_supp = "DELETE FROM exercise WHERE id = $id_exercise";
       $stmt_supp = $conn->prepare($sql_supp);
  
