@@ -223,14 +223,14 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     </div>
     <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
     <div class="navigation">
-        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home.svg"><strong>Accueil</strong></a></li>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"><strong>Accueil</strong></a></li>
         <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
         <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
 
         <?php if(isset($_SESSION["account"])): ?>
           <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
             <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-            <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+            <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg">Soumettre</a></li>
             <?php endif; ?>
             <div class="deconnexion">
               <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
