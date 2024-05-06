@@ -25,32 +25,120 @@ session_start();
   }
 </script>
 <?php
+include_once("requetes/configdb.php");
 
 if (!isset($_SESSION['stockage'])){
   $_SESSION['stockage'] = array();
   $_SESSION['stockage']['mode'] = 'ajout';
 }
+if(isset($_GET['info']) && !isset($_SESSION['stockage'])){
+  $_SESSION['stockage']['mode'] = 'modification';
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM exercise WHERE id=:id;");
+  $stmt->bindParam(":id", $_GET['info']);
+  $stmt->execute();
+  $informations = $stmt->fetchAll();
+  
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM file WHERE id=:id;");
+  $stmt->bindParam(":id", $informations[0]['correction_file_id']);
+  $stmt->execute();
+  $correction_infos = $stmt->fetchAll();
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM file WHERE id=:id;");
+  $stmt->bindParam(":id", $informations[0]['exercice_file_id']);
+  $stmt->execute();
+  $exercice_infos = $stmt->fetchAll();
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM origin WHERE id=:id;");
+  $stmt->bindParam(":id", $informations[0]['origin_id']);
+  $stmt->execute();
+  $origin_infos = $stmt->fetchAll();
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM thematic WHERE id=:id;");
+  $stmt->bindParam(":id", $informations[0]['thematic_id']);
+  $stmt->execute();
+  $thematic_infos = $stmt->fetchAll();
+
+  $stmt = $mysqlClient->prepare("SELECT * FROM classroom WHERE id=:id;");
+  $stmt->bindParam(":id", $informations[0]['classroom_id']);
+  $stmt->execute();
+  $classroom_infos = $stmt->fetchAll();
+
+  
+  switch($informations[0]['difficulty']){
+    case '1': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 1';
+      break;
+
+    case '2': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 2';
+      break;
+
+
+    case '3': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 3';
+      break;
+
+
+    case '4': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 4';
+      break;
+
+    case '5': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 5';
+      break;
+
+    case '6': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 6';
+      break;
+
+    case '7': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 7';
+      break;
+
+    case '8': 
+      $_SESSION['stockage']['difficulte'] = 'Niveau 8';
+      break;
+  }
+  
+  
+  $_SESSION['stockage']['name'] = $informations[0]['name'];
+  $_SESSION['stockage']['durée'] = $informations[0]['duration'];
+  $_SESSION['stockage']['chapitre'] = "'".$informations[0]['chapter']."'";
+  $_SESSION['stockage']['information_sup']=$informations[0]['origin_information'];
+  $_SESSION['stockage']['thematique']=$thematic_infos[0]['name'];
+  $_SESSION['stockage']['origine']=$origin_infos[0]['name'];
+  $_SESSION['stockage']['mots_clés'] = "'".$informations[0]['keywords']."'";
+  $_SESSION['stockage']['Nom_source'] = "'".$origin_infos[0]['name']."'";
+  $_SESSION['stockage']['classe'] = $classroom_infos[0]['name'];
+  $_SESSION['stockage']['exercice'] = $exercice_infos[0]['original_name'];
+  $_SESSION['stockage']['corrige'] = $correction_infos[0]['original_name'];
+}
 
 $_POST['suivant1'] = "none";
 $_POST['suivant2'] = "none";
 
-if((!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficulte']) && !empty($_POST['thematique']) && !empty($_POST['chapitre']))){
+if(!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficulte']) && !empty($_POST['thematique']) && !empty($_POST['chapitre'])){
   $_POST['suivant1'] = "true";
   $_SESSION['stockage']['name'] = $_POST['name'];
   $_SESSION['stockage']['classe'] = $_POST['classe'];
   $_SESSION['stockage']['mots_clés'] = $_POST['mots_clés'];
   $_SESSION['stockage']['durée'] = $_POST['durée'];
   $_SESSION['stockage']['difficulte'] = $_POST['difficulte'];
-  $_SESSION['stockage']['thematique'] = $_POST['thematique'];
+  $_SESSION['stockage']['thematique'] =$_POST['thematique'];
   $_SESSION['stockage']['chapitre'] = $_POST['chapitre'];
+  var_dump($_SESSION['stockage']);
 }
 
 if(!empty($_POST['origine']) && !empty($_POST['Nom_source']) && !empty($_POST['information_sup'])){
+  var_dump('yes');
   $_POST['suivant2'] = "true";
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['origine']=$_POST['origine'];
   $_SESSION['stockage']['Nom_source']=$_POST['Nom_source'];
   $_SESSION['stockage']['information_sup']=$_POST['information_sup'];
+  var_dump($_SESSION['stockage']);
 }
 
 if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['NewNameExercice']) && !empty($_POST['NewNameCorrige'])){
@@ -58,13 +146,14 @@ if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['New
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['exercice']=$_POST['exercice'];
   $_SESSION['stockage']['corrige']=$_POST['corrige'];
+  var_dump($_SESSION['stockage']);
 }
 
-include_once("requetes/configdb.php");
 
 $sql_no_exercices = "SELECT name FROM classroom";
 $result_no_exercice = $conn->query($sql_no_exercices);
 $listeclasses = $result_no_exercice->fetch_all();
+
 
 $sql_no_exercices = "SELECT name FROM thematic";
 $result_no_exercice = $conn->query($sql_no_exercices);
@@ -75,23 +164,20 @@ $result_no_exercice = $conn->query($sql_no_exercices);
 $listeorigines = $result_no_exercice->fetch_all();
 
 if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom_source']) && !empty($_SESSION['stockage']['name']) && !empty($_SESSION['stockage']['classe']) && !empty($_SESSION['stockage']['difficulte']) && !empty($_SESSION['stockage']['thematique']) && !empty($_SESSION['stockage']['chapitre']) && !empty($_FILES['exercice']) && !empty($_FILES['corrige'])){
-  
-  //var_dump($_POST['NewNameExercice']);
-  //var_dump($_POST['NewNameCorrige']);
-  $_SESSION['stockage']['NameExercice']= $_POST['NewNameExercice'];
-  $_SESSION['stockage']['NameCorrige']= $_POST['NewNameCorrige'];
 
-  //var_dump($_SESSION['stockage']);
-  $uploads_dir = './assets/Corriges';
-  $tmp_name = $_FILES["corrige"]["tmp_name"];
-  $name = basename($_FILES["corrige"]["name"]);
-  move_uploaded_file($tmp_name, "$uploads_dir/$name");
+  if(!empty($_FILES)){
+    $_SESSION['stockage']['NameExercice']= $_POST['NewNameExercice'];
+    $_SESSION['stockage']['NameCorrige']= $_POST['NewNameCorrige'];
+    $uploads_dir = './assets/Corriges';
+    $tmp_name = $_FILES["corrige"]["tmp_name"];
+    $name = basename($_FILES["corrige"]["name"]);
+    move_uploaded_file($tmp_name, "$uploads_dir/$name");
 
-  $uploads_dir = './assets/Exercices';
-  $tmp_name = $_FILES["exercice"]["tmp_name"];
-  $name = basename($_FILES["exercice"]["name"]);
-  move_uploaded_file($tmp_name, "$uploads_dir/$name");
-
+    $uploads_dir = './assets/Exercices';
+    $tmp_name = $_FILES["exercice"]["tmp_name"];
+    $name = basename($_FILES["exercice"]["name"]);
+    move_uploaded_file($tmp_name, "$uploads_dir/$name");
+  }
   $stmt = $mysqlClient->prepare("SELECT id FROM classroom WHERE name=:name;");
   $stmt->bindParam(":name", $_SESSION['stockage']['classe']);
   $stmt->execute();
@@ -142,7 +228,8 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   $stmt->bindParam(":name2", $_SESSION['stockage']['origine']);
   $stmt->execute();
   $id_origine = $stmt->fetchAll();
-  //var_dump($_FILES);
+  var_dump($id_origine);
+  
   $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
   $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
   $stmt->execute();
@@ -183,28 +270,62 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   }
   $correction_id = $elements;
 
-  $id_classe = intval($id_classe[0][0]);
-  $id_origine = intval($id_origine[0][0]);
-  $correction_id = intval($correction_id[0][0]);
-  $exercice_id = intval($exercice_id[0][0]);
-  $id_thematique = intval($id_thematique[0][0]);
-  $date=date("Y-n-j");
-  $stmt = $mysqlClient->prepare("INSERT INTO exercise (name, classroom_id, thematic_id, chapter, keywords,difficulty, duration, origin_id, exercice_file_id, correction_file_id, origin_information, created_by_id, date) VALUES(:name, :classroom_id, :thematic_id, :chapter, :keywords, :difficulty, :duration, :origin_id, :exercice_file_id, :correction_file_id, :origin_information, :created_by_id, :date); ");
-  $stmt->bindParam(":name", $_SESSION['stockage']['name']);
-  $stmt->bindParam(":classroom_id", $id_classe);
-  $stmt->bindParam(":thematic_id", $id_thematique);
-  $stmt->bindParam(":chapter", $_SESSION['stockage']['chapitre']);
-  $stmt->bindParam(":keywords", $_SESSION['stockage']['mots_clés']);
-  $stmt->bindParam(":difficulty", $num_difficulte);
-  $stmt->bindParam(":duration", $_SESSION['stockage']['durée']);
-  $stmt->bindParam(":origin_id", $id_origine);
-  $stmt->bindParam(":exercice_file_id", $exercice_id);
-  $stmt->bindParam(":correction_file_id", $correction_id);
-  $stmt->bindParam(":origin_information", $_SESSION['stockage']['information_sup']);
-  $stmt->bindParam(":created_by_id", $_SESSION['account']['id']);
-  $stmt->bindParam(":date", $date);
-  $stmt->execute();
+  if($_SESSION['stockage']['mode'] === 'ajout'){
 
+    $id_classe = intval($id_classe[0][0]);
+    $id_origine = intval($id_origine[0][0]);
+    $correction_id = intval($correction_id[0][0]);
+    $exercice_id = intval($exercice_id[0][0]);
+    $id_thematique = intval($id_thematique[0][0]);
+    $date=date("Y-n-j");
+    $stmt = $mysqlClient->prepare("INSERT INTO exercise (name, classroom_id, thematic_id, chapter, keywords,difficulty, duration, origin_id, exercice_file_id, correction_file_id, origin_information, created_by_id, date) VALUES(:name, :classroom_id, :thematic_id, :chapter, :keywords, :difficulty, :duration, :origin_id, :exercice_file_id, :correction_file_id, :origin_information, :created_by_id, :date); ");
+    $stmt->bindParam(":name", $_SESSION['stockage']['name']);
+    $stmt->bindParam(":classroom_id", $id_classe);
+    $stmt->bindParam(":thematic_id", $id_thematique);
+    $stmt->bindParam(":chapter", $_SESSION['stockage']['chapitre']);
+    $stmt->bindParam(":keywords", $_SESSION['stockage']['mots_clés']);
+    $stmt->bindParam(":difficulty", $num_difficulte);
+    $stmt->bindParam(":duration", $_SESSION['stockage']['durée']);
+    $stmt->bindParam(":origin_id", $id_origine);
+    $stmt->bindParam(":exercice_file_id", $exercice_id);
+    $stmt->bindParam(":correction_file_id", $correction_id);
+    $stmt->bindParam(":origin_information", $_SESSION['stockage']['information_sup']);
+    $stmt->bindParam(":created_by_id", $_SESSION['account']['id']);
+    $stmt->bindParam(":date", $date);
+    $stmt->execute();
+
+  }
+  if($_SESSION['stockage']['mode'] === 'modification'){
+
+    var_dump($_SESSION['stockage']);
+
+    $id_classe = intval($id_classe[0][0]);
+    $id_origine = intval($id_origine[0][0]);
+    $correction_id = intval($correction_id[0][0]);
+    $exercice_id = intval($exercice_id[0][0]);
+    $id_thematique = intval($id_thematique[0][0]);
+    $date=date("Y-n-j");
+    $stmt = $mysqlClient->prepare("UPDATE exercise SET name=:name, classroom_id=:classroom_id, thematic_id=:thematic_id, chapter=:chapter, keywords=:keywords, difficulty=:difficulty, duration=:duration, origin_id=:origin_id, exercice_file_id=:exercice_file_id, correction_file_id=:correction_file_id, origin_information=:origin_information, created_by_id=:created_by_id, date=:date WHERE id=:id;");
+    $stmt->bindParam(":name", $_SESSION['stockage']['name']);
+    $stmt->bindParam(":classroom_id", $id_classe);
+    $stmt->bindParam(":thematic_id", $id_thematique);
+    $stmt->bindParam(":chapter", $_SESSION['stockage']['chapitre']);
+    $stmt->bindParam(":keywords", $_SESSION['stockage']['mots_clés']);
+    $stmt->bindParam(":difficulty", $num_difficulte);
+    $stmt->bindParam(":duration", $_SESSION['stockage']['durée']);
+    $stmt->bindParam(":origin_id", $id_origine);
+    $stmt->bindParam(":exercice_file_id", $exercice_id);
+    $stmt->bindParam(":correction_file_id", $correction_id);
+    $stmt->bindParam(":origin_information", $_SESSION['stockage']['information_sup']);
+    $stmt->bindParam(":created_by_id", $_SESSION['account']['id']);
+    $stmt->bindParam(":date", $date);
+    
+    $id_exo = intval($_GET['info']);
+    $stmt->bindParam(":id", $id_exo);
+
+    $stmt->execute();
+
+  }
   ///detruit la session de stockage des valeurs.
   $_SESSION['stockage'] = [];
 }
@@ -287,46 +408,52 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                     <h1>Informations générales</h1>
                     <form method='post' name='informations Generales'>
                       <div class='ligne'>
-                        <label name='name'> Nom de l'exercice*: <input class="inputTexte" type='text' name='name' value=<?php if(isset($_SESSION['stockage']['name'])){echo $_SESSION['stockage']['name'];}?>></input></label>
-                        <label name='mots_clés'> Mots clés: <input class="inputTexte" type='text' name='mots_clés' value=<?php if(isset($_SESSION['stockage']['mots_clés'])){echo $_SESSION['stockage']['mots_clés'];}?>></input></label>
+                        <label name='name'> Nom de l'exercice*: <input class="inputTexte" type='text' name='name' value=<?php if(isset($_SESSION['stockage']['name'])){echo "'".$_SESSION['stockage']['name']."'";}?>></input></label>
+                        <label name='mots_clés'> Mots clés: <input class="inputTexte" type='text' name='mots_clés' value=<?php if(isset($_SESSION['stockage']['mots_clés'])){echo "'".$_SESSION['stockage']['mots_clés']."'";}?>></input></label>
                       </div>
                       <div class='ligne'>
                         <label name='classe'> Classe*: 
                             <select name="classe" id="classe">
                               <?php
-                              foreach($listeclasses as $element){
-                                echo "<option value='$element[0]'>$element[0]</option>";
+                              for($i=0; $i < count($listeclasses); $i++){
+                                $element = "'".$listeclasses[$i][0]."'";
+                              ?>
+                                <option value=<?php echo $element; ?> <?= isset($_SESSION['stockage']['classe']) && $_SESSION['stockage']['classe'] === $element ? 'selected' : '' ?>><?php echo $listeclasses[$i][0]; ?></option>
+                              <?php
                               }
                               ?>
                             </select>
                         </label>
                         <label name='difficulte'> Difficulté*:
                           <select name="difficulte" id="difficulte">
-                            <option value="Niveau 1">Niveau 1</option>
-                            <option value="Niveau 2">Niveau 2</option>
-                            <option value="Niveau 3">Niveau 3</option>
-                            <option value="Niveau 4">Niveau 4</option>
-                            <option value="Niveau 5">Niveau 5</option>
-                            <option value="Niveau 6">Niveau 6</option>
-                            <option value="Niveau 7">Niveau 7</option>
-                            <option value="Niveau 8">Niveau 8</option>
+                            <option value="Niveau 1" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 1" ? 'selected' : '' ?>>Niveau 1</option>
+                            <option value="Niveau 2" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 2" ? 'selected' : '' ?>>Niveau 2</option>
+                            <option value="Niveau 3" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 3" ? 'selected' : '' ?>>Niveau 3</option>
+                            <option value="Niveau 4" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 4" ? 'selected' : '' ?>>Niveau 4</option>
+                            <option value="Niveau 5" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 5" ? 'selected' : '' ?>>Niveau 5</option>
+                            <option value="Niveau 6" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 6" ? 'selected' : '' ?>>Niveau 6</option>
+                            <option value="Niveau 7" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 7" ? 'selected' : '' ?>>Niveau 7</option>
+                            <option value="Niveau 8" <?= isset($_SESSION['stockage']['difficulte']) && $_SESSION['stockage']['difficulte'] === "Niveau 8" ? 'selected' : '' ?>>Niveau 8</option>
                           </select>
                         </label>
                       </div>
                       <div class='ligne'>
                         <label name='thematique'> Thematique*: 
                           <select name="thematique" id="thematique">
-                            <?php
-                            foreach($listethematiques as $element){
-                              echo "<option value='$element[0]'>$element[0]</option>";
-                            }
-                            ?>
+                          <?php
+                              for($i=0; $i < count($listethematiques); $i++){
+                                $element = "'".$listethematiques[$i][0]."'";
+                              ?>
+                                <option value=<?php echo $element; ?> <?= isset($_SESSION['stockage']['thematique']) && $_SESSION['stockage']['thematique'] === $element ? 'selected' : '' ?>><?php echo $listethematiques[$i][0]; ?></option>
+                              <?php
+                              }
+                              ?>
                           </select>
                         </label>
                         <label name='durée'> Durée(en heure): <input class="inputTexte" type='text' name='durée' value=<?php if(isset($_SESSION['stockage']['durée'])){echo $_SESSION['stockage']['durée'];}?>></input></label>
                       </div>
                       <div class='ligne'>
-                        <label name='chapitre'> Chapitre du cours* : <input class="inputTexte" type='text' name='chapitre' value=<?php if(isset($_SESSION['stockage']['chapitre'])){echo $_SESSION['stockage']['chapitre'];}?>></input></label>
+                        <label name='chapitre'> Chapitre du cours* : <input class="inputTexte" type='text' name='chapitre' value=<?php if(isset($_SESSION['stockage']['chapitre'])){echo "'".$_SESSION['stockage']['chapitre']."'";}?>></input></label>
                       </div>
                       <input type='submit' value='Continuer'></input>
                     </form>
@@ -341,8 +468,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='origine'> Origine*: 
                           <select name="origine" id="origine">
                             <?php
-                            foreach($listeorigines as $element){
-                              echo "<option value='$element[0]'>$element[0]</option>";
+                            for($i=0; $i < count($listeorigines); $i++){
+                              $element = "'".$listeorigines[$i][0]."'";
+                            ?>
+                              <option value=<?php echo $element; ?> <?= isset($_SESSION['stockage']['origine']) && $_SESSION['stockage']['origine'] === $element ? 'selected' : '' ?>><?php echo $listeorigines[$i][0]; ?></option>
+                            <?php
                             }
                             ?>
                           </select>
@@ -367,7 +497,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='exercice'> Fiche exercice(PDF, word)*:
                           <div class='file'>
                             <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="exercice" onChange="getvalue();"/>
-                            <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value="Sélectionner un fichier à télécharger"/>
+                            <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value=<?= !empty($_SESSION['stockage']['exercice']) === true ? $_SESSION['stockage']['exercice'] : "Sélectionner un fichier à télécharger"?>/>
                             <input class='bouton-upload' type="button" onclick="getfile();"/>
                           </div>
                         </label>
@@ -376,7 +506,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='corrige'> Fiche corrigé(PDF, word)*: 
                           <div class='file'>
                               <input type="file" id="hiddenfile2" class="label-upload" style="display:none" name="corrige" onChange="getvalue2();"/>
-                              <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value="Sélectionner un fichier à télécharger"/>
+                              <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value=<?= !empty($_SESSION['stockage']['corrige']) === true ? $_SESSION['stockage']['corrige'] : "Sélectionner un fichier à télécharger"?>/>
                               <input class='bouton-upload' type="button" onclick="getfile2();"/>
                             </div>
                         </label>
