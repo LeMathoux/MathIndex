@@ -156,7 +156,7 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
                       echo "</td>";
                       echo "<td class='actions'>";
                       echo "<img src='assets/images/icone_modifier_gris.svg'>
-                            <p><a href='.Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
+                            <p><a href='Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
                       echo "<img src='assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page'])) {
                         echo "<p><a href='?page=".$_GET['page']."&action=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
