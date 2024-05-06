@@ -145,11 +145,11 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                     echo '</td>';
                                     echo "<td>";
                                     echo "<img src='assets/images/icone_download.svg'>
-                                    <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
+                                    <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "'>Exercice</a><br>";
 
                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                     echo "<img src='assets/images/icone_download.svg'>
-                                    <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                    <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "'>Corrigé</a>";
                                 }
                                 echo "</td>";
                                 echo "</tr>";
@@ -212,11 +212,11 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                         echo '</td>';
                                         echo "<td>";
                                         echo "<img src='assets/images/icone_download.svg'>
-                                        <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
+                                        <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "'>Exercice</a><br>";
 
                                         if ($row["correction_original_name"] && $row["correction_extension"]) {
                                             echo "<img src='assets/images/icone_download.svg'>
-                                            <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                            <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "'>Corrigé</a>";
                                         }
                                         echo "</td>";
                                         echo "</tr>";
