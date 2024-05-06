@@ -148,10 +148,10 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
                       echo "<td class='thematiques'><p>" . $row["thematic_name"] . "</p></td>";
                       echo "<td class='fichiers'>";
                       echo "<img src='assets/images/icone_download.svg'>
-                            <a href='assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
+                            <a href='assets/Exercices/" . $row["exercice_original_name"] . "' download>Exercice</a>";
                       if ($row["correction_original_name"] && $row["correction_extension"]) {
                         echo "<img src='assets/images/icone_download.svg'>
-                        <a href='assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
+                        <a href='assets/Corrigé/" . $row["correction_original_name"]. "' download>Corrigé</a>";
                       }
                       echo "</td>";
                       echo "<td class='actions'>";
