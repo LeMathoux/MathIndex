@@ -36,7 +36,7 @@ body {
       margin-left:6px;
   }
   
-  .barre-navigation a.accueil-liens {
+  .barre-navigation a.soumettre-liens {
       background-color: #F6F6F6;
       color: #1B3168;
       width: 90%;
@@ -53,7 +53,7 @@ body {
     display: none;
   }
 
-  .barre-navigation a.fonctions-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
+  .barre-navigation a.fonctions-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.accueil-liens:hover{
     width: 90%;
     background-color: #F6F6F6;
     padding: 0px 7.32px 0px 7.32px;
@@ -86,7 +86,7 @@ body {
     font-weight:400;
 }
 
-.barre-navigation a.soumettre-liens {
+.barre-navigation a.accueil-liens {
     color: #757575;
     display: flex;
     align-items: center;

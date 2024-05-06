@@ -93,7 +93,7 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
         <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
         <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
         <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste.svg">Mes exercices</a></li>
-        <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+        <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
         <div class="deconnexion">
             <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
         </div>
