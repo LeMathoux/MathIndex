@@ -18,25 +18,25 @@ body {
     flex-direction: column;  
 }
 
-.barre-navigation li {
-    list-style: none;
-    margin-left: 16px;
-    line-height:2;
-}
-
 .navigation{
     padding-top:75px;
 }
 
-.barre-navigation ul li {
-  padding: 10px 20px;
+.navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.barre-navigation strong{
+.navigation ul li {
+  padding: 10px;
+}
+
+.navigation strong{
     margin-left:6px;
 }
 
-.barre-navigation a.accueil-liens {
+.navigation a.accueil-liens {
     color: #757575;
     display: flex;
     align-items: center;
@@ -45,7 +45,7 @@ body {
     font-weight:400;
 }
 
-.barre-navigation a.recherche-liens {
+.navigation a.recherche-liens {
     color: #757575;
     display: flex;
     align-items: center;
@@ -54,7 +54,7 @@ body {
     font-weight:400;
 }
 
-.barre-navigation a.fonctions-liens {
+.navigation a.exercices-liens {
     background-color: #F6F6F6;
     color: #1B3168;
     width: 90%;
@@ -68,7 +68,7 @@ body {
     font-weight: 700;
 }
 
-.barre-navigation a.mesexercices-liens {
+.navigation a.mesexercices-liens {
     color: #757575;
     display: flex;
     align-items: center;
@@ -77,13 +77,30 @@ body {
     font-weight:400;
 }
 
-.barre-navigation a.soumettre-liens {
-    color: #757575;
+.navigation a.soumettre-liens {
+  background-color: #F6F6F6;
+  color: #1B3168;
+  width: 90%;
+  height: 38.64px;
+  padding: 0px 7.32px 0px 7.32px;
+  border-radius: 3.66px;
     display: flex;
     align-items: center;
     text-decoration:none;
     font-family:'Popins', sans-serif;
     font-weight:400;
+}
+
+.navigation a img {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.navigation ul li a:hover {
+  background-color: #F6F6F6;
+  width: 90%;
+  height: 38.64px;
+  border-radius: 3.66px;
 }
 
 .deconnexion .deconnexion-liens{
@@ -104,16 +121,9 @@ body {
     top : 94vh;
     left: 0.5%;
 }
+
 .nav_ipad{
     display: none;
-}
-.barre-navigation a img {
-    margin-right: 10px;
-}
-.barre-navigation a.accueil-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-    width: 90%;
-    background-color: #F6F6F6;
-    padding: 0px 7.32px 0px 7.32px;
 }
 
 .ensembles-logo  {
@@ -231,6 +241,7 @@ header {
     background-color: #FFFFFF;
     border-radius: 7.36px;
     margin: 5px auto 15px auto;
+    font-family: 'Epilogue', sans-serif;
 }
 
 .carre-blanc h2{
@@ -242,56 +253,45 @@ header {
 }
 
 .carre-blanc table {
-    width: 90%;
-    height: 44px;
-    border-collapse: collapse;
-    border-radius: 5px;
-    overflow: hidden; /* Pour que les coins arrondis soient visibles */
-    margin-left: auto;
-    margin-right: auto;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
+  width: 90%;
+  height: 364px;
+  border-collapse: collapse;
+  border-radius: 8px; /* Coins arrondis pour tout le tableau */
+  overflow: hidden; /* Empêche le contenu du tableau de déborder des coins arrondis */
+  color: #464646;
+  margin-left: 50px;
 }
 
-.carre-blanc thead {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    background-color: #E7E7E7;
-    color: #464646;
+.carre-blanc th, td {
+  border-top: 1px solid #DBDBDB;
+  border-bottom: 1px solid #DBDBDB;
+  padding: 8px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
 }
 
-.carre-blanc td, th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    color: #464646;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
+.carre-blanc th {
+  background-color: #E7E7E7;
 }
 
-.carre-blanc td a{
-    text-decoration:none;
-    color:#74828F;
-    margin-right: 5px;
+.carre-blanc td:first-child {
+  border-left: 1px solid #DBDBDB;
 }
 
-.carre-blanc td:nth-child(1) {
-    color: #74828F;
-}
-
-.carre-blanc td:nth-child(2) {
-    color: #74828F;
-}
-
-.carre-blanc td:nth-child(3) {
-    color: #74828F;
+.carre-blanc td:last-child {
+  border-right: 1px solid #DBDBDB;
 }
 
 .carre-blanc td img{
     margin-right:5px;
     position: relative;
     top: 5px;
+}
+
+.carre-blanc td a{
+  text-decoration:none;
+  color:#74828F;
+  margin-right: 5px;
 }
 
 .carre-blanc .mot_cle {
@@ -311,16 +311,16 @@ header {
 }
 
 .pagination a{
-            margin: 0 5px;
-            width:24px;
-            height:24px;
-            color: black;
-            border: 1px solid #DFE3E8;
-            border-radius:4px;
-            text-decoration:none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+  margin: 0 5px;
+  width:24px;
+  height:24px;
+  color: black;
+  border: 1px solid #DFE3E8;
+  border-radius:4px;
+  text-decoration:none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 span.page-actuel{
@@ -337,7 +337,7 @@ span.page-actuel{
 }
 
 .pagination .page-actuel:hover {
-    border: 1px solid black; 
+  border: 1px solid black; 
 }
 
 a.pagination-bouton-gauche{
@@ -615,11 +615,7 @@ a.pagination-bouton-droite{
     margin-right: auto;
     margin-left: auto;
   }
-  .barre-navigation a.fonctions-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-    background-color: #F6F6F6;
-    padding: 0px;
-    width: 100%;
-  }
+
   .ensembles-logo-ipad {
     display: flex;
     position: relative;

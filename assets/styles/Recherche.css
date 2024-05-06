@@ -18,73 +18,87 @@ body {
     flex-direction: column; 
   }
   
-  .barre-navigation li {
-      list-style: none;
-      margin-left: 16px;
-      line-height:2;
-  }
-  
   .navigation{
       padding-top:75px;
   }
   
-  .barre-navigation ul li {
-    padding: 10px 20px;
+  .navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .navigation ul li {
+    padding: 10px;
   }
   
-  .barre-navigation strong{
+.navigation strong{
       margin-left:6px;
-  }
+}
   
-  .barre-navigation a.accueil-liens {
-      color: #757575;
+.navigation a.recherche-liens {
+      background-color: #F6F6F6;
+      color: #1B3168;
+      width: 90%;
+      height: 38.64px;
+      border-radius: 3.66px;
       display: flex;
       align-items: center;
       text-decoration:none;
       font-family:'Popins', sans-serif;
-      font-weight:400;
+      font-weight:700;
+      margin-left: 5px;
   }
-  .barre-navigation a.recherche-liens {
-    background-color: #F6F6F6;
-    color: #1B3168;
-    width: 90%;
-    height: 38.64px;
-    padding: 0px 7.32px 0px 7.32px;
-    border-radius: 3.66px;
+
+.navigation a.accueil-liens {
+    color: #757575;
     display: flex;
     align-items: center;
-    text-decoration: none;
-    font-family: 'Popins', sans-serif;
-    font-weight: 700;
-  }
-  .barre-navigation a.fonctions-liens {
-      color: #757575;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
-      font-family:'Popins', sans-serif;
-      font-weight:400;
-  }
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+}
+
+.navigation a.exercices-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.mesexercices-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.soumettre-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a img {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.navigation ul li a:hover {
+  background-color: #F6F6F6;
+  width: 90%;
+  height: 38.64px;
+  border-radius: 3.66px;
+}
   
-  .barre-navigation a.mesexercices-liens {
-      color: #757575;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
-      font-family:'Popins', sans-serif;
-      font-weight:400;
-  }
-  
-  .barre-navigation a.soumettre-liens {
-      color: #757575;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
-      font-family:'Popins', sans-serif;
-      font-weight:400;
-  }
-  
-  .deconnexion .deconnexion-liens{
+.deconnexion .deconnexion-liens{
       color: #757575;
       display: flex;
       align-items: center;
@@ -95,16 +109,12 @@ body {
       height:38px;
       font-family: 'Poppins', sans-serif;
     font-weight: 400;
-  }
+}
   
   .deconnexion{
     position: fixed;
     top : 94vh;
     left: 0.5%;
-  }
-  
-  .barre-navigation a img {
-      margin-right: 10px;
   }
   
   .ensembles-logo  {
@@ -281,11 +291,7 @@ body {
       font-weight: 600;
       margin-top: 40px;
   }
-  .barre-navigation a.fonctions-liens:hover,a.accueil-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-    width: 90%;
-    background-color: #F6F6F6;
-    padding: 0px 7.32px 0px 7.32px;
-  }
+ 
   .carre-blanc table {
       border-collapse: collapse;
       width: 95%;
@@ -328,6 +334,15 @@ body {
       color:#74828F;
       margin-right: 5px;
   }
+
+  .mot_cle {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: #DBDBDB;
+    border:none;
+}
   
   .carre-blanc img{
       margin-right:5px;
@@ -364,14 +379,6 @@ body {
     font-size: 20px;
   }
   
-  .keyword {
-      display: inline-block;
-      padding: 5px 10px;
-      margin: 5px;
-      border-radius: 20px;
-      background-color: #DBDBDB;
-      border:none;
-  }
   .menu_arriere{
     display: flex;
     flex-direction: row;
