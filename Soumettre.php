@@ -497,7 +497,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='exercice'> Fiche exercice(PDF, word)*:
                           <div class='file'>
                             <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="exercice" onChange="getvalue();"/>
-                            <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value=<?= !empty($_SESSION['stockage']['exercice']) === true ? $_SESSION['stockage']['exercice'] : "Sélectionner un fichier à télécharger"?>/>
+                            <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value=<?= !empty($_SESSION['stockage']['exercice']) === true ? $_SESSION['stockage']['exercice'] :  "'Sélectionner un fichier à télécharger'"?>/>
                             <input class='bouton-upload' type="button" onclick="getfile();"/>
                           </div>
                         </label>
@@ -506,7 +506,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='corrige'> Fiche corrigé(PDF, word)*: 
                           <div class='file'>
                               <input type="file" id="hiddenfile2" class="label-upload" style="display:none" name="corrige" onChange="getvalue2();"/>
-                              <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value=<?= !empty($_SESSION['stockage']['corrige']) === true ? $_SESSION['stockage']['corrige'] : "Sélectionner un fichier à télécharger"?>/>
+                              <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value=<?= !empty($_SESSION['stockage']['corrige']) === true ? $_SESSION['stockage']['corrige'] :   "'Sélectionner un fichier à télécharger'"?>/>
                               <input class='bouton-upload' type="button" onclick="getfile2();"/>
                             </div>
                         </label>
