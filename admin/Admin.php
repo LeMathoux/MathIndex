@@ -414,7 +414,16 @@
                     <?php } ?>
                     <?php
                 if (isset($_GET['action_thematiques']) && $_GET['action_thematiques'] === 'delete') {
+                    // verifiaction si la thematique est utilisée sur des exercice
+                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                    $stmt->bindParam(":id", $_GET['id']);
+                    $stmt->execute();
+                    $nb_exercices = $stmt->fetchAll();
+                    $nb_exercices = $nb_exercices[0][0];
+
+                    if($nb_exercices === 0){
                     ?>
+                    
                     <div class="confirmation">
                     <div class="contenu_confirmation">
                         <div class="info_confirmation">
@@ -437,6 +446,30 @@
                     </div>
                     </div>
                     <?php
+                        }
+                        else{
+                    ?>
+                    <div class="confirmation">
+                    <div class="contenu_confirmation">
+                        <div class="info_confirmation">
+                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                        <div>
+                            <h2>Suppression impossible</h2>
+                            <p>La thematique est utilisée sur au moins un exerice.</p>
+                        </div>
+                        </div>
+                        <?php
+                        if (isset($_GET['page_thematiques'])) {
+                        echo '<a href="?onglet=thematiques&page_thematiques='.$_GET['page_thematiques'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                        }
+                        else {
+                        echo '<a href="./Admin.php?onglet=thematiques" class="annuler_btn" style="color: black;">Annuler</a>';
+                        } 
+                        ?>
+                    </div>
+                    </div>
+                    <?php
+                        }
                     }
                     if (isset($_GET['confirmed_thematique']) && $_GET['confirmed_thematique'] == 'true') {
                         $id_thematique = $_GET['id'];
