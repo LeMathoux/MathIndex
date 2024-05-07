@@ -158,13 +158,24 @@
                 ?>
                     <div class="content">
                         <h2>Gestion des exercices</h2>
-                        <p>Rechercher un contributeur par nom, prénom ou email :</p>
+                        <p>Rechercher un exercices par son nom ou sa thématique :</p>
                         <div class="recherche_exo">
                             <form action="Admin.php"  method="get">
                                 <input type='hidden' name='onglet' value='exercices'>
-                                <input type="text" id="recherche" name="recherche">
+                                <input type="text" id="recherche_exo" name="recherche_exo"
+                                <?php
+                                if (isset($_GET["recherche_exo"])) {
+                                    echo 'value="'.$_GET["recherche_exo"].'"';
+                                }
+                                ?>
+                                >
                                 <button type="submit">Rechercher</button>
                             </form>
+                            <?php 
+                                if (isset($_GET["recherche_exo"])) {
+                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=exercices"><p>X</p></a>';
+                                }
+                            ?>
                             <div class="bouton_ajout">
                                 <a href="../Soumettre.php"><p style="color: white;">Ajouter +</p></a>
                             </div> 
@@ -177,16 +188,29 @@
                           <td><p>Actions</p></td>
                       </thead>
                     <?php
-                        $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension, exercise.id AS exercise_id
+                        
+
+                if (isset($_GET["recherche_exo"])) {
+                    $sql_search_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension, exercise.id AS exercise_id
+                                        FROM exercise
+                                        LEFT JOIN thematic ON exercise.thematic_id = thematic.id
+                                        LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
+                                        LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
+                                        WHERE exercise.name LIKE '%" . $_GET["recherche_exo"] . "%'
+                                        OR thematic.name LIKE '%" . $_GET["recherche_exo"] . "%'
+                                        LIMIT " . $exercices_par_page . " OFFSET " . $offset;
+                    $result_all_exercices = $conn->query($sql_search_exercices);
+
+                }
+                else {
+                    $sql_all_exercices = "SELECT exercise.name AS exercise_name, thematic.name AS thematic_name, file_exercice.original_name AS exercice_original_name, file_exercice.extension, file_correction.original_name AS correction_original_name, file_correction.extension AS correction_extension, exercise.id AS exercise_id
                                         FROM exercise
                                         LEFT JOIN thematic ON exercise.thematic_id = thematic.id
                                         LEFT JOIN file AS file_exercice ON exercise.exercice_file_id = file_exercice.id
                                         LEFT JOIN file AS file_correction ON exercise.correction_file_id = file_correction.id
                                         LIMIT $exercices_par_page OFFSET $offset";
-
-                        $result_all_exercices = $conn->query($sql_all_exercices);
-
-                  
+                    $result_all_exercices = $conn->query($sql_all_exercices);
+                }
                     while ($row = $result_all_exercices->fetch_assoc()) {
                       echo "<tr>";
                       echo "<td class='nom'><p>" . $row["exercise_name"] . "</p></td>";
@@ -212,6 +236,7 @@
                       echo "</td>";
                      echo "</tr>";
                     }
+                
                   echo "</table>";
                     ?>  
                     <div class="pagination">
@@ -336,7 +361,7 @@
                     </div>
                 </div>
                 <!----------------onglet-05-thematiques------------------------->
-                <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-5">Thématiques</label>
+                <div class="tab" id="tab-thema"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-5">Thématiques</label>
                     <?php
                         $thematiques_par_page = 4;
                         $page_thematiques = isset($_GET['page_thematiques']) ? $_GET['page_thematiques'] : 1;
@@ -368,10 +393,22 @@
                             <h2>Gestion des Thematiques</h2>
                             <p>Rechercher une thematique par son nom :</p>
                             <div class="recherche_origines">
-                                <form action="Admin.php?onglet=thematiques" method="get">
-                                    <input type="text" id="recherche" name="recherche">
-                                    <button type="submit">Rechercher</button>
-                                </form>
+                            <form action="Admin.php"  method="get">
+                                <input type='hidden' name='onglet' value='thematiques'>
+                                <input type="text" id="recherche_thema" name="recherche_thema"
+                                <?php
+                                if (isset($_GET["recherche_thema"])) {
+                                    echo 'value="'.$_GET["recherche_thema"].'"';
+                                }
+                                ?>
+                                >
+                                <button type="submit">Rechercher</button>
+                            </form>
+                            <?php 
+                                if (isset($_GET["recherche_thema"])) {
+                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=thematiques"><p>X</p></a>';
+                                }
+                            ?>
                                 <div class="bouton_ajout">
                                     <a href="Admin.php?onglet=thematiques&add_thematique=true"><p style="color: white;">Ajouter +</p></a>
                                 </div> 
@@ -384,9 +421,18 @@
                                     <td><p>Actions</p></td>
                                 </thead>
                                 <?php
-                                $sql_all_thematiques = "SELECT id, name FROM thematic LIMIT $thematiques_par_page OFFSET $offset";
-                                $result_all_thematiques = $conn->query($sql_all_thematiques);
 
+                                if (isset($_GET["recherche_thema"])) {
+                                    $sql_search_thematiques = "SELECT id, name FROM thematic
+                                                        WHERE name LIKE '%" . $_GET["recherche_thema"] . "%'
+                                                        LIMIT $thematiques_par_page OFFSET $offset";
+                                    $result_all_thematiques = $conn->query($sql_search_thematiques);
+                
+                                }
+                                else {
+                                    $sql_all_thematiques = "SELECT id, name FROM thematic LIMIT $thematiques_par_page OFFSET $offset";
+                                    $result_all_thematiques = $conn->query($sql_all_thematiques);
+                                }
                     
                                 while ($row_thematiques = $result_all_thematiques->fetch_assoc()) {
                                     $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
@@ -511,7 +557,7 @@
                     ?> 
                 </div>
                 <!----------------onglet-06-origines-------------------------->
-                <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label class='label_onglet' for="tab-6">Origines</label>
+                <div class="tab" id="tab-ori"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label class='label_onglet' for="tab-6">Origines</label>
                 <?php
                     $origines_par_page = 4;
                     $page_origines = isset($_GET['page_origines']) ? $_GET['page_origines'] : 1;
@@ -533,7 +579,7 @@
                                 <div>
                                     <label class='label_formu' for='nom_origine'>Nom de l'origine :<input type='text' name='nom_origine' id='nom_origine' value="<?php if(isset($origine)){echo $origine;}?>" /></label>
                                 </div>
-                                <a href='Admin.php?onglet=thematiques'>revenir à la liste</a><input type='submit' />
+                                <a href='Admin.php?onglet=origines'>revenir à la liste</a><input type='submit' />
                             </form>
                         </div>
 
@@ -543,10 +589,22 @@
                         <h2>Gestion des origines</h2>
                         <p>Rechercher une origine par son nom :</p>
                         <div class="recherche_origines">
-                            <form action="Admin.php" method="get">
-                                <input type="text" id="recherche" name="recherche">
+                        <form action="Admin.php"  method="get">
+                                <input type='hidden' name='onglet' value='origines'>
+                                <input type="text" id="recherche_thema" name="recherche_origines"
+                                <?php
+                                if (isset($_GET["recherche_origines"])) {
+                                    echo 'value="'.$_GET["recherche_origines"].'"';
+                                }
+                                ?>
+                                >
                                 <button type="submit">Rechercher</button>
                             </form>
+                            <?php 
+                                if (isset($_GET["recherche_origines"])) {
+                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=origines"><p>X</p></a>';
+                                }
+                            ?>
                             <div class="bouton_ajout">
                                 <a href="Admin.php?onglet=origines&add_origine=true"><p style="color: white;">Ajouter +</p></a>
                             </div> 
@@ -557,13 +615,21 @@
                                 <td><p>Actions</p></td>
                             </thead>
                     <?php
-                        $sql_all_origines = "SELECT id, name
-                                        FROM origin
-                                        LIMIT $origines_par_page OFFSET $offset";
-
-                        $result_all_origines = $conn->query($sql_all_origines);
-
                   
+                        if (isset($_GET["recherche_origines"])) {
+                            $sql_search_origines = "SELECT id, name FROM origin
+                                                WHERE name LIKE '%" . $_GET["recherche_origines"] . "%'
+                                                LIMIT $origines_par_page OFFSET $offset";
+                            $result_all_origines = $conn->query($sql_search_origines);
+        
+                        }
+                        else {
+                            $sql_all_origines = "SELECT id, name
+                            FROM origin
+                            LIMIT $origines_par_page OFFSET $offset";
+                            $result_all_origines = $conn->query($sql_all_origines);
+                        }
+
                     while ($row_origines = $result_all_origines->fetch_assoc()) {
                       echo "<tr>";
                       echo "<td class='nom'><p>" . $row_origines["name"] . "</p></td>";
@@ -582,7 +648,7 @@
                     }
                   echo "</table>";
                     ?>  
-                   <div class="pagination">
+                    <div class="pagination">
                             <?php
                         if ($page_origines > 1) {
                             echo "<a href='Admin.php?onglet=origines&page_origines=".($page_origines - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
