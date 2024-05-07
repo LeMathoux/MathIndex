@@ -198,7 +198,7 @@ footer {
 }
 /* Menu onglet */
 
-#menu-tab  label{
+#menu-tab  .label_onglet{
     font-family: 'trebuchet ms', geneva; 
 	font-size: 11pt;
 	color:white;
@@ -236,12 +236,12 @@ color: green;
     .tab {
       float: left;
     }
-    .tab label {
+    .label_onglet {
       background: #1B3168;
       padding: 10px 40px; 
       border: 1px solid #ccc; 
       margin-left: -1px; 
-        margin-right: 10px;
+      margin-right: 10px;
       position: relative;
       left: 1px; 
       border-radius: 10px 10px 0px 0px;
@@ -250,6 +250,10 @@ color: green;
     .tab [type=radio] {
       display: none;   
     }
+
+  .label_formu{
+    color: black;
+  }
 	
 /*--------------Contenu article onglet--------------*/
     .content {
