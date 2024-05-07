@@ -667,3 +667,9 @@ justify-content: center;
   margin-left: 30px;
   text-align: center;
 }
+#tab-thema p{
+  color: gray;
+}
+#tab-ori p{
+  color: gray;
+}
