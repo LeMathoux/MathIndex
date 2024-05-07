@@ -86,6 +86,33 @@
             $thematique = $thematique[0][0];
         }
 
+        //script d'insertion origine
+        if(isset($_POST['nom_origine']) && !empty($_POST['nom_origine']) && $_GET['add_origine'] === 'true'){
+            var_dump($_POST['nom_origine']);
+            $stmt = $mysqlClient->prepare("INSERT INTO origin(name) VALUES(:name);");
+            $stmt->bindParam(":name", $_POST['nom_origine']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=origines");
+        }
+        //script de modification origine
+        if(isset($_POST['nom_origine']) && !empty($_POST['nom_origine']) && $_GET['add_origine'] === 'modify'){
+            $stmt = $mysqlClient->prepare("UPDATE origin SET name=:name WHERE id=:id");
+            $stmt->bindParam(":name", $_POST['nom_origine']);
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=origines");
+        }
+        //script de recuperation du nom origine a modifier
+        if(isset($_GET['id']) && isset($_GET['add_origine']) && $_GET['add_origine'] === 'modify'){
+            $stmt = $mysqlClient->prepare("SELECT name FROM origin WHERE id=:id");
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+            $origine = $stmt -> fetchAll();
+            $origine = $origine[0][0];
+        }
+
       ?>
     </div>
     
@@ -477,11 +504,9 @@
                         $stmt_supp = $conn->prepare($sql_supp);
                         $stmt_supp->execute();
                         
-                        if (isset($_GET['page_thematiques'])) {
-                            header("Location: Admin.php?onglet=thematiques&page=" . $_GET['page_thematiques']);
-                        } else {
-                            header("Location: Admin.php?onglet=thematiques");
-                        }
+                    
+                        header("Location: Admin.php?onglet=thematiques");
+                        
                     }
                     ?> 
                 </div>
@@ -501,6 +526,19 @@
                     // Calculer le nombre total de pages
                     $total_pages_origines = ceil($total_origines / $origines_par_page);
                 ?>
+                <?php if(isset($_GET['add_origine'])){ ?>
+                        <div class="content">
+                            <h1> Ajouter une origine </h1>
+                            <form action='' method='post'>
+                                <div>
+                                    <label class='label_formu' for='nom_origine'>Nom de l'origine :<input type='text' name='nom_origine' id='nom_origine' value="<?php if(isset($origine)){echo $origine;}?>" /></label>
+                                </div>
+                                <a href='Admin.php?onglet=thematiques'>revenir à la liste</a><input type='submit' />
+                            </form>
+                        </div>
+
+
+                    <?php }else{?>
                     <div class="content">
                         <h2>Gestion des origines</h2>
                         <p>Rechercher une origine par son nom :</p>
@@ -510,7 +548,7 @@
                                 <button type="submit">Rechercher</button>
                             </form>
                             <div class="bouton_ajout">
-                                <a href="../Soumettre.php"><p style="color: white;">Ajouter +</p></a>
+                                <a href="Admin.php?onglet=origines&add_origine=true"><p style="color: white;">Ajouter +</p></a>
                             </div> 
                         </div>
                         <table class="tab_origines">
@@ -531,13 +569,13 @@
                       echo "<td class='nom'><p>" . $row_origines["name"] . "</p></td>";
                       echo "<td class='actions_origines'>";
                       echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href=''>Modifier</a></p>";
+                            <p><a href='Admin.php?onglet=origines&add_origine=modify&id=".$row_origines["id"]."'>Modifier</a></p>";
                       echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_origines'])) {
                         echo "<p><a href='?page_origines=".$_GET['page_origines']."&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
                       }
                       else {
-                        echo "<p><a href='?action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=origines&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
                       }
                       echo "</td>";
                      echo "</tr>";
@@ -570,52 +608,75 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <?php
                 if (isset($_GET['action_origines']) && $_GET['action_origines'] === 'delete') {
-                        ?>
-                            <div class="confirmation">
-                            <div class="contenu_confirmation">
-                                <div class="info_confirmation">
-                                <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
-                                <div>
-                                    <h2>Confirmez la suppression</h2>
-                                    <p>Êtes-vous certain de vouloir supprimer cette origine ?</p>
-                                </div>
-                                </div>
-                                <?php
-                                if (isset($_GET['page_origines'])) {
-                                echo '<a href="?page_origines='.$_GET['page_origines'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                                echo '<a href="?page_origines='.$_GET['page_origines'].'&confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                                }
-                                else {
-                                echo '<a href="./Admin.php" class="annuler_btn" style="color: black;">Annuler</a>';
-                                echo '<a href="?confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                                } 
-                                ?>
-                            </div>
-                            </div>
+                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE origin_id=:id;");
+                    $stmt->bindParam(":id", $_GET['id']);
+                    $stmt->execute();
+                    $nb_exercices = $stmt->fetchAll();
+                    $nb_exercices = $nb_exercices[0][0];
+
+                    if($nb_exercices === "0"){
+
+                    ?>
+                    <div class="confirmation">
+                    <div class="contenu_confirmation">
+                        <div class="info_confirmation">
+                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                        <div>
+                            <h2>Confirmez la suppression</h2>
+                            <p>Êtes-vous certain de vouloir supprimer cette origine ?</p>
+                        </div>
+                        </div>
                         <?php
+                        if (isset($_GET['page_origines'])) {
+                        echo '<a href="?page_origines='.$_GET['page_origines'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?page_origines='.$_GET['page_origines'].'&confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
                         }
+                        else {
+                        echo '<a href="./Admin.php" class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                        } 
+                        ?>
+                        </div>
+                        </div>
+                        <?php
+                            }
+                            else{
+                        ?>
+                                <div class="confirmation">
+                                <div class="contenu_confirmation">
+                                    <div class="info_confirmation">
+                                    <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                                    <div>
+                                        <h2>Suppression impossible</h2>
+                                        <p>L'origine est utilisée sur au moins un exerice.</p>
+                                    </div>
+                                    </div>
+                                    <?php
+                                    if (isset($_GET['page_origines'])) {
+                                    echo '<a href="?onglet=origines&page_origines='.$_GET['page_origines'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                                    }
+                                    else {
+                                    echo '<a href="./Admin.php?onglet=origines" class="annuler_btn" style="color: black;">Annuler</a>';
+                                    } 
+                                    ?>
+                                </div>
+                                </div>
+                    <?php
+                        }
+                    }
                         if (isset($_GET['confirmed_origines']) && $_GET['confirmed_origines'] == 'true') {
                             $id_origines = $_GET['id'];
-                          
-                                $sql_supp = "DELETE FROM origin WHERE id = $id_origines";
-                                $stmt_supp = $conn->prepare($sql_supp);
-                           
-                                $stmt_supp->execute();
-                          
-                                if (isset($_GET['page_origines'])) {
-                                  header("Location: ./Admin.php?page=" . $_GET['page_origines']);
-                              } else {
-                                  header("Location: ./Admin.php");
-                              }
+                            $sql_supp = "DELETE FROM origin WHERE id = $id_origines";
+                            $stmt_supp = $conn->prepare($sql_supp);
+                            $stmt_supp->execute();
+                            
+                            header("Location: Admin.php?onglet=origines");
+                              
                         }
                         ?>
-                    
-
-
-
-
                 </div>
                 </div>
                 </div>
