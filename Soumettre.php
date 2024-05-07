@@ -26,16 +26,27 @@ session_start();
 </script>
 <?php
 include_once("requetes/configdb.php");
-
-if (!isset($_SESSION['stockage'])){
+if (!isset($_GET['info'])){
+  var_dump('enter');
   $_SESSION['stockage'] = array();
   $_SESSION['stockage']['mode'] = 'ajout';
 }
-if(isset($_GET['info']) && !isset($_SESSION['stockage'])){
-  $_SESSION['stockage']['mode'] = 'modification';
+else{
+  $_SESSION['stockage'] = [];
+}
+if(isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info']){
+  $_SESSION['stockage'] = [];
+}
+var_dump($_SESSION['stockage']);
 
+if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info'])){
+  var_dump('yes');
+  $_SESSION['stockage'] = [];
+  $_SESSION['stockage']['mode'] = 'modification';
+  $_SESSION['stockage']['numExe'] = $_GET['info'];
+  $id_info = intval($_GET['info']);
   $stmt = $mysqlClient->prepare("SELECT * FROM exercise WHERE id=:id;");
-  $stmt->bindParam(":id", $_GET['info']);
+  $stmt->bindParam(":id", $id_info);
   $stmt->execute();
   $informations = $stmt->fetchAll();
   
@@ -105,15 +116,17 @@ if(isset($_GET['info']) && !isset($_SESSION['stockage'])){
   
   $_SESSION['stockage']['name'] = $informations[0]['name'];
   $_SESSION['stockage']['durée'] = $informations[0]['duration'];
-  $_SESSION['stockage']['chapitre'] = "'".$informations[0]['chapter']."'";
+  $_SESSION['stockage']['chapitre'] = $informations[0]['chapter'];
   $_SESSION['stockage']['information_sup']=$informations[0]['origin_information'];
   $_SESSION['stockage']['thematique']=$thematic_infos[0]['name'];
   $_SESSION['stockage']['origine']=$origin_infos[0]['name'];
-  $_SESSION['stockage']['mots_clés'] = "'".$informations[0]['keywords']."'";
-  $_SESSION['stockage']['Nom_source'] = "'".$origin_infos[0]['name']."'";
+  $_SESSION['stockage']['mots_clés'] = $informations[0]['keywords'];
+  var_dump($_SESSION['stockage']['mots_clés']);
+  $_SESSION['stockage']['Nom_source'] = $origin_infos[0]['name'];
   $_SESSION['stockage']['classe'] = $classroom_infos[0]['name'];
   $_SESSION['stockage']['exercice'] = $exercice_infos[0]['original_name'];
   $_SESSION['stockage']['corrige'] = $correction_infos[0]['original_name'];
+  var_dump($_SESSION['stockage']);
 }
 
 $_POST['suivant1'] = "none";
@@ -408,8 +421,8 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                     <h1>Informations générales</h1>
                     <form method='post' name='informations Generales'>
                       <div class='ligne'>
-                        <label name='name'> Nom de l'exercice*: <input class="inputTexte" type='text' name='name' value=<?php if(isset($_SESSION['stockage']['name'])){echo "'".$_SESSION['stockage']['name']."'";}?>></input></label>
-                        <label name='mots_clés'> Mots clés: <input class="inputTexte" type='text' name='mots_clés' value=<?php if(isset($_SESSION['stockage']['mots_clés'])){echo "'".$_SESSION['stockage']['mots_clés']."'";}?>></input></label>
+                        <label name='name'> Nom de l'exercice*: <input class="inputTexte" type='text' name='name' value="<?php if(isset($_SESSION['stockage']['name'])){echo $_SESSION['stockage']['name'];}?>"></input></label>
+                        <label name='mots_clés'> Mots clés: <input class="inputTexte" type='text' name='mots_clés' value="<?php if(isset($_SESSION['stockage']['mots_clés'])){echo $_SESSION['stockage']['mots_clés'];}?>"></input></label>
                       </div>
                       <div class='ligne'>
                         <label name='classe'> Classe*: 
@@ -453,7 +466,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <label name='durée'> Durée(en heure): <input class="inputTexte" type='text' name='durée' value=<?php if(isset($_SESSION['stockage']['durée'])){echo $_SESSION['stockage']['durée'];}?>></input></label>
                       </div>
                       <div class='ligne'>
-                        <label name='chapitre'> Chapitre du cours* : <input class="inputTexte" type='text' name='chapitre' value=<?php if(isset($_SESSION['stockage']['chapitre'])){echo "'".$_SESSION['stockage']['chapitre']."'";}?>></input></label>
+                        <label name='chapitre'> Chapitre du cours* : <input class="inputTexte" type='text' name='chapitre' value="<?php if(isset($_SESSION['stockage']['chapitre'])){echo $_SESSION['stockage']['chapitre'];}?>"></input></label>
                       </div>
                       <input type='submit' value='Continuer'></input>
                     </form>
@@ -479,7 +492,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         </label>
                       </div>
                       <div class='ligne'>
-                        <label name='Nom_source'> Nom de la source/lien du site*: <input class="inputTexte" type='text' name='Nom_source' value=<?php if(isset($_SESSION['stockage']['Nom_source'])){echo $_SESSION['stockage']['Nom_source'];}?>></input></label>
+                        <label name='Nom_source'> Nom de la source/lien du site*: <input class="inputTexte" type='text' name='Nom_source' value="<?php if(isset($_SESSION['stockage']['Nom_source'])){echo $_SESSION['stockage']['Nom_source'];}?>"></input></label>
                       </div>
                       <div class='ligne'>
                         <label name='information_sup'> Informations complémentaires: <textarea name='information_sup'><?php if(isset($_SESSION['stockage']['information_sup'])){echo $_SESSION['stockage']['information_sup'];}?></textarea></label>
