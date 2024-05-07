@@ -421,7 +421,7 @@
                     $nb_exercices = $stmt->fetchAll();
                     $nb_exercices = $nb_exercices[0][0];
 
-                    if($nb_exercices === 0){
+                    if($nb_exercices === "0"){
                     ?>
                     
                     <div class="confirmation">
