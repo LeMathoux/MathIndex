@@ -58,7 +58,8 @@
         }
 
         //script d'insertion thematique
-        if(isset($_POST['nom_thematique']) && !empty($_GETT['nom_thematique']) && $_GET['add_thematique'] === true){
+        if(isset($_POST['nom_thematique']) && !empty($_POST['nom_thematique']) && $_GET['add_thematique'] === 'true'){
+            var_dump($_POST['nom_thematique']);
             $stmt = $mysqlClient->prepare("INSERT INTO thematic(name) VALUES(:name);");
             $stmt->bindParam(":name", $_POST['nom_thematique']);
             $stmt->execute();
@@ -82,7 +83,7 @@
             $thematique = $stmt -> fetchAll();
             $thematique = $thematique[0][0];
         }
-        
+
       ?>
     </div>
     
@@ -328,7 +329,7 @@
                                 <div>
                                     <label class='label_formu' for='nom_thematique'>Nom de la thematique :<input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
                                 </div>
-                                <a href='admin.php?onglet=thematiques'><button>revenir a la liste</button></a><input type='submit' />
+                                <a href='Admin.php?onglet=thematiques'>revenir à la liste</a><input type='submit' />
                             </form>
                         </div>
 
@@ -343,7 +344,7 @@
                                     <button type="submit">Rechercher</button>
                                 </form>
                                 <div class="bouton_ajout">
-                                    <a href="admin.php?onglet=thematiques&add_thematique=true"><p style="color: white;">Ajouter +</p></a>
+                                    <a href="Admin.php?onglet=thematiques&add_thematique=true"><p style="color: white;">Ajouter +</p></a>
                                 </div> 
                             </div>
                             <table class="tab_exercice">
@@ -370,13 +371,13 @@
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
                                     echo "<td class='actions_exercices'>";
                                     echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p>";
+                                            <p><a href='Admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p>";
                                     echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
                                     if (isset($_GET['page_thematiques'])) {
-                                        echo "<p><a href='?page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
                                     }
                                     else {
-                                        echo "<p><a href='?action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -408,7 +409,46 @@
                             </div>
                         </div>
 
-                    <?php } ?> 
+                    <?php } ?>
+                    <?php
+                if (isset($_GET['action_thematiques']) && $_GET['action_thematiques'] === 'delete') {
+                    ?>
+                    <div class="confirmation">
+                    <div class="contenu_confirmation">
+                        <div class="info_confirmation">
+                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                        <div>
+                            <h2>Confirmez la suppression</h2>
+                            <p>Êtes-vous certain de vouloir supprimer cette thematique ?</p>
+                        </div>
+                        </div>
+                        <?php
+                        if (isset($_GET['page_thematiques'])) {
+                        echo '<a href="?onglet=thematiques&page_thematiques='.$_GET['page_thematiques'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?onglet=thematiques&page_thematiques='.$_GET['page_thematiques'].'&confirmed_thematique=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                        }
+                        else {
+                        echo '<a href="./Admin.php?onglet=thematiques" class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?onglet=thematiques&confirmed_thematique=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                        } 
+                        ?>
+                    </div>
+                    </div>
+                    <?php
+                    }
+                    if (isset($_GET['confirmed_thematique']) && $_GET['confirmed_thematique'] == 'true') {
+                        $id_thematique = $_GET['id'];
+                        $sql_supp = "DELETE FROM thematic WHERE id = $id_thematique";
+                        $stmt_supp = $conn->prepare($sql_supp);
+                        $stmt_supp->execute();
+                        
+                        if (isset($_GET['page_thematiques'])) {
+                            header("Location: Admin.php?onglet=thematiques&page=" . $_GET['page_thematiques']);
+                        } else {
+                            header("Location: Admin.php?onglet=thematiques");
+                        }
+                    }
+                    ?> 
                 </div>
                 <!----------------onglet-06-origines-------------------------->
                 <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label class='label_onglet' for="tab-6">Origines</label>
@@ -513,7 +553,7 @@
                                 echo '<a href="?page_origines='.$_GET['page_origines'].'&confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
                                 }
                                 else {
-                                echo '<a href="./admin.php" class="annuler_btn" style="color: black;">Annuler</a>';
+                                echo '<a href="./Admin.php" class="annuler_btn" style="color: black;">Annuler</a>';
                                 echo '<a href="?confirmed_origines=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
                                 } 
                                 ?>
