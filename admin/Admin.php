@@ -582,10 +582,10 @@
                     }
                   echo "</table>";
                     ?>  
-                    <div class="pagination">
+                   <div class="pagination">
                             <?php
                         if ($page_origines > 1) {
-                            echo "<a href='Admin.php?page=".($page_origines - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                            echo "<a href='Admin.php?onglet=origines&page_origines=".($page_origines - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
                         } else {
                             echo "<span class='pagination-bouton-gauche'>&lt;</span>";
                         }
@@ -594,12 +594,12 @@
                             if ($i == $page_origines) {
                             echo "<span class='page-actuel'>$i</span>";
                             } else {
-                                echo "<a href='Admin.php?page=".$i."' class='pagination-lien'>$i</a>";
+                                echo "<a href='Admin.php?onglet=origines&page_origines=".$i."' class='pagination-lien'>$i</a>";
                             }
                         }
 
                         if ($page_origines < $total_pages_origines) {
-                            echo "<a href='Admin.php?page=".($page_origines + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                            echo "<a href='Admin.php?onglet=origines&page_origines=".($page_origines + 1)."' class='pagination-bouton-droite'>&gt;</a>";
                         } else {
                             echo "<span class='pagination-bouton-droite'>&gt;</span>";
                         }
