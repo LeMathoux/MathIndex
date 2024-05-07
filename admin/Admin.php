@@ -11,6 +11,9 @@
 </head>
 <?php 
     include_once '../requetes/configdb.php';
+    if(!isset($_GET['onglet'])){
+        $_GET['onglet'] = 'contributeurs';
+    }
 ?>
 <body>
   <nav class="barre-navigation">
@@ -66,7 +69,7 @@
                 <div id="menu-tab"><!----------------tableau-01---------------------------------->
                 <div id="page-wrap">
                 <div class="tabs"><!----------------onglet-01-contributeurs-------------------------->
-                <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" /> <label for="tab-1">Contributeurs</label>
+                <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label for="tab-1">Contributeurs</label>
                 <div class="content">
                     
                     <h2>Gestion des contributeurs :</h2>
@@ -81,7 +84,7 @@
                 </div>
                 </div>
                 <!----------------onglet-02-exercices-------------------------->
-                <div class="tab" id="tab-exo"><input id="tab-2" name="tab-group-1" type="radio" /> <label for="tab-2">Exercices</label>
+                <div class="tab" id="tab-exo"><input id="tab-2" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'exercices'){ echo 'checked';} ?>/> <label for="tab-2">Exercices</label>
                 <?php
                     $exercices_par_page = 4;
                     $page_exercices = isset($_GET['page_exercice']) ? $_GET['page_exercice'] : 1;
@@ -100,7 +103,8 @@
                         <h2>Gestion des exercices</h2>
                         <p>Rechercher un contributeur par nom, prénom ou email :</p>
                         <div class="recherche_exo">
-                            <form action="Admin.php" method="get">
+                            <form action="Admin.php"  method="get">
+                                <input type='hidden' name='onglet' value='exercices'>
                                 <input type="text" id="recherche" name="recherche">
                                 <button type="submit">Rechercher</button>
                             </form>
@@ -143,10 +147,10 @@
                             <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
                       echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_exercice'])) {
-                        echo "<p><a href='?page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
                       }
                       else {
-                        echo "<p><a href='?action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
                       }
                       echo "</td>";
                      echo "</tr>";
@@ -156,7 +160,7 @@
                     <div class="pagination">
                             <?php
                         if ($page_exercices > 1) {
-                            echo "<a href='Admin.php?page_exercice=".($page_exercices - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                            echo "<a href='Admin.php?onglet=exercices&page_exercice=".($page_exercices - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
                         } else {
                             echo "<span class='pagination-bouton-gauche'>&lt;</span>";
                         }
@@ -165,12 +169,12 @@
                             if ($i == $page_exercices) {
                             echo "<span class='page-actuel'>$i</span>";
                             } else {
-                                echo "<a href='Admin.php?page_exercice=".$i."' class='pagination-lien'>$i</a>";
+                                echo "<a href='Admin.php?onglet=exercices&page_exercice=".$i."' class='pagination-lien'>$i</a>";
                             }
                         }
 
                         if ($page_exercices < $total_pages_exercices) {
-                            echo "<a href='Admin.php?page_exercice=".($page_exercices + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                            echo "<a href='Admin.php?onglet=exercice&page_exercice=".($page_exercices + 1)."' class='pagination-bouton-droite'>&gt;</a>";
                         } else {
                             echo "<span class='pagination-bouton-droite'>&gt;</span>";
                         }
@@ -193,12 +197,12 @@
                                 </div>
                                 <?php
                                 if (isset($_GET['page_exercice'])) {
-                                echo '<a href="?page_exercice='.$_GET['page_exercice'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                                echo '<a href="?page_exercice='.$_GET['page_exercice'].'&confirmed_exercice=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                                echo '<a href="?onglet='.$_GET['onglet'].'page_exercice='.$_GET['page_exercice'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                                echo '<a href="?onglet='.$_GET['onglet'].'?page_exercice='.$_GET['page_exercice'].'&confirmed_exercice=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
                                 }
                                 else {
-                                echo '<a href="./admin.php" class="annuler_btn" style="color: black;">Annuler</a>';
-                                echo '<a href="?confirmed_exercice=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                                echo '<a href="./admin.php?onglet=exercices" class="annuler_btn" style="color: black;">Annuler</a>';
+                                echo '<a href="?onglet=exercices&confirmed_exercice=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
                                 } 
                                 ?>
                             </div>
@@ -267,7 +271,7 @@
                 </div>
                 </div>
                 <!----------------onglet-04-classes-------------------------->
-                <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" /> <label for="tab-4">Classes</label>
+                <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label for="tab-4">Classes</label>
                     <div class="content">
                             
                         <h2>Gestion des classes :</h2>
@@ -283,11 +287,11 @@
                     </div>
                 </div>
                 <!----------------onglet-05-thematiques------------------------->
-                <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" /> <label for="tab-5">Thématiques</label>
+                <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label for="tab-5">Thématiques</label>
                 <div class="content"><br /> <iframe src="//www.youtube.com/embed/I3W3mRs4ULQ?rel=0" frameborder="0" width="560" height="315" allowfullscreen="allowfullscreen"></iframe></div>
                 </div>
                 <!----------------onglet-06-origines-------------------------->
-                <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" /> <label for="tab-6">Origines</label>
+                <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label for="tab-6">Origines</label>
                 <?php
                     $origines_par_page = 4;
                     $page_origines = isset($_GET['page_origines']) ? $_GET['page_origines'] : 1;
