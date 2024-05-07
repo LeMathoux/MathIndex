@@ -255,6 +255,7 @@ color: green;
     .content {
       position: absolute;
       top: 28px;
+      height: 570px;
       left: 0;
       background: white;
       right: 0;

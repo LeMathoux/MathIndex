@@ -262,14 +262,6 @@
                             }
                           }
                         ?>
-                <!----------------onglet-03-matieres-------------------------->
-                <div class="tab" id="tab-origin"><input id="tab-3" name="tab-group-1" type="radio" /> <label for="tab-3">Matières</label>
-                <div class="content">
-                <p>Exemple, une image, et une video...</p>
-                <br />
-                <p><img src="http://ekladata.com/UM-RXN_kZ3q93_FwWhFA15FP_uc.jpg" alt="" /> <iframe style="margin-left: 30px; box-shadow: 6px 6px 10px grey;" src="" frameborder="0" width="500" height="281"></iframe></p>
-                </div>
-                </div>
                 <!----------------onglet-04-classes-------------------------->
                 <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label for="tab-4">Classes</label>
                     <div class="content">
@@ -288,7 +280,93 @@
                 </div>
                 <!----------------onglet-05-thematiques------------------------->
                 <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label for="tab-5">Thématiques</label>
-                <div class="content"><br /> <iframe src="//www.youtube.com/embed/I3W3mRs4ULQ?rel=0" frameborder="0" width="560" height="315" allowfullscreen="allowfullscreen"></iframe></div>
+                    <?php
+                        $thematiques_par_page = 4;
+                        $page_thematiques = isset($_GET['page_thematiques']) ? $_GET['page_thematiques'] : 1;
+                        $offset = ($page_thematiques - 1) * $thematiques_par_page;
+
+                        // Requête pour obtenir le nombre total d'exercices
+                        $sql_total_thematiques = "SELECT COUNT(*) AS total FROM thematic";
+                        $result_total_thematiques = $conn->query($sql_total_thematiques);
+                        $row_total_thematiques = $result_total_thematiques->fetch_assoc();
+                        $total_thematiques = $row_total_thematiques['total'];
+
+                        // Calculer le nombre total de pages
+                        $total_pages_thematiques = ceil($total_thematiques / $thematiques_par_page);
+                    ?>
+                    <div class="content">
+                        <h2>Gestion des Thematiques</h2>
+                        <p>Rechercher une thematique par son nom :</p>
+                        <div class="recherche_origines">
+                            <form action="Admin.php?onglet=thematiques" method="get">
+                                <input type="text" id="recherche" name="recherche">
+                                <button type="submit">Rechercher</button>
+                            </form>
+                            <div class="bouton_ajout">
+                                <a href="../Soumettre.php"><p style="color: white;">Ajouter +</p></a>
+                            </div> 
+                        </div>
+                        <table class="tab_exercice">
+                            <thead>
+                                <td><p>Nom</p></td>
+                                <td><p>Matiere</p></td>
+                                <td><p>Nombre d'exercices</p></td>
+                                <td><p>Actions</p></td>
+                            </thead>
+                            <?php
+                            $sql_all_thematiques = "SELECT id, name FROM thematic LIMIT $thematiques_par_page OFFSET $offset";
+                            $result_all_thematiques = $conn->query($sql_all_thematiques);
+
+                  
+                            while ($row_thematiques = $result_all_thematiques->fetch_assoc()) {
+                                $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                                $stmt->bindParam(":id", $row_thematiques["id"]);
+                                $stmt->execute();
+                                $nb_exercices = $stmt->fetchAll();
+
+                                echo "<tr>";
+                                echo "<td class='nom'><p>" . $row_thematiques["name"] . "</p></td>";
+                                echo "<td class='nom'><p>Mathematiques</p></td>";
+                                echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                echo "<td class='actions_exercices'>";
+                                echo "<img src='../assets/images/icone_modifier_gris.svg'>
+                                        <p><a href=''>Modifier</a></p>";
+                                echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                if (isset($_GET['page_thematiques'])) {
+                                    echo "<p><a href='?page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                }
+                                else {
+                                    echo "<p><a href='?action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                }
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        echo "</table>";
+                        ?>
+                        <div class="pagination">
+                            <?php
+                                if ($page_thematiques > 1) {
+                                    echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                                } else {
+                                    echo "<span class='pagination-bouton-gauche'>&lt;</span>";
+                                }
+
+                                for ($i=1; $i<=$total_pages_thematiques; $i++) {
+                                    if ($i == $page_thematiques) {
+                                    echo "<span class='page-actuel'>$i</span>";
+                                    } else {
+                                        echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".$i."' class='pagination-lien'>$i</a>";
+                                    }
+                                }
+
+                                if ($page_thematiques < $total_pages_thematiques) {
+                                    echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                                } else {
+                                    echo "<span class='pagination-bouton-droite'>&gt;</span>";
+                                }
+                            ?>
+                        </div> 
+                    </div>
                 </div>
                 <!----------------onglet-06-origines-------------------------->
                 <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label for="tab-6">Origines</label>
