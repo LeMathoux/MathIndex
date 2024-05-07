@@ -56,6 +56,33 @@
         } else {
             echo "<a href='../Connexion.php' class='connexion'><img src='../assets/images/icone_login.svg' alt='login'>Connexion</a>";
         }
+
+        //script d'insertion thematique
+        if(isset($_POST['nom_thematique']) && !empty($_GETT['nom_thematique']) && $_GET['add_thematique'] === true){
+            $stmt = $mysqlClient->prepare("INSERT INTO thematic(name) VALUES(:name);");
+            $stmt->bindParam(":name", $_POST['nom_thematique']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=thematiques");
+        }
+        //script de modification thematique
+        if(isset($_POST['nom_thematique']) && !empty($_POST['nom_thematique']) && $_GET['add_thematique'] === 'modify'){
+            $stmt = $mysqlClient->prepare("UPDATE thematic SET name=:name WHERE id=:id");
+            $stmt->bindParam(":name", $_POST['nom_thematique']);
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=thematiques");
+        }
+        //script de recuperation du nom thematique a modifier
+        if(isset($_GET['id']) && isset($_GET['add_thematique']) && $_GET['add_thematique'] === 'modify'){
+            $stmt = $mysqlClient->prepare("SELECT name FROM thematic WHERE id=:id");
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+            $thematique = $stmt -> fetchAll();
+            $thematique = $thematique[0][0];
+        }
+        
       ?>
     </div>
     
@@ -69,7 +96,7 @@
                 <div id="menu-tab"><!----------------tableau-01---------------------------------->
                 <div id="page-wrap">
                 <div class="tabs"><!----------------onglet-01-contributeurs-------------------------->
-                <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label for="tab-1">Contributeurs</label>
+                <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
                 <div class="content">
                     
                     <h2>Gestion des contributeurs :</h2>
@@ -84,7 +111,7 @@
                 </div>
                 </div>
                 <!----------------onglet-02-exercices-------------------------->
-                <div class="tab" id="tab-exo"><input id="tab-2" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'exercices'){ echo 'checked';} ?>/> <label for="tab-2">Exercices</label>
+                <div class="tab" id="tab-exo"><input id="tab-2" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'exercices'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-2">Exercices</label>
                 <?php
                     $exercices_par_page = 4;
                     $page_exercices = isset($_GET['page_exercice']) ? $_GET['page_exercice'] : 1;
@@ -263,7 +290,7 @@
                           }
                         ?>
                 <!----------------onglet-04-classes-------------------------->
-                <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label for="tab-4">Classes</label>
+                <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <div class="content">
                             
                         <h2>Gestion des classes :</h2>
@@ -279,7 +306,7 @@
                     </div>
                 </div>
                 <!----------------onglet-05-thematiques------------------------->
-                <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label for="tab-5">Thématiques</label>
+                <div class="tab"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-5">Thématiques</label>
                     <?php
                         $thematiques_par_page = 4;
                         $page_thematiques = isset($_GET['page_thematiques']) ? $_GET['page_thematiques'] : 1;
@@ -294,82 +321,97 @@
                         // Calculer le nombre total de pages
                         $total_pages_thematiques = ceil($total_thematiques / $thematiques_par_page);
                     ?>
-                    <div class="content">
-                        <h2>Gestion des Thematiques</h2>
-                        <p>Rechercher une thematique par son nom :</p>
-                        <div class="recherche_origines">
-                            <form action="Admin.php?onglet=thematiques" method="get">
-                                <input type="text" id="recherche" name="recherche">
-                                <button type="submit">Rechercher</button>
+                    <?php if(isset($_GET['add_thematique'])){ ?>
+                        <div class="content">
+                            <h1> Ajouter une thematique </h1>
+                            <form action='' method='post'>
+                                <div>
+                                    <label class='label_formu' for='nom_thematique'>Nom de la thematique :<input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
+                                </div>
+                                <a href='admin.php?onglet=thematiques'><button>revenir a la liste</button></a><input type='submit' />
                             </form>
-                            <div class="bouton_ajout">
-                                <a href="../Soumettre.php"><p style="color: white;">Ajouter +</p></a>
-                            </div> 
                         </div>
-                        <table class="tab_exercice">
-                            <thead>
-                                <td><p>Nom</p></td>
-                                <td><p>Matiere</p></td>
-                                <td><p>Nombre d'exercices</p></td>
-                                <td><p>Actions</p></td>
-                            </thead>
-                            <?php
-                            $sql_all_thematiques = "SELECT id, name FROM thematic LIMIT $thematiques_par_page OFFSET $offset";
-                            $result_all_thematiques = $conn->query($sql_all_thematiques);
 
-                  
-                            while ($row_thematiques = $result_all_thematiques->fetch_assoc()) {
-                                $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
-                                $stmt->bindParam(":id", $row_thematiques["id"]);
-                                $stmt->execute();
-                                $nb_exercices = $stmt->fetchAll();
 
-                                echo "<tr>";
-                                echo "<td class='nom'><p>" . $row_thematiques["name"] . "</p></td>";
-                                echo "<td class='nom'><p>Mathematiques</p></td>";
-                                echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
-                                echo "<td class='actions_exercices'>";
-                                echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                        <p><a href=''>Modifier</a></p>";
-                                echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
-                                if (isset($_GET['page_thematiques'])) {
-                                    echo "<p><a href='?page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
-                                }
-                                else {
-                                    echo "<p><a href='?action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
-                                }
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                        echo "</table>";
-                        ?>
-                        <div class="pagination">
-                            <?php
-                                if ($page_thematiques > 1) {
-                                    echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
-                                } else {
-                                    echo "<span class='pagination-bouton-gauche'>&lt;</span>";
-                                }
+                    <?php }else{?>
+                        <div class="content">
+                            <h2>Gestion des Thematiques</h2>
+                            <p>Rechercher une thematique par son nom :</p>
+                            <div class="recherche_origines">
+                                <form action="Admin.php?onglet=thematiques" method="get">
+                                    <input type="text" id="recherche" name="recherche">
+                                    <button type="submit">Rechercher</button>
+                                </form>
+                                <div class="bouton_ajout">
+                                    <a href="admin.php?onglet=thematiques&add_thematique=true"><p style="color: white;">Ajouter +</p></a>
+                                </div> 
+                            </div>
+                            <table class="tab_exercice">
+                                <thead>
+                                    <td><p>Nom</p></td>
+                                    <td><p>Matiere</p></td>
+                                    <td><p>Nombre d'exercices</p></td>
+                                    <td><p>Actions</p></td>
+                                </thead>
+                                <?php
+                                $sql_all_thematiques = "SELECT id, name FROM thematic LIMIT $thematiques_par_page OFFSET $offset";
+                                $result_all_thematiques = $conn->query($sql_all_thematiques);
 
-                                for ($i=1; $i<=$total_pages_thematiques; $i++) {
-                                    if ($i == $page_thematiques) {
-                                    echo "<span class='page-actuel'>$i</span>";
-                                    } else {
-                                        echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".$i."' class='pagination-lien'>$i</a>";
+                    
+                                while ($row_thematiques = $result_all_thematiques->fetch_assoc()) {
+                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                                    $stmt->bindParam(":id", $row_thematiques["id"]);
+                                    $stmt->execute();
+                                    $nb_exercices = $stmt->fetchAll();
+
+                                    echo "<tr>";
+                                    echo "<td class='nom'><p>" . $row_thematiques["name"] . "</p></td>";
+                                    echo "<td class='nom'><p>Mathematiques</p></td>";
+                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='actions_exercices'>";
+                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p>";
+                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    if (isset($_GET['page_thematiques'])) {
+                                        echo "<p><a href='?page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
                                     }
+                                    else {
+                                        echo "<p><a href='?action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                    }
+                                    echo "</td>";
+                                    echo "</tr>";
                                 }
-
-                                if ($page_thematiques < $total_pages_thematiques) {
-                                    echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques + 1)."' class='pagination-bouton-droite'>&gt;</a>";
-                                } else {
-                                    echo "<span class='pagination-bouton-droite'>&gt;</span>";
-                                }
+                            echo "</table>";
                             ?>
-                        </div> 
-                    </div>
+                            <div class="pagination">
+                                <?php
+                                    if ($page_thematiques > 1) {
+                                        echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                                    } else {
+                                        echo "<span class='pagination-bouton-gauche'>&lt;</span>";
+                                    }
+
+                                    for ($i=1; $i<=$total_pages_thematiques; $i++) {
+                                        if ($i == $page_thematiques) {
+                                        echo "<span class='page-actuel'>$i</span>";
+                                        } else {
+                                            echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".$i."' class='pagination-lien'>$i</a>";
+                                        }
+                                    }
+
+                                    if ($page_thematiques < $total_pages_thematiques) {
+                                        echo "<a href='Admin.php?onglet=thematiques&page_thematiques=".($page_thematiques + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                                    } else {
+                                        echo "<span class='pagination-bouton-droite'>&gt;</span>";
+                                    }
+                                ?>
+                            </div>
+                        </div>
+
+                    <?php } ?> 
                 </div>
                 <!----------------onglet-06-origines-------------------------->
-                <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label for="tab-6">Origines</label>
+                <div class="tab"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label class='label_onglet' for="tab-6">Origines</label>
                 <?php
                     $origines_par_page = 4;
                     $page_origines = isset($_GET['page_origines']) ? $_GET['page_origines'] : 1;
