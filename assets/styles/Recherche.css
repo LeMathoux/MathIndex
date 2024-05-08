@@ -17,7 +17,14 @@ body {
   display: flex;
   flex-direction: column; 
 }
-
+.carre-blanc .mot_cle {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: #DBDBDB;
+  border:none;
+}
 .barre-navigation li {
     list-style: none;
     margin-left: 16px;
@@ -290,46 +297,49 @@ header {
   padding: 0px 7.32px 0px 7.32px;
 }
 .carre-blanc table {
-    border-collapse: collapse;
-    width: 95%;
-    height: 44px;
-    border-radius: 8px; /* Arrondir les bords du tableau */
-    overflow: hidden; /* Pour cacher les coins arrondis débordants */
-    border: 1px solid #E7E7E7; /* Bordure du tableau */
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 25px;
-    margin-bottom: 250px;
+  width: 95%;
+  height: auto;
+  border-collapse: collapse;
+  border-radius: 8px; /* Coins arrondis pour tout le tableau */
+  overflow: hidden; /* Empêche le contenu du tableau de déborder des coins arrondis */
+  color: #464646;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 250px;
 }
 
 .carre-blanc th, td {
-    padding: 8px;
-    border-bottom: 1px solid #E7E7E7; 
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
+  height: 50px;
+  border-top: 1px solid #DBDBDB;
+  border-bottom: 1px solid #DBDBDB;
+  padding: 8px;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
 }
+
 .carre-blanc th {
-    background-color: #F0F0F0;
-    color: #464646;
-    text-align: left;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 14px
+  background-color: #E7E7E7;
 }
 
-.carre-blanc td:nth-child(1) {
-    color: #74828F;
+.carre-blanc td:first-child {
+  border-left: 1px solid #DBDBDB;
 }
 
-.carre-blanc td:nth-child(2) {
-    color: #74828F;
+.carre-blanc td:last-child {
+  border-right: 1px solid #DBDBDB;
+}
+
+.carre-blanc td img{
+    margin-right:5px;
+    position: relative;
+    top: 5px;
 }
 
 .carre-blanc td a{
-    text-decoration:none;
-    color:#74828F;
-    margin-right: 5px;
+  text-decoration:none;
+  color:#74828F;
+  margin-right: 5px;
 }
 
 .carre-blanc img{
