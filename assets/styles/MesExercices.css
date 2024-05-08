@@ -82,20 +82,27 @@ body {
     font-weight:400;
   }
   
-  .deconnexion .deconnexion-liens{
-    color: #757575;
-    display: flex;
-      align-items: center;
-      text-decoration:none;
-      font-size:14px;
-      background-color:#F6F6F6;
-      width:253px;
-      height:38px;
-    }
-  
-  .deconnexion{
-    margin-top: 265%;
-  }
+.deconnexion .deconnexion-liens{
+  color: #757575;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  text-decoration:none;
+  font-size:14px;
+  background-color:#F6F6F6;
+  width:253px;
+  height:38px;
+  left: 20px;
+  bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.deconnexion{
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
   
   .barre-navigation a img {
       margin-right: 10px;
