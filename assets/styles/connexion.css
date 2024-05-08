@@ -87,10 +87,11 @@ body {
 .ensembles-logo-titre .titre{
     color: #1B3168;
     font-size: 26px;
+    font-weight: 600;
 }
 
 .ensembles-logo-titre .sous-titre {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
     color: #5D7285;
 }
@@ -142,7 +143,7 @@ header {
   display: none;
 }
 .contenu h1{
-    margin-left: 19%;
+    margin-left: 4%;
     color: #1B3168;
     font-size:28px;
 }

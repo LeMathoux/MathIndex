@@ -108,7 +108,7 @@ body {
     font-family:'Popins', sans-serif;
     font-weight:400;
     left : 20px;
-  bottom: 20px ;
+    bottom: 20px ;
 }
 
 .deconnexion{
@@ -225,7 +225,7 @@ a.connexion img{
 }
 
 .contenu h1{
-    margin-left: 3%;
+    margin-left: 4%;
     color: #1B3168;
     font-size: 28px;
     font-family: 'Epilogue', sans-serif;
