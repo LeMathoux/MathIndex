@@ -11,7 +11,6 @@
 </head>
 <?php 
     session_start();
-    var_dump($_SESSION['account']);
     include_once '../requetes/configdb.php';
     if(!isset($_GET['onglet'])){
         $_GET['onglet'] = 'contributeurs';
@@ -26,6 +25,7 @@
           <span class="sous-titre">Lycée Saint-Vincent -Senlis</span>
         </div>
     </div>
+    <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
     <div class="navigation">
         <li><a href="../Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home.svg"><strong>Accueil</strong></a></li>
         <li><a href="../Recherche.php" class="recherche-liens"><img src="../assets/images/icone_search_gris.svg">Recherche</a></li>
@@ -42,8 +42,28 @@
           <?php endif; ?>
         </div>
     </div>
+    <div class="nav_ipad">
+      <ul>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home.svg"></a></li>
+        <li><a href="Recherche.php" class="recherche-liens"><img src="../assets/images/icone_search_gris.svg"></a></li>
+        <li><a href="Exercices.php" class="exercices-liens"><img src="../assets/images/icone_fonctions_gris.svg"></a></li>
+      </ul>
+
+      <?php if(isset($_SESSION["account"])): ?>
+        <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
+          <ul>
+            <li><a href="MesExercices.php" class="mesexercices-liens"><img src="../assets/images/icone_liste_gris.svg"></a></li>
+            <li><a href="Soumettre.php" class="soumettre-liens"><img src="../assets/images/icone_soumettre_gris.svg"></a></li>
+            <div class="deconnexion">
+              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg"></a></li>
+            </div>
+          </ul>
+        <?php endif; ?>
+      <?php endif; ?>
+    </div>
   </nav>
   <header>
+  <button onclick="AfficheMenu()" class='btn_menu_tel'><img src="../assets/images/Hamburger_icon.png"></button>
     <div class="header-droite">
       <?php
           if (session_status() == PHP_SESSION_NONE) {
@@ -217,10 +237,10 @@
                       echo "<td class='thematiques'><p>" . $row["thematic_name"] . "</p></td>";
                       echo "<td class='fichiers_exercices'>";
                       echo "<img src='../assets/images/icone_download.svg'>
-                            <a href='../assets/Exercices/" . $row["exercice_original_name"] . "." . $row["extension"] . "' download>Exercice</a>";
+                            <a href='../assets/Exercices/" . $row["exercice_original_name"] . "' download>Exercice</a>";
                       if ($row["correction_original_name"] && $row["correction_extension"]) {
                         echo "<img src='../assets/images/icone_download.svg'>
-                        <a href='../assets/Corrigé/" . $row["correction_original_name"]. "." . $row["correction_extension"] ."' download>Corrigé</a>";
+                        <a href='../assets/Corriges/" . $row["correction_original_name"]."' download>Corrigé</a>";
                       }
                       echo "</td>";
                       echo "<td class='actions_exercices'>";
