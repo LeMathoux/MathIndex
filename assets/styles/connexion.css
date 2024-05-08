@@ -1,4 +1,4 @@
- body {
+body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -19,52 +19,51 @@
   flex-direction: column;  
 }
 
+.barre-navigation li {
+  list-style: none;
+  margin-left: 16px;
+  line-height:2;
+}
+.barre-navigation a.accueil-liens:hover,a.recherche-liens:hover, a.exercices-liens:hover{
+  width: 90%;
+  background-color: #F6F6F6;
+  padding: 0px 7.32px 0px 7.32px;
+}
 .navigation{
     padding-top:75px;
 }
 
-.navigation ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.barre-navigation ul li {
+  padding: 10px 20px;
 }
 
-.navigation ul li {
-  padding: 10px;
+.barre-navigation strong{
+    margin-left:6px;
 }
 
-.navigation a.recherche-liens {
+.barre-navigation a.accueil-liens  {
     color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:700;
 }
 
-.navigation a.accueil-liens {
-  color: #757575;
-  display: flex;
-  align-items: center;
-  text-decoration:none;
-  font-family:'Popins', sans-serif;
-  font-weight:400;
+.barre-navigation a.recherche-liens  {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
 }
 
-.navigation a.exercices-liens {
-color: #757575;
-display: flex;
-align-items: center;
-text-decoration:none;
-font-family:'Popins', sans-serif;
-font-weight:400;
+.barre-navigation a.exercices-liens  {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
 }
 
-.navigation ul li a:hover {
-  background-color: #F6F6F6;
-  width: 90%;
-  height: 38.64px;
-  border-radius: 3.66px;
+.barre-navigation a img {
+    margin-right: 10px;
 }
 
 .ensembles-logo  {
@@ -437,30 +436,30 @@ height:38px;
 font-family:'Popins', sans-serif;
 font-weight:400;
 }
-
 .barre-navigation a img{
 margin-right: auto;
 margin-left: auto;
 }
-
+.barre-navigation a.exercices-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
+background-color: #F6F6F6;
+padding: 0px;
+width: 100%;
+}
 .ensembles-logo-ipad {
 display: flex;
 position: relative;
 margin-left: auto;
 margin-right: auto;
 }
-
 .ensembles-logo  {
 display: none;
 }
-
 .carre-blanc h2{
 padding-left: 28px;
 line-height: 2;
 font-family: 'Epilogue', sans-serif;
 font-weight: 300;
 }
-
 .carre-blanc ol {
 margin-left: 30px;
 font-size: 12px;
