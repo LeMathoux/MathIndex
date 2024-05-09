@@ -148,7 +148,30 @@
                 <div class="tabs"><!----------------onglet-01-contributeurs-------------------------->
                 <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
                 <div class="content">
+
+                    <h2>Gestion des contributeurs :</h2>
+                    <p>Rechercher un contributeurs par nom, prénom ou email :</p>
+                    <div class="recherche_exo">
+                        <form action="Admin.php"  method="Get">
+                            <input type='hidden' name='onglet' value=''>
+                            <input type="text" id="recherche_contrib" name="recherche_contrib">
+                            <button type="submit">Rechercher</button>
+                        </form>
+                                
+                        <div class="bouton_ajout">
+                            <a href=""><p style="color: white;">Ajouter +</p></a>
+                        </div> 
+                    </div>
                     
+                    <table class="tab_exercice">
+                        <thead>
+                            <td><p>Nom</p></td>
+                            <td><p>Prénom</p></td>
+                            <td><p>Rôle</p></td>
+                            <td><p>Email</p></td>
+                            <td><p>Actions</p></td>
+                        </thead>
+                    </table>
                     
                 </div>
                 </div>
