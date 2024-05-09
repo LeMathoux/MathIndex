@@ -168,15 +168,6 @@ header {
   transform: translateY(-50%);
 }
 
-.header-droite a {
-  text-decoration: none;
-  color: #333;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-}
 
 .header-droite img {
  margin-right: 5px;
