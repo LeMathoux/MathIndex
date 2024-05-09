@@ -273,7 +273,7 @@ color: green;
 
 .tabs {
       position: relative;   
-      min-height: 500px; /* This part sucks */
+      min-height: 500px; 
       clear: both;
       margin: 25px 0px;
     }
