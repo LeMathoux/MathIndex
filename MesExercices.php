@@ -76,7 +76,7 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil</title>
+  <title>Mes exercices</title>
   <link rel="stylesheet" href="assets/styles/MesExercices.css" />
 </head>
 <body>
