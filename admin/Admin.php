@@ -149,15 +149,7 @@
                 <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
                 <div class="content">
                     
-                    <h2>Gestion des contributeurs :</h2>
                     
-                    <p>Rechercher un contributeur par nom, prénom :</p>
-                    
-                    <form action="" method="">
-                        <input type="text" id="recherche" name="recherche" placeholder="Rechercher :">
-                        <button class="button">Rechercher</button>
-                        <button class="button2">Ajouter +</button>
-                    </form>
                 </div>
                 </div>
                 <!----------------onglet-02-exercices-------------------------->
@@ -364,7 +356,7 @@
                             }
                           }
                         ?>
-                <!----------------onglet-04-classes-------------------------->
+                <!----------------onglet-03-classes-------------------------->
                 <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <div class="content">
                             
@@ -376,11 +368,10 @@
                             <button class="button2">Ajouter +</button>
                         </form>
                         
-                        <p>Une Gestion..!</p>
-                        <br /> <iframe src="/" frameborder="0" width="420" height="315" allowfullscreen="allowfullscreen"></iframe>
+                       
                     </div>
                 </div>
-                <!----------------onglet-05-thematiques------------------------->
+                <!----------------onglet-04-thematiques------------------------->
                 <div class="tab" id="tab-thema"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-5">Thématiques</label>
                     <?php
                         $thematiques_par_page = 4;
@@ -576,7 +567,7 @@
                     }
                     ?> 
                 </div>
-                <!----------------onglet-06-origines-------------------------->
+                <!----------------onglet-05-origines-------------------------->
                 <div class="tab" id="tab-ori"><input id="tab-6" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'origines'){ echo 'checked';} ?> /> <label class='label_onglet' for="tab-6">Origines</label>
                 <?php
                     $origines_par_page = 4;
