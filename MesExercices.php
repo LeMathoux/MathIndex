@@ -78,9 +78,10 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes exercices</title>
   <link rel="stylesheet" href="assets/styles/MesExercices.css" />
+  <script src="requetes/menu_tel.js"></script>
 </head>
 <body>
-  <nav class="barre-navigation">
+  <nav class="barre-navigation hidden">
     <div class="ensembles-logo">
         <img alt="logo" src="assets/images/Logo.svg">
         <div class="ensembles-logo-titre ">
@@ -88,6 +89,10 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
           <span class="sous-titre">Lycée Saint-Vincent - Senlis</span>
         </div>
     </div>
+    <div class="ensembles-logo-ipad">
+            <img alt="logo" src="assets/images/Logo.svg">
+        </div>
+    <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
     <div class="navigation">
         <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
         <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
@@ -98,8 +103,23 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
             <li><a href="requetes/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
         </div>
     </div>
+    <div class="nav_ipad">
+      <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"></a></li>
+      <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
+      <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions.svg"></a></li>
+      <?php if(isset($_SESSION["account"])): ?>
+          <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
+              <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
+              <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
+              <div class="deconnexion">
+                  <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
+              </div>
+          <?php endif; ?>
+      <?php endif; ?>
+    </div>
   </nav>
   <header>
+    <button onclick="AfficheMenu()" class='btn_menu_tel'><img src="assets/images/Hamburger_icon.png"></button>
     <div class="header-droite">
       <?php
           $lastname=$_SESSION['account']['last_name'];
@@ -157,14 +177,14 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
                         }
                         echo "</td>";
                         echo "<td class='actions'>";
-                        echo "<img src='assets/images/icone_modifier_gris.svg'>
-                              <p><a href='Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
-                        echo "<img src='assets/images/icone_poubelle_gris.svg'>";
+                        echo "<div class='uneAction'><img src='assets/images/icone_modifier_gris.svg'>
+                              <a href='Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></div>";
+                        echo "<div class='uneAction'><img src='assets/images/icone_poubelle_gris.svg'>";
                         if (isset($_GET['page'])) {
-                          echo "<p><a href='?page=".$_GET['page']."&action=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                          echo "<a href='?page=".$_GET['page']."&action=delete&id=".$row["exercise_id"]."'>Supprimer</a></div>";
                         }
                         else {
-                          echo "<p><a href='?action=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                          echo "<a href='?action=delete&id=".$row["exercise_id"]."'>Supprimer</a></div>";
                         }
                         echo "</td>";
                       echo "</tr>";
