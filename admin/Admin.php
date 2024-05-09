@@ -382,10 +382,30 @@
                 <!----------------onglet-03-classes-------------------------->
                 <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <div class="content">
+
+                        <h2>Gestion des classes :</h2>
+                        <p>Rechercher une classe par son nom :</p>
+                        <div class="recherche_exo">
+                            <form action="Admin.php"  method="Get">
+                                <input type='hidden' name='onglet' value='classes'>
+                                <input type="text" id="recherche_classes" name="recherche_classes">
+                                <button type="submit">Rechercher</button>
+                            </form>
                             
+                            <div class="bouton_ajout">
+                                <a href=""><p>Ajouter +</p></a>
+                            </div> 
+                        </div>
+
+                        <table class="tab_exercice">
+                            <thead>
+                                <td><p>Nom</p></td>
+                                <td><p>Nombre d'exercices par classe</p></td>
+                                <td><p>Actions</p></td>
+                            </thead>
+                        </table>
                         
                         
-                       
                     </div>
                 </div>
                 <!----------------onglet-04-thematiques------------------------->
