@@ -180,7 +180,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `last_name`, `first_name`, `role`, `password`, `profile_photo_file`) VALUES
-(1, 'melisande.onana@orange.fr', 'Mélisande', 'Onana', 'admin', 'motdepasse123', NULL);
+(1, 'mail@gmail.com', 'Mélisande', 'Onana', 'Administrateur', 'motdepasse123', NULL);
 
 --
 -- Index pour les tables déchargées
