@@ -398,6 +398,43 @@ flex-direction: row;
 width: 100%;
 height: 100%;
 }
+.cible{
+  background-color:#E7E7E7;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  height: 100px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.cible a{
+  text-decoration: none;
+  color: #757575;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  margin-left: 10px;
+}
+.cible img{
+  width: 20px;
+  height: 20px;
+  margin-top: 15px;
+}
+.img_logout{
+  margin-left: 25px;
+}
+.img_admin{
+  margin-left: 17px;
+}
+#cible {
+  display: none;
+}
+#bouton:focus + #cible {
+  display: block;
+}
+#cible:active{
+  display: block;
+}
 @media screen and (max-width: 1866px){
 .carre-blanc p{
   font-size: 21px;
