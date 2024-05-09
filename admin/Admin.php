@@ -383,13 +383,7 @@
                 <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <div class="content">
                             
-                        <h2>Gestion des classes :</h2>
-                        <p>Rechercher une classes :</p>
-                        <form action="" method="">
-                            <input type="text" id="recherche" name="recherche" placeholder="Rechercher :">
-                            <button class="button">Rechercher</button>
-                            <button class="button2">Ajouter +</button>
-                        </form>
+                        
                         
                        
                     </div>
