@@ -77,7 +77,7 @@
                         ?>
                         <div class='element'>
                             <input type="submit" value="Connexion">
-                            <a href="mdp.php">Mot de passe oublié ?</a>
+                            <a href="MotDePasseOublie.php">Mot de passe oublié ?</a>
                         </div>
                     </form>
                 </div>
