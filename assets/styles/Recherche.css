@@ -220,7 +220,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 95%;
-  height: auto;
+  height: 650px;
   background-color: #FFFFFF;
   border-radius: 7.36px;
   margin: 5px auto 15px auto;
@@ -306,7 +306,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  margin-bottom: 250px;
+  margin-bottom: 25px;
 }
 
 .carre-blanc th, td {
