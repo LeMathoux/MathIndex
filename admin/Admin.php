@@ -159,7 +159,7 @@
                         </form>
                                 
                         <div class="bouton_ajout">
-                            <a href=""><p style="color: white;">Ajouter +</p></a>
+                            <a href=""><p>Ajouter +</p></a>
                         </div> 
                     </div>
                     
