@@ -45,7 +45,11 @@ body {
     font-family:'Popins', sans-serif;
     font-weight:400;
   }
-  
+  .barre-navigation a.accueil-liens:hover,a.recherche-liens:hover,a.exercices-liens:hover,a.soumettre-liens:hover{
+    width: 90%;
+    background-color: #F6F6F6;
+    padding: 0px 7.32px 0px 7.32px;
+  }
   .barre-navigation a.recherche-liens {
     color: #757575;
     display: flex;
