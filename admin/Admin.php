@@ -151,7 +151,7 @@
                     
                     <h2>Gestion des contributeurs :</h2>
                     
-                    <p>Rechercher un contributeur par nom, prénom :</p>
+                    <p>Rechercher un contributeur par nom, prénom, email :</p>
                     
                     <form action="" method="">
                         <input type="text" id="recherche" name="recherche" placeholder="Rechercher :">
