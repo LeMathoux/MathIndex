@@ -10,14 +10,13 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 297px;
+    width: 15%;
     background-color: #FFFFFF;
     padding-top: 15px;
     box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    display: flex; /* Ajout */
-    flex-direction: column; /* Ajout */
-    align-items: center; /* Ajout */
+    display: flex; 
+    flex-direction: column;  
   }
   
   .barre-navigation li {
@@ -39,45 +38,71 @@ body {
   }
   
   .barre-navigation a.accueil-liens {
-      background-color: #F6F6F6;
-      color: #1B3168;
-      width: 253.38px;
-      height: 38.64px;
-      padding: 0px 7.32px 0px 7.32px;
-      border-radius: 3.66px;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
   }
   
   .barre-navigation a.recherche-liens {
-      color: #757575;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
-  }
-  
-  .barre-navigation a.fonctions-liens {
-      color: #757575;
-      display: flex;
-      align-items: center;
-      text-decoration:none;
-  }
-  
-  .deconnexion .deconnexion-liens{
     color: #757575;
     display: flex;
-      align-items: center;
-      text-decoration:none;
-      font-size:14px;
-      background-color:#F6F6F6;
-      width:253px;
-      height:38px;
-    }
-  
-  .deconnexion{
-    margin-top: 265%;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
   }
+  
+  .barre-navigation a.exercices-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+  }
+  
+  .barre-navigation a.mesexercices-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+  }
+  
+  .barre-navigation a.soumettre-liens {
+    color: #757575;
+    display: flex;
+    align-items: center;
+    text-decoration:none;
+    font-family:'Popins', sans-serif;
+    font-weight:400;
+  }
+  
+.deconnexion .deconnexion-liens{
+  color: #757575;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  text-decoration:none;
+  font-size:14px;
+  background-color:#F6F6F6;
+  width:253px;
+  height:38px;
+  left: 20px;
+  bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.deconnexion{
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
   
   .barre-navigation a img {
       margin-right: 10px;
@@ -89,28 +114,28 @@ body {
     margin-left: 15px;
   }
   
-          .ensembles-logo-titre img{
-              width: 32px;
-              height: 34px;
-          }
-  
-          .ensembles-logo-titre {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              margin-left: 15px;
-          }
-  
-          .ensembles-logo-titre .titre{
-              color: #1B3168;
-              font-size: 26px;
-          }
-  
-          .ensembles-logo-titre .sous-titre {
-              font-size: 17px;
-              font-weight: 500;
-              color: #5D7285;
-          }
+.ensembles-logo-titre img{
+    width: 32px;
+    height: 34px;
+}
+
+.ensembles-logo-titre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.ensembles-logo-titre .titre{
+    color: #1B3168;
+    font-size: 26px;
+}
+
+.ensembles-logo-titre .sous-titre {
+    font-size: 17px;
+    font-weight: 500;
+    color: #5D7285;
+}
   
   header {
     background-color: #FFFFFF;
@@ -147,25 +172,30 @@ body {
   }
   
   .contenu {
-    padding-top: 35px;
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 88vh;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .contenu h1{
-      margin-left: 19%;
+      margin-left: 3%;
       color: #1B3168;
       font-size:28px;
   }
   
-  .carre-blanc {
-      width: 1518px;
-      height: 762px;
-      background-color: #FFFFFF;
-      border-radius: 7.36px;
-      position: absolute;
-      top: 605px;
-      left: 58%;
-      transform: translate(-50%, -50%);
-  }
+.carre-blanc {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 7.36px;
+  margin: 5px auto 15px auto;
+}
   
    p{
       font-size: 18px;
@@ -194,25 +224,49 @@ body {
   .mentionlegales {
     font-size: 20px;
     color: #000000;
-    width: 100%;
+    width: 85%;
     display: flex;
     flex-direction: row;
-    margin-left: 350px;
-    margin-top: 31.3px;
-    margin-bottom: 9px;
+    margin-left: 2%;
+    margin-top: auto;
+    margin-bottom: 15px;
+    font-family:'Poppins', sans-serif;
+    font-weight: 400;
   }
   
   .mentionlegales-text {
     display: inline-block;
-    margin: 0 10px;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
     font-size: 20px;
+  }
+  .menu_arriere{
+    display: flex;
+    flex-direction: row;
+    position: static;
+    height: auto;
+    width: 15%;
+  }
+  .menu_arriere{
+    display: flex;
+    flex-direction: row;
+    position: static;
+    height: auto;
+    width: 15%;
+  }
+  .grand_conteneur{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
   }
   table{
     border: solid 1px #dadada;
     border-radius: 10px;
     border-spacing: 0;
     margin-left: 50px;
-    width: 1240px;
+    width: 92%;
      
   }  
   thead{
@@ -221,15 +275,15 @@ body {
   }
   .nom{
     height: 60px;
-    width: 350px;
+    width: 400px;
     border-top: #dadada 1px solid;
   }
   .thematiques{
-    width: 300px;
+    width: 350px;
     border-top: #dadada 1px solid;
   }
     .fichiers{
-      width: 290px;
+      width: 350px;
       border-top: #dadada 1px solid;
     }
   .fichiers a{
@@ -242,7 +296,7 @@ body {
     margin-left: 10px;
   }
     .actions{
-      width: 300px;
+      width: auto;
       border-top: #dadada 1px solid;
       display: flex;
     }
@@ -260,10 +314,27 @@ body {
   thead p{
     color: black;
   }
+  .header-droite .compte {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  }
+  
+  .header-droite .profil-image {
+    margin-right: 10px;
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
   .barre-navigation a.mesexercices-liens {
     background-color: #F6F6F6;
     color: #1B3168;
-    width: 253.38px;
+    width: 90%;
     height: 38.64px;
     padding: 0px 7.32px 0px 7.32px;
     border-radius: 3.66px;
@@ -281,6 +352,7 @@ body {
 }
 .carre-blanc .pagination {
   margin-top: 20px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
 }

@@ -53,10 +53,10 @@
              $to = 'dauguet.mathis@gmail.com';
 
              // Sujet de l'e-mail
-             $subject = 'MathIndex :'. $result['last_name'] . $result['first_name']. 'demande un changement de mot de passe';
+             $subject = 'MathIndex : '. $result['last_name'] .' '. $result['first_name']. ' demande un changement de mot de passe';
              
              // Contenu de l'e-mail
-             $message = 'Adresse email de la personne : '. $informations['email'] .'</br></br>Après changement, merci de notifier l\'utilisateur de son nouveau mot de passe.';
+             $message = 'Adresse email de la personne : '. $informations['email'] .'. Après changement, merci de notifier l\'utilisateur de son nouveau mot de passe.';
              
              $headers  = array(
                 'From' => 'user@mathindex.com'
