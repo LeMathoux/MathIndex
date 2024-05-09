@@ -276,7 +276,7 @@
                         }
 
                         if ($page_exercices < $total_pages_exercices) {
-                            echo "<a href='Admin.php?onglet=exercice&page_exercice=".($page_exercices + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                            echo "<a href='Admin.php?onglet=exercices&page_exercice=".($page_exercices + 1)."' class='pagination-bouton-droite'>&gt;</a>";
                         } else {
                             echo "<span class='pagination-bouton-droite'>&gt;</span>";
                         }
