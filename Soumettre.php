@@ -27,7 +27,6 @@ session_start();
 <?php
 include_once("requetes/configdb.php");
 if (!isset($_GET['info'])){
-  var_dump('enter');
   $_SESSION['stockage'] = array();
   $_SESSION['stockage']['mode'] = 'ajout';
 }
@@ -37,10 +36,10 @@ else{
 if(isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info']){
   $_SESSION['stockage'] = [];
 }
-var_dump($_SESSION['stockage']);
+;
 
 if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info'])){
-  var_dump('yes');
+  
   $_SESSION['stockage'] = [];
   $_SESSION['stockage']['mode'] = 'modification';
   $_SESSION['stockage']['numExe'] = $_GET['info'];
@@ -121,12 +120,12 @@ if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['s
   $_SESSION['stockage']['thematique']=$thematic_infos[0]['name'];
   $_SESSION['stockage']['origine']=$origin_infos[0]['name'];
   $_SESSION['stockage']['mots_clés'] = $informations[0]['keywords'];
-  var_dump($_SESSION['stockage']['mots_clés']);
+
   $_SESSION['stockage']['Nom_source'] = $origin_infos[0]['name'];
   $_SESSION['stockage']['classe'] = $classroom_infos[0]['name'];
   $_SESSION['stockage']['exercice'] = $exercice_infos[0]['original_name'];
   $_SESSION['stockage']['corrige'] = $correction_infos[0]['original_name'];
-  var_dump($_SESSION['stockage']);
+
 }
 
 $_POST['suivant1'] = "none";
@@ -141,17 +140,17 @@ if(!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficul
   $_SESSION['stockage']['difficulte'] = $_POST['difficulte'];
   $_SESSION['stockage']['thematique'] =$_POST['thematique'];
   $_SESSION['stockage']['chapitre'] = $_POST['chapitre'];
-  var_dump($_SESSION['stockage']);
+
 }
 
 if(!empty($_POST['origine']) && !empty($_POST['Nom_source']) && !empty($_POST['information_sup'])){
-  var_dump('yes');
+
   $_POST['suivant2'] = "true";
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['origine']=$_POST['origine'];
   $_SESSION['stockage']['Nom_source']=$_POST['Nom_source'];
   $_SESSION['stockage']['information_sup']=$_POST['information_sup'];
-  var_dump($_SESSION['stockage']);
+
 }
 
 if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['NewNameExercice']) && !empty($_POST['NewNameCorrige'])){
@@ -159,7 +158,7 @@ if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['New
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['exercice']=$_POST['exercice'];
   $_SESSION['stockage']['corrige']=$_POST['corrige'];
-  var_dump($_SESSION['stockage']);
+
 }
 
 
@@ -241,7 +240,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   $stmt->bindParam(":name2", $_SESSION['stockage']['origine']);
   $stmt->execute();
   $id_origine = $stmt->fetchAll();
-  var_dump($id_origine);
+
   
   $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
   $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
@@ -310,7 +309,6 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   }
   if($_SESSION['stockage']['mode'] === 'modification'){
 
-    var_dump($_SESSION['stockage']);
 
     $id_classe = intval($id_classe[0][0]);
     $id_origine = intval($id_origine[0][0]);
