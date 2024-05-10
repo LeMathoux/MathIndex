@@ -435,10 +435,10 @@
                                 <div class="ranger">
                                     <label for="thematique">Choisir la matière :</label>
                                     <select name="thematique" id="thematique">
-                                        <option value="volvo">Suites</option>
-                                        <option value="saab">Primitives</option>
-                                        <option value="opel">Continuité</option>
-                                        <option value="audi">Géométrie</option>
+                                        <option value="Suites">Suites</option>
+                                        <option value="Primitives">Primitives</option>
+                                        <option value="Continuite">Continuité</option>
+                                        <option value="Geométrie">Géométrie</option>
                                     </select>
                                 </div>
                             </form>
