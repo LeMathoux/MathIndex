@@ -1126,7 +1126,7 @@ form{
   border-radius: 0px 10px 10px 10px;
   overflow: hidden;
   margin-bottom: -20px;
-  height: 100vh;
+  height: 120vh;
 }
 .label1 {
   background: #1B3168;
@@ -1151,5 +1151,11 @@ textarea{
   margin-top: 10px;
   width: 80%;
   border-radius: 8px;
+}
+.tabs {
+  position: relative;   
+  height: 120vh; 
+  clear: both;
+  margin: 25px 0px;
 }
 }
