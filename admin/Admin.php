@@ -79,6 +79,33 @@
             echo "<a href='../Connexion.php' class='connexion'><img src='../assets/images/icone_login.svg' alt='login'>Connexion</a>";
         }
 
+        //script d'insertion contributeurs
+        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && $_GET['add_contributeur'] === 'true'){
+            var_dump($_POST['nom_contributeur']);
+            $stmt = $mysqlClient->prepare("INSERT INTO user(name) VALUES(:name);");
+            $stmt->bindParam(":name", $_POST['nom_contributeur']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=contributeurs");
+        }
+        //script de modification contributeur
+        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && $_GET['add_contributeur'] === 'modify'){
+            $stmt = $mysqlClient->prepare("UPDATE user SET name=:name WHERE id=:id");
+            $stmt->bindParam(":name", $_POST['nom_contributeur']);
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=contributeurs");
+        }
+        //script de recuperation du nom contributeur a modifier
+        if(isset($_GET['id']) && isset($_GET['add_contributeur']) && $_GET['add_contributeur'] === 'modify'){
+            $stmt = $mysqlClient->prepare("SELECT name FROM user WHERE id=:id");
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+            $contributeur = $stmt -> fetchAll();
+            $contributeur = $contributeur[0][0];
+        }
+
         //script d'insertion thematique
         if(isset($_POST['nom_thematique']) && !empty($_POST['nom_thematique']) && $_GET['add_thematique'] === 'true'){
             var_dump($_POST['nom_thematique']);
