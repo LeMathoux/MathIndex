@@ -1192,3 +1192,57 @@ left: 0%;
 }
 }
 
+/*-------------- Admin - Contenu onglet - Partie Ajouter --------------*/
+
+.content label{
+  font-size: 18px;
+  color: gray;
+}
+
+.content input{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+
+.content select{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+
+.ranger{
+  margin: 30px;
+}
+
+.bouton_envoyer{
+  background-color: #dadada;
+  border: #dadada;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
+
+.bouton_retour{
+  background-color: #dadada;
+  border:  #dadada;
+  width: 250px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
