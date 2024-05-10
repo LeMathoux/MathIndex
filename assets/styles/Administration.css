@@ -261,6 +261,9 @@ font-variant: normal;
 color: green;
 
 }
+.ensembles-logo-ipad  {
+  display: none;
+}
 	
 /*--------------Dimensions tableau--------------*/
 
@@ -276,6 +279,8 @@ color: green;
       min-height: 500px; 
       clear: both;
       margin: 25px 0px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .tab {
       float: left;
@@ -313,7 +318,7 @@ color: green;
       border: 1px solid #ccc; 
       border-radius: 0px 10px 10px 10px;
       overflow: hidden;
-	  overflow-y: auto;
+	    overflow-y: auto;
 	  margin-bottom: -20px;
     }
     .content > * {
@@ -384,7 +389,7 @@ color: green;
     display: flex;
     flex-direction: row;
     height: 100%;
-    width: 297px;
+    width: 15%;
 }
 
 #tab-exo p{
