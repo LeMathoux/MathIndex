@@ -633,13 +633,15 @@
                 ?>
                 <?php if(isset($_GET['add_origine'])){ ?>
                         <div class="content">
-                            <h1> Ajouter une origine </h1>
+                            <h1>Ajouter une origine</h1>
                             <form action='' method='post'>
-                                <div>
-                                    <label class='label_formu' for='nom_origine'>Nom de l'origine :<input type='text' name='nom_origine' id='nom_origine' value="<?php if(isset($origine)){echo $origine;}?>" /></label>
+                                <div class="ranger">
+                                    <label for='nom_thematique'>Nom de l'origine :</label>
+                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" />
                                 </div>
-                                <a href='Admin.php?onglet=origines'>revenir à la liste</a><input type='submit' />
                             </form>
+                            <a href="Admin.php?onglet=origines"><button class="bouton_retour">◄ Retour à la liste</button></a>
+                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
 
