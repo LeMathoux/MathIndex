@@ -37,9 +37,9 @@ CREATE TABLE `classroom` (
 --
 
 INSERT INTO `classroom` (`id`, `name`) VALUES
-(1, 'Seconde'),
-(2, 'Première'),
-(3, 'Terminale');
+(1, 'Seconde 2'),
+(2, 'Première 5 '),
+(3, 'Terminale 1');
 
 -- --------------------------------------------------------
 
