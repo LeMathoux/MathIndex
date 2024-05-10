@@ -106,6 +106,33 @@
             $contributeur = $contributeur[0][0];
         }
 
+        //script d'insertion classe
+        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classe'] === 'true'){
+            var_dump($_POST['nom_classe']);
+            $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
+            $stmt->bindParam(":name", $_POST['nom_classe']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=classes");
+        }
+        //script de modification classe
+        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classe'] === 'modify'){
+            $stmt = $mysqlClient->prepare("UPDATE classroom SET name=:name WHERE id=:id");
+            $stmt->bindParam(":name", $_POST['nom_classe']);
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=classes");
+        }
+        //script de recuperation du nom classe a modifier
+        if(isset($_GET['id']) && isset($_GET['add_classe']) && $_GET['add_classe'] === 'modify'){
+            $stmt = $mysqlClient->prepare("SELECT name FROM classroom WHERE id=:id");
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+            $classe = $stmt -> fetchAll();
+            $classe = $classe[0][0];
+        }
+
         //script d'insertion thematique
         if(isset($_POST['nom_thematique']) && !empty($_POST['nom_thematique']) && $_GET['add_thematique'] === 'true'){
             var_dump($_POST['nom_thematique']);
