@@ -563,32 +563,201 @@
                         ?>
                 <!----------------onglet-03-classes-------------------------->
                 <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
-                    <div class="content">
+                    <?php
+                        $classes_par_page = 4;
+                        $page_classes = isset($_GET['page_classes']) ? $_GET['page_classes'] : 1;
+                        $offset = ($page_classes - 1) * $classes_par_page;
 
-                        <h2>Gestion des classes :</h2>
-                        <p>Rechercher une classe par son nom :</p>
-                        <div class="recherche_exo">
-                            <form action="Admin.php"  method="Get">
-                                <input type='hidden' name='onglet' value='classes'>
-                                <input type="text" id="recherche_classes" name="recherche_classes">
-                                <button type="submit">Rechercher</button>
-                            </form>
+                        // Requête pour obtenir le nombre total de classes
+                        $sql_total_classes = "SELECT COUNT(*) AS total FROM thematic";
+                        $result_total_classes = $conn->query($sql_total_classes);
+                        $row_total_classes = $result_total_classes->fetch_assoc();
+                        $total_classes = $row_total_classes['total'];
+
+                        // Calculer le nombre total de pages
+                        $total_pages_classes = ceil($total_classes / $classes_par_page);
+                    ?>
+                    <?php if(isset($_GET['add_classes'])){ ?>
+                        <div class="content">
+                            <h1> Ajouter une Classe </h1>
                             
-                            <div class="bouton_ajout">
-                                <a href=""><p>Ajouter +</p></a>
-                            </div> 
+                            <form action='' method='post'>
+                                <div class="ranger">
+                                    <label class='' for='nom_classe'>Nom de la classe :</label>
+                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" />
+                                </div>
+                            </form>
+
+                            <a href="Admin.php?onglet=classes"><button class="bouton_retour">◄ Retour à la liste</button></a>
+                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
-                        <table class="tab_exercice">
-                            <thead>
-                                <td><p>Nom</p></td>
-                                <td><p>Nombre d'exercices par classe</p></td>
-                                <td><p>Actions</p></td>
-                            </thead>
-                        </table>
-                        
-                        
+
+                    <?php }else{?>
+                        <div class="content">
+                            <h2>Gestion des classes</h2>
+                            <p>Rechercher une classe par son nom :</p>
+                            <div class="recherche_origines">
+                            <form action="Admin.php"  method="get">
+                                <input type='hidden' name='onglet' value='classes'>
+                                <input type="text" id="recherche_class" name="recherche_class"
+                                <?php
+                                if (isset($_GET["recherche_class"])) {
+                                    echo 'value="'.$_GET["recherche_class"].'"';
+                                }
+                                ?>
+                                >
+                                <button type="submit">Rechercher</button>
+                            </form>
+                            <?php 
+                                if (isset($_GET["recherche_class"])) {
+                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=classes"><p>X</p></a>';
+                                }
+                            ?>
+                                <div class="bouton_ajout">
+                                    <a href="Admin.php?onglet=classes&add_classes=true"><p style="color: white;">Ajouter +</p></a>
+                                </div> 
+                            </div>
+                            <table class="tab_exercice">
+                                <thead>
+                                    <td><p>Nom</p></td>
+                                    <td><p>Nombre d'exercices</p></td>
+                                    <td><p>Actions</p></td>
+                                </thead>
+                                <?php
+
+                                if (isset($_GET["recherche_class"])) {
+                                    $sql_search_classes = "SELECT  name FROM classroom
+                                                        WHERE name LIKE '%" . $_GET["recherche_class"] . "%'
+                                                        LIMIT $classes_par_page OFFSET $offset";
+                                    $result_all_classes = $conn->query($sql_search_classes);
+                
+                                }
+                                else {
+                                    $sql_all_classes = "SELECT name FROM classroom LIMIT $classes_par_page OFFSET $offset";
+                                    $result_all_classes = $conn->query($sql_all_classes);
+                                }
+                    
+                                while ($row_classes = $result_all_classes->fetch_assoc()) {
+                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                                    $stmt->bindParam(":id", $row_classes["id"]);
+                                    $stmt->execute();
+                                    $nb_exercices = $stmt->fetchAll();
+                                
+                                    echo "<tr>";
+                                    echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
+                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='actions_exercices'>";
+                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p>";
+                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    if (isset($_GET['page_classes'])) {
+                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                    }
+                                    else {
+                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                    }
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
+                            echo "</table>";
+                            ?>
+                            <div class="pagination">
+                                <?php
+                                    if ($page_classes > 1) {
+                                        echo "<a href='Admin.php?onglet=classes&page_classes=".($page_classes - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
+                                    } else {
+                                        echo "<span class='pagination-bouton-gauche'>&lt;</span>";
+                                    }
+
+                                    for ($i=1; $i<=$total_pages_classes; $i++) {
+                                        if ($i == $page_classes) {
+                                        echo "<span class='page-actuel'>$i</span>";
+                                        } else {
+                                            echo "<a href='Admin.php?onglet=classes&page_classes=".$i."' class='pagination-lien'>$i</a>";
+                                        }
+                                    }
+
+                                    if ($page_classes < $total_pages_classes) {
+                                        echo "<a href='Admin.php?onglet=classes&page_classes=".($page_classes + 1)."' class='pagination-bouton-droite'>&gt;</a>";
+                                    } else {
+                                        echo "<span class='pagination-bouton-droite'>&gt;</span>";
+                                    }
+                                ?>
+                            </div>
+                        </div>
+
+                    <?php } ?>
+                    <?php
+                if (isset($_GET['action_classes']) && $_GET['action_classes'] === 'delete') {
+                    // verifiaction si la thematique est utilisée sur des exercice
+                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                    $stmt->bindParam(":id", $_GET['id']);
+                    $stmt->execute();
+                    $nb_exercices = $stmt->fetchAll();
+                    $nb_exercices = $nb_exercices[0][0];
+
+                    if($nb_exercices === "0"){
+                    ?>
+                    
+                    <div class="confirmation">
+                    <div class="contenu_confirmation">
+                        <div class="info_confirmation">
+                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                        <div>
+                            <h2>Confirmez la suppression</h2>
+                            <p>Êtes-vous certain de vouloir supprimer cette classe ?</p>
+                        </div>
+                        </div>
+                        <?php
+                        if (isset($_GET['page_classes'])) {
+                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'&confirmed_classe=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                        }
+                        else {
+                        echo '<a href="./Admin.php?onglet=classes" class="annuler_btn" style="color: black;">Annuler</a>';
+                        echo '<a href="?onglet=classes&confirmed_classe=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
+                        } 
+                        ?>
                     </div>
+                    </div>
+                    <?php
+                        }
+                        else{
+                    ?>
+                    <div class="confirmation">
+                    <div class="contenu_confirmation">
+                        <div class="info_confirmation">
+                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
+                        <div>
+                            <h2>Suppression impossible</h2>
+                            <p>La classe est utilisée sur au moins un exerice.</p>
+                        </div>
+                        </div>
+                        <?php
+                        if (isset($_GET['page_classes'])) {
+                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'"class="annuler_btn" style="color: black;">Annuler</a>';
+                        }
+                        else {
+                        echo '<a href="./Admin.php?onglet=classes" class="annuler_btn" style="color: black;">Annuler</a>';
+                        } 
+                        ?>
+                    </div>
+                    </div>
+                    <?php
+                        }
+                    }
+                    if (isset($_GET['confirmed_classe']) && $_GET['confirmed_classe'] == 'true') {
+                        $id_classe = $_GET['id'];
+                        $sql_supp = "DELETE FROM thematic WHERE id = $id_classe";
+                        $stmt_supp = $conn->prepare($sql_supp);
+                        $stmt_supp->execute();
+                        
+                    
+                        header("Location: Admin.php?onglet=classes");
+                        
+                    }
+                    ?> 
                 </div>
                 <!----------------onglet-04-thematiques------------------------->
                 <div class="tab" id="tab-thema"><input id="tab-5" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'thematiques'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-5">Thématiques</label>
