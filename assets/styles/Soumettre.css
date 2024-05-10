@@ -314,7 +314,7 @@ form{
   height: 90%;
 }
 .inputTexte{
-  width: 100%;
+  width: 480px;
   height: 40px;
   margin-top: 10px;
   border-radius: 8px;
@@ -322,7 +322,7 @@ form{
   opacity: 0.7;
 }
 select{
-  width: 100%;
+  width: 480px;
   height: 46px;
   margin-top: 10px;
   border-radius: 8px;
@@ -333,7 +333,7 @@ select{
   width: 25%;
 }
 textarea{
-  width: 100%;
+  width: 500px;
   height: 200px;
   margin-top: 10px;
 }
@@ -361,13 +361,13 @@ margin-right: 10px;
   height: 40px;
   border: 2px solid #ccc;
   margin-top: 10px;
-  width: 80%;
+  width: 400px;
   border-radius: 8px;
 }
 input[type='file']{
   display: flex;
   height: 40px;
-  width: 100%;
+  width: 480px;
   margin: auto auto auto auto;
   border-radius: 8px;
 }
@@ -680,6 +680,21 @@ color: green;
     font-family:'Popins', sans-serif;
     font-weight:400;
 }
+.ligne{
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+.content label{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 20px;
+  padding: 20px;
+  padding-bottom: 0px;
+  margin: auto auto auto 0px;
+  color: #000000;
+}
 }
 @media screen and (max-width: 1034px){
   .nav_ipad{
@@ -933,6 +948,7 @@ color: green;
   .show{
     display: flex;
     width: 100px;
+    z-index: 3;
   }
   .carre-blanc p{
     font-size: 8px;
@@ -1008,7 +1024,7 @@ color: green;
   display: flex;
   flex-direction: column;
   width: 95%;
-  height: 88vh;
+  height: 155vh;
   padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -1036,5 +1052,87 @@ color: green;
 position: fixed;
 top : 94vh;
 left: 0%;
+}
+.ligne{
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+.content label{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 16px;
+  padding: 20px;
+  padding-bottom: 0px;
+  margin: auto auto auto 0px;
+  color: #000000;
+}
+.inputTexte{
+  width: 80%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  opacity: 0.7;
+}
+select{
+  width: 80%;
+  height: 46px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  opacity: 0.7;
+}
+form{
+  width: 100%;
+  height: 140%;
+}
+.content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 28px;
+  left: 0;
+  overflow-y: hidden;
+  background: white;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid #ccc; 
+  border-radius: 0px 10px 10px 10px;
+  overflow: hidden;
+  margin-bottom: -20px;
+  height: 130vh;
+}
+.tabs {
+  position: relative;   
+  height: 130vh; 
+  clear: both;
+  margin: 25px 0px;
+}
+.label1 {
+  background: #1B3168;
+  padding: 10px 25px; 
+  border: 1px solid #ccc; 
+  margin-left: auto; 
+  margin-right: auto;
+  position: relative;
+  font-size: 10px;
+  left: 1px; 
+  border-radius: 10px 10px 0px 0px;
+}
+textarea{
+  width: 80%;
+  height: 200px;
+  margin-top: 10px;
+}
+.file {
+  display: flex;
+  height: 40px;
+  border: 2px solid #ccc;
+  margin-top: 10px;
+  width: 80%;
+  border-radius: 8px;
 }
 }
