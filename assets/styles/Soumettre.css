@@ -695,6 +695,29 @@ color: green;
   margin: auto auto auto 0px;
   color: #000000;
 }
+.tabs {
+  position: relative;   
+  height: 105vh; 
+  clear: both;
+  margin: 25px 0px;
+}
+.content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 28px;
+  left: 0;
+  overflow-y: hidden;
+  background: white;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid #ccc; 
+  border-radius: 0px 10px 10px 10px;
+  overflow: hidden;
+  margin-bottom: -20px;
+  height: 100vh;
+}
 }
 @media screen and (max-width: 1034px){
   .nav_ipad{
@@ -1024,7 +1047,7 @@ color: green;
   display: flex;
   flex-direction: column;
   width: 95%;
-  height: 155vh;
+  height: 105vh;
   padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -1103,13 +1126,7 @@ form{
   border-radius: 0px 10px 10px 10px;
   overflow: hidden;
   margin-bottom: -20px;
-  height: 130vh;
-}
-.tabs {
-  position: relative;   
-  height: 130vh; 
-  clear: both;
-  margin: 25px 0px;
+  height: 100vh;
 }
 .label1 {
   background: #1B3168;
