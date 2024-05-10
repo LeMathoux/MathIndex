@@ -73,6 +73,7 @@
             $lastname=$_SESSION['account']['last_name'];
             $firstname=$_SESSION['account']['first_name'];
             $role=$_SESSION['account']['role'];
+            $iduser=$_SESSION['account']['id'];
             $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
             echo "<div class='compte'>$lastname $firstname <img src='../assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
         } else {
@@ -99,11 +100,10 @@
         }
         //script de recuperation du nom contributeur a modifier
         if(isset($_GET['id']) && isset($_GET['add_contributeur']) && $_GET['add_contributeur'] === 'modify'){
-            $stmt = $mysqlClient->prepare("SELECT name FROM user WHERE id=:id");
+            $stmt = $mysqlClient->prepare("SELECT * FROM user WHERE id=:id");
             $stmt->bindParam(":id", $_GET['id']);
             $stmt->execute();
             $contributeur = $stmt -> fetchAll();
-            $contributeur = $contributeur[0][0];
         }
 
         //script d'insertion classe
@@ -200,7 +200,7 @@
                 <div id="menu-tab"><!----------------tableau-01---------------------------------->
                 <div id="page-wrap">
                 <div class="tabs"><!----------------onglet-01-contributeurs-------------------------->
-                <div class="tab"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
+                <div class="tab" id="tab-contri"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
                     <?php
                         $contributeurs_par_page = 4;
                         $page_contributeurs = isset($_GET['page_contributeurs']) ? $_GET['page_contributeurs'] : 1;
@@ -222,17 +222,21 @@
                                 <form action='' method='post'>
                                     <div class="ranger">
                                         <label class='' for='nom_contributeurs'>Nom du contributeurs :</label>
-                                        <input type='text' name='nom_contributeurs' id='nom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs;}?>" />
+                                        <input type='text' name='nom_contributeurs' id='nom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" />
+                                    </div><div class="ranger">    
+                                        <label class='' for='prenom_contributeurs'>Prénom du contributeurs :</label>
+                                        <input type='text' name='prenom_contributeurs' id='prenom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" />
+                                    </div><div class="ranger"> 
+                                        <label class='' for='email_contributeurs'>Email du contributeurs :</label>
+                                        <input type='text' name='email_contributeurs' id='email_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" />
                                     </div>
-
-                                    <div class="ranger">
-                                        <label for="contributeurs">Choisir la matière :</label>
-                                        <select name="contributeurs" id="contributeurs">
-                                            <option value="Suites">Suites</option>
-                                            <option value="Primitives">Primitives</option>
-                                            <option value="Continuite">Continuité</option>
-                                            <option value="Geométrie">Géométrie</option>
-                                        </select>
+                                    <div class="ranger"> 
+                                        <label class='' for='role_contributeurs'>Role du contributeurs :</label>
+                                        <input type='text' name='role_contributeurs' id='role_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" />
+                                    </div>
+                                    <div class="ranger"> 
+                                        <label class='' for='mdp_contributeurs'>Mot de passe du contributeurs :</label>
+                                        <input type='text' name='mdp_contributeurs' id='mdp_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" />
                                     </div>
                                 </form>
 
@@ -277,14 +281,16 @@
                                 <?php
 
                                 if (isset($_GET["recherche_contrib"])) {
-                                    $sql_search_contributeurs = "SELECT id, first_name FROM user
-                                                        WHERE name LIKE '%" . $_GET["recherche_contrib"] . "%'
+                                    $sql_search_contributeurs = "SELECT * FROM user
+                                                        WHERE last_name LIKE '%" . $_GET["recherche_contrib"] . "%'
+                                                        OR  first_name LIKE '%" . $_GET["recherche_contrib"] . "%'
+                                                        OR email LIKE '%" . $_GET["recherche_contrib"] . "%'
                                                         LIMIT $contributeurs_par_page OFFSET $offset";
                                     $result_all_contributeurs = $conn->query($sql_search_contributeurs);
                 
                                 }
                                 else {
-                                    $sql_all_contributeurs = "SELECT id, first_name FROM user LIMIT $contributeurs_par_page OFFSET $offset";
+                                    $sql_all_contributeurs = "SELECT * FROM user LIMIT $contributeurs_par_page OFFSET $offset";
                                     $result_all_contributeurs = $conn->query($sql_all_contributeurs);
                                 }
                     
@@ -292,12 +298,12 @@
                                     $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
                                     $stmt->bindParam(":id", $row_contributeurs["id"]);
                                     $stmt->execute();
-                                    $nb_exercices = $stmt->fetchAll();
 
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["first_name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["last_name"] . "</p></td>";
-                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='nom'><p>" . $row_contributeurs["role"]. "</p></td>";
+                                    echo "<td class='nom'><p>" . $row_contributeurs["email"]. "</p></td>";
                                     echo "<td class='actions_exercices'>";
                                     echo "<img src='../assets/images/icone_modifier_gris.svg'>
                                             <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p>";
@@ -342,13 +348,13 @@
                     <?php
                 if (isset($_GET['action_contributeurs']) && $_GET['action_contributeurs'] === 'delete') {
                     // verifiaction si la thematique est utilisée sur des exercice
-                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE created_by_id=:id;");
                     $stmt->bindParam(":id", $_GET['id']);
                     $stmt->execute();
                     $nb_exercices = $stmt->fetchAll();
                     $nb_exercices = $nb_exercices[0][0];
 
-                    if($nb_exercices === "0"){
+                    if($nb_exercices === "0" && $_GET['id'] != $iduser){
                     ?>
                     
                     <div class="confirmation">
@@ -616,14 +622,14 @@
                           }
                         ?>
                 <!----------------onglet-03-classes-------------------------->
-                <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
+                <div class="tab" id="tab-classe"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <?php
                         $classes_par_page = 4;
                         $page_classes = isset($_GET['page_classes']) ? $_GET['page_classes'] : 1;
                         $offset = ($page_classes - 1) * $classes_par_page;
 
                         // Requête pour obtenir le nombre total de classes
-                        $sql_total_classes = "SELECT COUNT(*) AS total FROM thematic";
+                        $sql_total_classes = "SELECT COUNT(*) AS total FROM classroom";
                         $result_total_classes = $conn->query($sql_total_classes);
                         $row_total_classes = $result_total_classes->fetch_assoc();
                         $total_classes = $row_total_classes['total'];
@@ -672,7 +678,7 @@
                                     <a href="Admin.php?onglet=classes&add_classes=true"><p style="color: white;">Ajouter +</p></a>
                                 </div> 
                             </div>
-                            <table class="tab_exercice">
+                            <table class="tab_classe">
                                 <thead>
                                     <td><p>Nom</p></td>
                                     <td><p>Nombre d'exercices</p></td>
@@ -688,19 +694,20 @@
                 
                                 }
                                 else {
-                                    $sql_all_classes = "SELECT name FROM classroom LIMIT $classes_par_page OFFSET $offset";
+                                    $sql_all_classes = "SELECT id, name FROM classroom LIMIT $classes_par_page OFFSET $offset";
                                     $result_all_classes = $conn->query($sql_all_classes);
+
                                 }
                     
                                 while ($row_classes = $result_all_classes->fetch_assoc()) {
-                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE classroom_id=:id;");
                                     $stmt->bindParam(":id", $row_classes["id"]);
                                     $stmt->execute();
-                                    $nb_exercices = $stmt->fetchAll();
+                                    $nb_exercices = $stmt->fetchColumn();
                                 
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
-                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='nom'><p>" . $nb_exercices. "</p></td>";
                                     echo "<td class='actions_exercices'>";
                                     echo "<img src='../assets/images/icone_modifier_gris.svg'>
                                             <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p>";
@@ -803,7 +810,7 @@
                     }
                     if (isset($_GET['confirmed_classe']) && $_GET['confirmed_classe'] == 'true') {
                         $id_classe = $_GET['id'];
-                        $sql_supp = "DELETE FROM thematic WHERE id = $id_classe";
+                        $sql_supp = "DELETE FROM classroom WHERE id = $id_classe";
                         $stmt_supp = $conn->prepare($sql_supp);
                         $stmt_supp->execute();
                         
