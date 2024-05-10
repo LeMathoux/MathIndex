@@ -87,6 +87,14 @@ margin-left: 5px;
     align-items: center;
     text-decoration:none;
   }
+  .uneAction {
+    display: flex;
+    flex-direction: row;
+}
+.actions {
+  width: auto;
+  border-top: #dadada 1px solid;
+}
   .barre-navigation a.fonctions-liens {
     color: #757575;
     display: flex;

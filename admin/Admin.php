@@ -494,15 +494,15 @@
                         <a href='../assets/Corriges/" . $row["correction_original_name"]."' download>Corrigé</a>";
                       }
                       echo "</td>";
-                      echo "<td class='actions_exercices'>";
-                      echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
-                      echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                      echo "<td class='actions'>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                            <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p></div>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_exercice'])) {
-                        echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p></div>";
                       }
                       else {
-                        echo "<p><a href='?onglet=exercices&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p></div>";
                       }
                       echo "</td>";
                      echo "</tr>";
