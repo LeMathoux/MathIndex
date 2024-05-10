@@ -428,11 +428,22 @@
                         <div class="content">
                             <h1> Ajouter une thematique </h1>
                             <form action='' method='post'>
-                                <div>
-                                    <label class='label_formu' for='nom_thematique'>Nom de la thematique :<input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
+                                <div class="ranger">
+                                    <label class='' for='nom_thematique'>Nom de la thematique :</label>
+                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" />
                                 </div>
-                                <a href='Admin.php?onglet=thematiques'>revenir à la liste</a><input type='submit' />
+                                <div class="ranger">
+                                    <label for="thematique">Choisir la matière :</label>
+                                    <select name="thematique" id="thematique">
+                                        <option value="volvo">Suites</option>
+                                        <option value="saab">Primitives</option>
+                                        <option value="opel">Continuité</option>
+                                        <option value="audi">Géométrie</option>
+                                    </select>
+                                </div>
                             </form>
+                            <a href="Admin.php?onglet=thematiques"><button class="bouton_retour">◄ Retour à la liste</button></a>
+                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
 
