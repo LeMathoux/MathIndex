@@ -134,18 +134,24 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
     <button onclick="AfficheMenu()" class='btn_menu_tel'><img src="assets/images/Hamburger_icon.png"></button>
     <div class="header-droite">
       <?php
-          $lastname=$_SESSION['account']['last_name'];
-          $firstname=$_SESSION['account']['first_name'];
-          $iduser=$_SESSION['account']['id'];
-          $role=$_SESSION['account']['role'];
-          $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-         echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
-            if($role == "Administrateur" ){
-              echo "<div class='cible' id='cible'>";
-              echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
-              echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone-logout-admin.svg'></a>";
-              echo "</div></div>";
-            }
+          if (session_status() == PHP_SESSION_NONE) {
+          }
+
+          if(isset($_SESSION["account"])){
+            $lastname=$_SESSION['account']['last_name'];
+            $firstname=$_SESSION['account']['first_name'];
+            $role=$_SESSION['account']['role'];
+            $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
+            echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+              if($role == "Administrateur" ){
+                echo "<div class='cible' id='cible'>";
+                echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
+                echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone-logout-admin.svg'></a>";
+                echo "</div></div>";
+              }
+          } else {
+              echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
+          }
       ?>
     </div>
     
