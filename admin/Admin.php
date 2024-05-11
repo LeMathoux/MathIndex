@@ -712,7 +712,7 @@
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
 
-                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='nom'><p>" . $nb_exercices. "</p></td>";
                                     echo "<td class='actions'>";
                                     echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
                                             <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p></div>";
