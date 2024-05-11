@@ -113,7 +113,7 @@ border-radius: 3.66px;
 
 .deconnexion{
   position: fixed;
-  left : 20px;
+  left : 5px;
   bottom: 20px;
 }
 
@@ -219,6 +219,7 @@ header {
   height: 39px;
   border-radius: 50%;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .contenu {
