@@ -355,33 +355,39 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     </div>
     <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
     <div class="navigation">
-        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"><strong>Accueil</strong></a></li>
+    <ul>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
         <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
-        <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
-
-        <?php if(isset($_SESSION["account"])): ?>
-          <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
+        <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions_gris.svg">Exercices</a></li>
+      </ul>
+      <?php if(isset($_SESSION["account"])): ?>
+        <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
+          <ul>
             <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-            <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg">Soumettre</a></li>
-            <?php endif; ?>
+            <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg"><strong>Soumettre</strong></a></li>
             <div class="deconnexion">
               <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
             </div>
+          </ul>
         <?php endif; ?>
+      <?php endif; ?>
     </div>
     <div class="nav_ipad">
-      <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home.svg"></a></li>
-      <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
-      <li><a href="Exercices.php" class="fonctions-liens"><img src="assets/images/icone_fonctions_gris.svg"></a></li>
-
+      <ul>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_gris_home.svg"></a></li>
+        <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
+        <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions_gris.svg"></a></li>
+      </ul>
       <?php if(isset($_SESSION["account"])): ?>
         <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
-          <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
-          <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
-          <?php endif; ?>
-          <div class="deconnexion">
-            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
-          </div>
+          <ul>
+            <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
+            <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg"></a></li>
+            <div class="deconnexion">
+              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+            </div>
+          </ul>
+        <?php endif; ?>
       <?php endif; ?>
     </div>
   </nav>
@@ -496,7 +502,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         </label>
                       </div>
                       <div class='ligne'>
-                        <label name='Nom_source'> Nom de la source/lien du site*: <input class="inputTexte" type='text' name='Nom_source' value="<?php if(isset($_SESSION['stockage']['Nom_source'])){echo $_SESSION['stockage']['Nom_source'];}?>"></input></label>
+                        <label name='Nom_source'> Nom de la source/lien du site<span style="color: blue;">*</span>: <input class="inputTexte" type='text' name='Nom_source' value="<?php if(isset($_SESSION['stockage']['Nom_source'])){echo $_SESSION['stockage']['Nom_source'];}?>"></input></label>
                       </div>
                       <div class='ligne'>
                         <label name='information_sup'> Informations complémentaires: <textarea name='information_sup'><?php if(isset($_SESSION['stockage']['information_sup'])){echo $_SESSION['stockage']['information_sup'];}?></textarea></label>
@@ -528,7 +534,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                             </div>
                         </label>
                       </div>
-                      <input type='submit' value='Continuer'></input>
+                      <input type='submit' value='Enregistrer'></input>
                     </form>
                 </div>
             </div>
