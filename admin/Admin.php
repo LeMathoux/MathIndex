@@ -298,15 +298,15 @@
                                     echo "<td class='nom'><p>" . $row_contributeurs["last_name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["email"] . "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                                     if (isset($_GET['page_contributeurs'])) {
-                                        echo "<p><a href='?onglet=contributeurs&page_contributeurs=".$_GET['page_contributeurs']."&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=contributeurs&page_contributeurs=".$_GET['page_contributeurs']."&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=contributeurs&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=contributeurs&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -701,15 +701,15 @@
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                                     if (isset($_GET['page_classes'])) {
-                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -908,15 +908,15 @@
                                     echo "<td class='nom'><p>" . $row_thematiques["name"] . "</p></td>";
                                     echo "<td class='nom'><p>Mathematiques</p></td>";
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                                     if (isset($_GET['page_thematiques'])) {
-                                        echo "<p><a href='?onglet=thematiques&page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=thematiques&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";

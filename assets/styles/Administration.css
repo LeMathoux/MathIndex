@@ -90,9 +90,11 @@ margin-left: 5px;
   .uneAction {
     display: flex;
     flex-direction: row;
-}
+    height: 40px;
+    margin: auto;
+  }
 .actions {
-  width: auto;
+  width: 300px;
   border-top: #dadada 1px solid;
 }
   .barre-navigation a.fonctions-liens {
@@ -415,7 +417,7 @@ color: green;
     border: solid 1px #dadada;
     border-radius: 10px;
     border-spacing: 0;
-    width: 1240px;
+    width: 65%;
     margin-top: 50px;
 }
 
@@ -428,7 +430,7 @@ color: green;
   }
   .tab_exercice .nom{
     height: 60px;
-    width: 350px;
+    width: 450px;
     border-top: #dadada 1px solid;
   }
   .tab_exercice .thematiques {
@@ -1038,6 +1040,78 @@ justify-content: center;
   border-spacing: 0;
   width: 100%;
   margin-top: 80px;
+}
+.tab_exercice .nom {
+  height: 60px;
+  width: 400px;
+  border-top: #dadada 1px solid;
+}
+.uneAction {
+  display: flex;
+  flex-direction: row;
+  font-size:16px ;
+  height: 40px;
+  margin: auto;
+}
+.actions {
+  width: 200px;
+  border-top: #dadada 1px solid;
+}
+.tab_origines{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  margin-top: 80px;
+}
+.tab_origines img{
+  box-shadow: none;
+}
+.tab_origines thead{
+  background-color: #e8e8e8;
+  height: 40px;
+}
+.tab_origines .nom{
+  height: 60px;
+  width: 250px;
+  border-top: #dadada 1px solid;
+}
+.actions_origines{
+  width: 300px;
+  border-top: #dadada 1px solid;
+  display: flex;
+}
+.actions_origines a{
+  text-decoration: none;
+  font-size: 18px;
+  color: #757575;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.actions_origines img{
+  margin-left: 20px;
+}
+.recherche_origines form{
+  display: flex;
+  width: 80%;
+}
+.recherche_origines {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+}
+.recherche_origines .bouton_ajout {
+  background-color: rgb(58, 170, 77);
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 }
 @media screen and (max-width: 1285px){
