@@ -1099,15 +1099,15 @@
                     while ($row_origines = $result_all_origines->fetch_assoc()) {
                       echo "<tr>";
                       echo "<td class='nom'><p>" . $row_origines["name"] . "</p></td>";
-                      echo "<td class='actions_origines'>";
-                      echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href='Admin.php?onglet=origines&add_origine=modify&id=".$row_origines["id"]."'>Modifier</a></p>";
-                      echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                      echo "<td class='actions'>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                            <p><a href='Admin.php?onglet=origines&add_origine=modify&id=".$row_origines["id"]."'>Modifier</a></p></div>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_origines'])) {
-                        echo "<p><a href='?page_origines=".$_GET['page_origines']."&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?page_origines=".$_GET['page_origines']."&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p></div>";
                       }
                       else {
-                        echo "<p><a href='?onglet=origines&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=origines&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p></div>";
                       }
                       echo "</td>";
                      echo "</tr>";
