@@ -16,6 +16,7 @@
     if(!isset($_GET['onglet'])){
         $_GET['onglet'] = 'contributeurs';
     }
+    var_dump($_POST);
 ?>
 <body>
   <nav class="barre-navigation hidden">
@@ -81,12 +82,29 @@
         }
 
         //script d'insertion contributeurs
-        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && $_GET['add_contributeur'] === 'true'){
-            var_dump($_POST['nom_contributeur']);
-            $stmt = $mysqlClient->prepare("INSERT INTO user(name) VALUES(:name);");
-            $stmt->bindParam(":name", $_POST['nom_contributeur']);
-            $stmt->execute();
-
+        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && isset($_POST['prenom_contributeur']) && !empty($_POST['prenom_contributeur']) && isset($_POST['email_contributeur']) && !empty($_POST['email_contributeur']) && isset($_POST['mdp_contributeur']) && !empty($_POST['mdp_contributeur']) && isset($_POST['role_contributeur']) && !empty($_POST['role_contributeur']) &&  $_GET['add_contributeurs'] === 'true'){
+            if(!empty($_FILES['photo_profil'])){
+                $uploads_dir = '../assets/photos_de_profil';
+                $tmp_name = $_FILES["photo_profil"]["tmp_name"];
+                $name = basename($_FILES["photo_profil"]["name"]);
+                move_uploaded_file($tmp_name, "$uploads_dir/$name");
+                $stmt = $mysqlClient->prepare("INSERT INTO user(last_name,first_name,email,role,password,profile_photo_file) VALUES(:last_name,:first_name,:email,:role,:password,:profile_photo_file);");
+                $stmt->bindParam(":last_name", $_POST['nom_contributeur']);
+                $stmt->bindParam(":first_name", $_POST['prenom_contributeur']);
+                $stmt->bindParam(":email", $_POST['email_contributeur']);
+                $stmt->bindParam(":role", $_POST['role_contributeur']);
+                $stmt->bindParam(":password", $_POST['mdp_contributeur']);
+                $stmt->bindParam(":profile_photo_file", $_FILES['photo_profil']['name']);
+                $stmt->execute();
+            }else{
+                $stmt = $mysqlClient->prepare("INSERT INTO user(last_name,first_name,email,role,password) VALUES(:last_name,:first_name,:email,:role,:password);");
+                $stmt->bindParam(":last_name", $_POST['nom_contributeur']);
+                $stmt->bindParam(":first_name", $_POST['prenom_contributeur']);
+                $stmt->bindParam(":email", $_POST['email_contributeur']);
+                $stmt->bindParam(":role", $_POST['role_contributeur']);
+                $stmt->bindParam(":password", $_POST['mdp_contributeur']);
+                $stmt->execute();
+            }
             header("location: admin.php?onglet=contributeurs");
         }
         //script de modification contributeur
@@ -187,10 +205,45 @@
             $origine = $origine[0][0];
         }
 
+         //script d'insertion classe
+         if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classes'] === 'true'){
+            var_dump($_POST['nom_classe']);
+            $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
+            $stmt->bindParam(":name", $_POST['nom_classe']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=classes");
+        }
+        //script de modification classe
+        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classes'] === 'modify'){
+            $stmt = $mysqlClient->prepare("UPDATE classroom SET name=:name WHERE id=:id");
+            $stmt->bindParam(":name", $_POST['nom_classe']);
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+
+            header("location: admin.php?onglet=classes");
+        }
+        //script de recuperation du nom classe a modifier
+        if(isset($_GET['id']) && isset($_GET['add_classes']) && $_GET['add_classes'] === 'modify'){
+            $stmt = $mysqlClient->prepare("SELECT name FROM classroom WHERE id=:id");
+            $stmt->bindParam(":id", $_GET['id']);
+            $stmt->execute();
+            $classe = $stmt -> fetchAll();
+            $classe = $classe[0][0];
+        }
+
       ?>
     </div>
     
   </header>
+<script>
+    function getfile(){
+        document.getElementById('hiddenfile').click();
+    }
+    function getvalue(){
+        document.getElementById('selectedfile').value=document.getElementById('hiddenfile').value;
+    }
+</script>
   <div class='grand_conteneur'>
         <div class='menu_arriere'></div>
         <div class="contenu">
@@ -219,29 +272,35 @@
                     <div class="content">
                                 <h1> Ajouter un contributeurs </h1>
                                 
-                                <form action='' method='post'>
+                                <form enctype="multipart/form-data" method='post' name='Fichiers'>
                                     <div class='ligne'>
-                                        <label class='label_ajout' for='nom_contributeurs'>Nom du contributeurs :
-                                        <input type='text' name='nom_contributeurs' id='nom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" /></label>
-                                        <label class='label_ajout' for='role_contributeurs'>Role du contributeurs :
-                                        <input type='text' name='role_contributeurs' id='role_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" /></label>
+                                        <label class='label_ajout' for='nom_contributeur'>Nom du contributeurs :
+                                        <input type='text' name='nom_contributeur' id='nom_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" /></label>
+                                        <label class='label_ajout' for='role_contributeur'>Role du contributeurs :
+                                        <input type='text' name='role_contributeur' id='role_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" /></label>
                                     </div>
                                     <div class='ligne'>
-                                        <label class='label_ajout' for='prenom_contributeurs'>Prénom du contributeurs :
-                                        <input type='text' name='prenom_contributeurs' id='prenom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" /></label>
+                                        <label class='label_ajout' for='prenom_contributeur'>Prénom du contributeurs :
+                                        <input type='text' name='prenom_contributeur' id='prenom_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" /></label>
+                                        <label name='photo_profil' class='label_ajout'> Photo de profil (png ou jpeg) :
+                                            <div class='file'>
+                                                <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="photo_profil" onChange="getvalue();"/>
+                                                <input class="leFichier" type="text" id="selectedfile" name='NewNamePhoto' value='Sélectionner un fichier à télécharger'/>
+                                                <input class='bouton-upload' type="button" onclick="getfile();"/>
+                                            </div>
+                                        </label>
                                     </div>
                                     <div class='ligne'>
-                                        <label class='label_ajout' for='email_contributeurs'>Email du contributeurs :
-                                        <input type='text' name='email_contributeurs' id='email_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" /></label>
+                                        <label class='label_ajout' for='email_contributeur'>Email du contributeurs :
+                                        <input type='text' name='email_contributeur' id='email_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" /></label>
                                     </div>
                                     <div class='ligne'>
-                                        <label class='label_ajout' for='mdp_contributeurs'>Mot de passe du contributeurs :
-                                        <input type='text' name='mdp_contributeurs' id='mdp_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" /></label>
+                                        <label class='label_ajout' for='mdp_contributeur'>Mot de passe du contributeurs :
+                                        <input type='text' name='mdp_contributeur' id='mdp_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" /></label>
                                     </div>
+                                    <a href="Admin.php"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
+                                    <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
                                 </form>
-
-                                <a href="Admin.php?onglet=contributeurs"><button class="bouton_retour">◄ Retour à la liste</button></a>
-                                <button class="bouton_envoyer">Enregistrer</button>
                     </div>
 
 
@@ -415,7 +474,7 @@
                         $stmt_supp->execute();
                         
                     
-                        header("Location: Admin.php?onglet=contributeurs");
+                        header("location: Admin.php?onglet=contributeurs");
                         
                     }
                     ?> 
@@ -618,9 +677,9 @@
                                 $stmt_supp2->execute();
                           
                                 if (isset($_GET['page_exercice'])) {
-                                  header("Location: ./Admin.php?page_exercice=" . $_GET['page_exercice']);
+                                  header("location: ./Admin.php?page_exercice=" . $_GET['page_exercice']);
                               } else {
-                                  header("Location: ./Admin.php");
+                                  header("location: ./Admin.php");
                               }
                             }
                           }
@@ -650,10 +709,9 @@
                                     <label class='label_ajout' for='nom_classe'>Nom de la classe :
                                     <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" /></label>
                                 </div>
+                                <a href="Admin.php?onglet=classes"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
+                                <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
                             </form>
-
-                            <a href="Admin.php?onglet=classes"><button class="bouton_retour">◄ Retour à la liste</button></a>
-                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
 
@@ -758,7 +816,7 @@
                     <?php
                 if (isset($_GET['action_classes']) && $_GET['action_classes'] === 'delete') {
                     // verifiaction si la thematique est utilisée sur des exercice
-                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
+                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE classroom_id=:id;");
                     $stmt->bindParam(":id", $_GET['id']);
                     $stmt->execute();
                     $nb_exercices = $stmt->fetchAll();
@@ -821,7 +879,7 @@
                         $stmt_supp->execute();
                         
                     
-                        header("Location: Admin.php?onglet=classes");
+                        header("location: Admin.php?onglet=classes");
                         
                     }
                     ?> 
@@ -859,9 +917,9 @@
                                         <option value="Geométrie">Géométrie</option>
                                     </select></label>
                                 </div>
+                            <a href="Admin.php?onglet=thematiques"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
+                            <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
                             </form>
-                            <a href="Admin.php?onglet=thematiques"><button class="bouton_retour">◄ Retour à la liste</button></a>
-                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
 
@@ -1026,10 +1084,8 @@
                         $sql_supp = "DELETE FROM thematic WHERE id = $id_thematique";
                         $stmt_supp = $conn->prepare($sql_supp);
                         $stmt_supp->execute();
-                        
-                    
-                        header("Location: Admin.php?onglet=thematiques");
-                        
+
+                        header("location: Admin.php?onglet=thematiques");
                     }
                     ?> 
                 </div>
@@ -1054,12 +1110,12 @@
                             <h1>Ajouter une origine</h1>
                             <form action='' method='post'>
                                 <div class="ligne">
-                                    <label class='label_ajout' for='nom_thematique'>Nom de l'origine :
-                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
+                                    <label class='label_ajout' for='nom_origine'>Nom de l'origine :
+                                    <input type='text' name='nom_origine' id='nom_origine' value="<?php if(isset($origine)){echo $origine;}?>" /></label>
                                 </div>
+                                <a href="Admin.php?onglet=origines"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
+                                <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
                             </form>
-                            <a href="Admin.php?onglet=origines"><button class="bouton_retour">◄ Retour à la liste</button></a>
-                            <button class="bouton_envoyer">Enregistrer</button>
                         </div>
 
 
@@ -1218,7 +1274,7 @@
                             $stmt_supp = $conn->prepare($sql_supp);
                             $stmt_supp->execute();
                             
-                            header("Location: Admin.php?onglet=origines");
+                            header("location: Admin.php?onglet=origines");
                               
                         }
                         ?>
