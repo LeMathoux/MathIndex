@@ -1092,6 +1092,13 @@ justify-content: center;
   width: 400px;
   border-top: #dadada 1px solid;
 }
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  margin-top: 80px;
+}
 .uneAction {
   display: flex;
   flex-direction: row;
@@ -1503,6 +1510,30 @@ left: 0%;
   box-shadow: none;
   width: 20px;
   height: 20px;
+}
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  font-size: 8px;
+  margin-top: 80px;
+}
+.tab_classe img{
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+}
+.tab_classe thead{
+  background-color: #e8e8e8;
+  font-size: 8px;
+  height: 40px;
+}
+.tab_classe .nom{
+  height: 60px;
+  width: 400px;
+  font-size: 8px;
+  border-top: #dadada 1px solid;
 }
 .tab_origines img {
   box-shadow: none;
