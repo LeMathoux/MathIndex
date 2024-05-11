@@ -192,10 +192,13 @@ body {
     font-weight: 400;
   }  
   
-  .profil-image {
-      width: 30px; 
-      height: 30px;
-      border-radius: 50%; 
+  .header-droite .profil-image {
+    margin-right: 10px;
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    margin-left: 5px;
+    cursor: pointer;
   }
 
   .btn_menu_tel{
