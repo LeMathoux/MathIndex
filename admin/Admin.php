@@ -220,23 +220,23 @@
                                 <h1> Ajouter un contributeurs </h1>
                                 
                                 <form action='' method='post'>
-                                    <div class="ranger">
-                                        <label class='' for='nom_contributeurs'>Nom du contributeurs :</label>
-                                        <input type='text' name='nom_contributeurs' id='nom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" />
-                                    </div><div class="ranger">    
-                                        <label class='' for='prenom_contributeurs'>Prénom du contributeurs :</label>
-                                        <input type='text' name='prenom_contributeurs' id='prenom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" />
-                                    </div><div class="ranger"> 
-                                        <label class='' for='email_contributeurs'>Email du contributeurs :</label>
-                                        <input type='text' name='email_contributeurs' id='email_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" />
+                                    <div class='ligne'>
+                                        <label class='label_ajout' for='nom_contributeurs'>Nom du contributeurs :
+                                        <input type='text' name='nom_contributeurs' id='nom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" /></label>
+                                        <label class='label_ajout' for='role_contributeurs'>Role du contributeurs :
+                                        <input type='text' name='role_contributeurs' id='role_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" /></label>
                                     </div>
-                                    <div class="ranger"> 
-                                        <label class='' for='role_contributeurs'>Role du contributeurs :</label>
-                                        <input type='text' name='role_contributeurs' id='role_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" />
+                                    <div class='ligne'>
+                                        <label class='label_ajout' for='prenom_contributeurs'>Prénom du contributeurs :
+                                        <input type='text' name='prenom_contributeurs' id='prenom_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" /></label>
                                     </div>
-                                    <div class="ranger"> 
-                                        <label class='' for='mdp_contributeurs'>Mot de passe du contributeurs :</label>
-                                        <input type='text' name='mdp_contributeurs' id='mdp_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" />
+                                    <div class='ligne'>
+                                        <label class='label_ajout' for='email_contributeurs'>Email du contributeurs :
+                                        <input type='text' name='email_contributeurs' id='email_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" /></label>
+                                    </div>
+                                    <div class='ligne'>
+                                        <label class='label_ajout' for='mdp_contributeurs'>Mot de passe du contributeurs :
+                                        <input type='text' name='mdp_contributeurs' id='mdp_contributeurs' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" /></label>
                                     </div>
                                 </form>
 
@@ -646,9 +646,9 @@
                             <h1> Ajouter une Classe </h1>
                             
                             <form action='' method='post'>
-                                <div class="ranger">
-                                    <label class='' for='nom_classe'>Nom de la classe :</label>
-                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" />
+                                <div class="ligne">
+                                    <label class='label_ajout' for='nom_classe'>Nom de la classe :
+                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" /></label>
                                 </div>
                             </form>
 
@@ -846,18 +846,18 @@
                         <div class="content">
                             <h1> Ajouter une thematique </h1>
                             <form action='' method='post'>
-                                <div class="ranger">
-                                    <label class='' for='nom_thematique'>Nom de la thematique :</label>
-                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" />
+                                <div class="ligne">
+                                    <label class='label_ajout' for='nom_thematique'>Nom de la thematique :
+                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
                                 </div>
-                                <div class="ranger">
-                                    <label for="thematique">Choisir la matière :</label>
+                                <div class="ligne">
+                                    <label class='label_ajout' for="thematique">Choisir la matière :
                                     <select name="thematique" id="thematique">
                                         <option value="Suites">Suites</option>
                                         <option value="Primitives">Primitives</option>
                                         <option value="Continuite">Continuité</option>
                                         <option value="Geométrie">Géométrie</option>
-                                    </select>
+                                    </select></label>
                                 </div>
                             </form>
                             <a href="Admin.php?onglet=thematiques"><button class="bouton_retour">◄ Retour à la liste</button></a>
@@ -1053,9 +1053,9 @@
                         <div class="content">
                             <h1>Ajouter une origine</h1>
                             <form action='' method='post'>
-                                <div class="ranger">
-                                    <label for='nom_thematique'>Nom de l'origine :</label>
-                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" />
+                                <div class="ligne">
+                                    <label class='label_ajout' for='nom_thematique'>Nom de l'origine :
+                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
                                 </div>
                             </form>
                             <a href="Admin.php?onglet=origines"><button class="bouton_retour">◄ Retour à la liste</button></a>
