@@ -684,6 +684,25 @@ justify-content: center;
   width: 350px;
   border-top: #dadada 1px solid;
 }
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: 650px;
+  margin-top: 50px;
+}
+.tab_classe img{
+  box-shadow: none;
+}
+.tab_classe thead{
+  background-color: #e8e8e8;
+  height: 40px;
+}
+.tab_classe .nom{
+  height: 60px;
+  width: 350px;
+  border-top: #dadada 1px solid;
+}
 .actions_origines{
     width: 300px;
     border-top: #dadada 1px solid;
@@ -741,6 +760,12 @@ justify-content: center;
   color: gray;
 }
 #tab-ori p{
+  color: gray;
+}
+#tab-contri p{
+  color: gray;
+}
+#tab-classe p{
   color: gray;
 }
 .btn_menu_tel{
