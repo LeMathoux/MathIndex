@@ -18,12 +18,14 @@ body {
 }
 
 .header-droite .profil-image {
-margin-right: 10px;
-width: 39px;
-height: 39px;
-border-radius: 50%;
-margin-left: 5px;
+  margin-right: 10px;
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  margin-left: 5px;
+  cursor: pointer;
 }
+
 .barre-navigation {
   position: fixed;
   top: 0;
@@ -37,72 +39,86 @@ margin-left: 5px;
   display: flex;
   flex-direction: column; 
 }
-.barre-navigation li {
-    list-style: none;
-    margin-left: 16px;
-    line-height:2;
-}
+
 .navigation{
-    padding-top:75px;
-} 
-.barre-navigation ul li {
-    padding: 10px 20px;
+  padding-top:75px;
 }
-.barre-navigation strong{
-    margin-left:6px;
+
+.navigation ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
 }
-.barre-navigation a.accueil-liens {
-    background-color: #F6F6F6;
-    color: #1B3168;
-    width: 253.38px;
-    height: 38.64px;
-    padding: 0px 7.32px 0px 7.32px;
-    border-radius: 3.66px;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-  }
-  
-  .barre-navigation a.recherche-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-  }
-  .barre-navigation a.mesexercices-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-  }
-  .nav_ipad{
-    display: none;
-  }
-  .btnFerme{
-    display: none;
-  }
-  .barre-navigation a.soumettre-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-  }
-  .uneAction {
-    display: flex;
-    flex-direction: row;
-    height: 40px;
-    margin: auto;
-  }
-.actions {
-  width: 300px;
-  border-top: #dadada 1px solid;
+
+.navigation ul li {
+padding: 10px;
 }
-  .barre-navigation a.fonctions-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-  }
+
+.navigation strong{
+  margin-left:6px;
+}
+
+.navigation a.accueil-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.recherche-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.exercices-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.mesexercices-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a.soumettre-liens {
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:400;
+}
+
+.navigation a img {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.navigation ul li a:hover {
+  background-color: #F6F6F6;
+  width: 90%;
+  height: 38.64px;
+  border-radius: 3.66px;
+}
+
+.btnFerme{
+  display: none;
+}
+
 .deconnexion .deconnexion-liens{
     color: #757575;
     position: fixed;
@@ -111,7 +127,7 @@ margin-left: 5px;
     text-decoration:none;
     font-size:14px;
     background-color:#F6F6F6;
-    left : 20px;
+    left : 5px;
     bottom: 20px ;
     width:253px;
     height:38px;
@@ -244,14 +260,6 @@ footer {
   height: auto;
   width: 15%;
 }
-.content select{
-  height: 60px;
-  width: 520px;
-  border-radius: 10px;
-  border: #8d8d8d solid 1px;
-  font-size: 18px;
-  color: gray;
-}
 .grand_conteneur{
 display: flex;
 flex-direction: row;
@@ -259,14 +267,6 @@ width: 100%;
 height: 100%;
 }
 /* Menu onglet */
-.content input{
-  height: 60px;
-  width: 520px;
-  border-radius: 10px;
-  border: #8d8d8d solid 1px;
-  font-size: 18px;
-  color: gray;
-}
 
 #menu-tab  .label_onglet{
     font-family: 'trebuchet ms', geneva; 
@@ -287,9 +287,6 @@ font-variant: normal;
 color: green;
 
 }
-.ensembles-logo-ipad  {
-  display: none;
-}
 	
 /*--------------Dimensions tableau--------------*/
 
@@ -305,8 +302,6 @@ color: green;
       min-height: 500px; 
       clear: both;
       margin: 25px 0px;
-      margin-left: auto;
-      margin-right: auto;
     }
     .tab {
       float: left;
@@ -329,19 +324,6 @@ color: green;
   .label_formu{
     color: black;
   }
-  .ligne{
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-  }
-  .label_ajout{
-    display: flex;
-    flex-direction: column;
-    width: 35%;
-    font-size: 20px;
-    margin: auto auto auto 20px;
-    color: #000000;
-  }
 	
 /*--------------Contenu article onglet--------------*/
     .content {
@@ -357,7 +339,7 @@ color: green;
       border: 1px solid #ccc; 
       border-radius: 0px 10px 10px 10px;
       overflow: hidden;
-	    overflow-y: auto;
+	  overflow-y: auto;
 	  margin-bottom: -20px;
     }
     .content > * {
@@ -428,7 +410,7 @@ color: green;
     display: flex;
     flex-direction: row;
     height: 100%;
-    width: 15%;
+    width: 297px;
 }
 
 #tab-exo p{
@@ -438,10 +420,9 @@ color: green;
     border: solid 1px #dadada;
     border-radius: 10px;
     border-spacing: 0;
-    width: 65%;
+    width: 1240px;
     margin-top: 50px;
 }
-
 .tab_exercice img{
     box-shadow: none;
 }
@@ -451,7 +432,7 @@ color: green;
   }
   .tab_exercice .nom{
     height: 60px;
-    width: 450px;
+    width: 350px;
     border-top: #dadada 1px solid;
   }
   .tab_exercice .thematiques {
@@ -647,7 +628,7 @@ justify-content: center;
 }
 .recherche_exo input{
     height: 60px;
-    width: 100%;
+    width: 520px;
     border-radius: 10px;
     border: #8d8d8d solid 1px;
     font-size: 18px;
@@ -655,7 +636,6 @@ justify-content: center;
 }
 .recherche_exo form{
     display: flex;
-    width: 50%;
 }
 .recherche_exo button{
     background-color: #dadada;
@@ -910,53 +890,6 @@ justify-content: center;
 }
 }
 @media screen and (max-width: 1034px){
-  #menu-tab  .label_onglet{
-    position: relative;
-    width: 100%;
-    font-family: 'trebuchet ms', geneva; 
-    font-size: 8pt;
-    text-align: center;
-    color:white;
-	}
-  .tab {
-    width: 80px;
-    margin-left: 0px;
-    margin-right: 40px;
-  }
-  #menu-tab {
-    width: 100%;
-  }
-  .label_onglet {
-    display: flex;
-    width: 100px;
-    height: 40px;
-    background: #1B3190;
-    border: 1px solid #ccc; 
-    position: relative;
-    padding: 0px;
-    padding-left: 15px;
-    padding-right: 15px;
-    align-items: center;
-    margin-left: 10px;
-    border-radius: 10px 10px 10px 10px; 
-  }
-  .content {
-    position: absolute;
-    top: 28px;
-    width: auto;
-    height: 570px;
-    left: 0;
-    background: white;
-    right: 0;
-    bottom: 0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 0px 10px 10px 10px;
-    overflow: hidden;
-    overflow-y: auto;
-    margin-top: 20px;
-    margin-bottom: -20px;
-}
   .nav_ipad{
     padding-top: 75px;
     margin-left: auto;
@@ -1050,121 +983,6 @@ justify-content: center;
   font-size: 12px;
   font-family: 'Epilogue', sans-serif;
   font-weight: 400;
-}
-.recherche_exo input{
-  height: 60px;
-  width: 100%;
-  border-radius: 10px;
-  border: #8d8d8d solid 1px;
-  font-size: 18px;
-  color: gray;
-}
-.recherche_exo form{
-  display: flex;
-  width: 80%;
-}
-.recherche_exo {
-    display: flex;
-    flex-direction: column;
-    height: 80px;
-}
-.bouton_ajout {
-  background-color: rgb(58, 170, 77);
-  width: 200px;
-  height: 60px;
-  border-radius: 10px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin-left: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.tab_exercice {
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: 100%;
-  margin-top: 80px;
-}
-.tab_exercice .nom {
-  height: 60px;
-  width: 400px;
-  border-top: #dadada 1px solid;
-}
-.tab_classe{
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: auto;
-  margin-top: 80px;
-}
-.uneAction {
-  display: flex;
-  flex-direction: row;
-  font-size:16px ;
-  height: 40px;
-  margin: auto;
-}
-.actions {
-  width: 200px;
-  border-top: #dadada 1px solid;
-}
-.tab_origines{
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: auto;
-  margin-top: 80px;
-}
-.tab_origines img{
-  box-shadow: none;
-}
-.tab_origines thead{
-  background-color: #e8e8e8;
-  height: 40px;
-}
-.tab_origines .nom{
-  height: 60px;
-  width: 250px;
-  border-top: #dadada 1px solid;
-}
-.actions_origines{
-  width: 300px;
-  border-top: #dadada 1px solid;
-  display: flex;
-}
-.actions_origines a{
-  text-decoration: none;
-  font-size: 18px;
-  color: #757575;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-}
-.actions_origines img{
-  margin-left: 20px;
-}
-.recherche_origines form{
-  display: flex;
-  width: 80%;
-}
-.recherche_origines {
-    display: flex;
-    flex-direction: column;
-    height: 80px;
-}
-.recherche_origines .bouton_ajout {
-  background-color: rgb(58, 170, 77);
-  width: 200px;
-  height: 60px;
-  border-radius: 10px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin-left: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 }
 @media screen and (max-width: 1285px){
@@ -1313,74 +1131,6 @@ justify-content: center;
   }
 }
 @media screen and (max-width: 700px){
-  #menu-tab  .label_onglet{
-    position: relative;
-    width: 100%;
-    font-family: 'trebuchet ms', geneva; 
-    font-size: 6pt;
-    text-align: center;
-    color:white;
-	}
-  .ligne input {
-    width: 100%;
-    height: 40px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    opacity: 0.7;
-  }
-  .ligne {
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-  }
-  .label_ajout {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    font-size: 20px;
-    padding-top: 20px;
-    margin: auto auto auto 20px;
-    color: #000000;
-  }
-  .content select {
-    height: 60px;
-    width: 100%;
-    border-radius: 10px;
-    border: #8d8d8d solid 1px;
-    font-size: 18px;
-    color: gray;
-}
-  .label_ajout {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    font-size: 20px;
-    margin: auto auto auto 20px;
-    color: #000000;
-  }
-  .tab {
-    width: 45px;
-    margin-left: 0px;
-    margin-right: 20px;
-  }
-  #menu-tab {
-    width: 100%;
-  }
-  .label_onglet {
-    display: flex;
-    width: 45px;
-    height: 30px;
-    background: #1B3190;
-    border: 1px solid #ccc; 
-    position: relative;
-    padding: 0px;
-    padding-left: 5px;
-    padding-right: 10px;
-    align-items: center;
-    margin-left: 10px;
-    border-radius: 10px 10px 10px 10px; 
-  }
   .menu_arriere{
     display: none;
   }
@@ -1491,166 +1241,6 @@ position: fixed;
 top : 94vh;
 left: 0%;
 }
-.tab_exercice {
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: 95%;
-  margin: auto;
-  font-size: 10px;
-  margin-top: 80px;
-}
-.tab_exercice .nom {
-  height: 60px;
-  width: 400px;
-  font-size: 8px;
-  border-top: #dadada 1px solid;
-}
-.tab_exercice img {
-  box-shadow: none;
-  width: 20px;
-  height: 20px;
-}
-.tab_classe{
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: auto;
-  font-size: 8px;
-  margin-top: 80px;
-}
-.tab_classe img{
-  box-shadow: none;
-  width: 20px;
-  height: 20px;
-}
-.tab_classe thead{
-  background-color: #e8e8e8;
-  font-size: 8px;
-  height: 40px;
-}
-.tab_classe .nom{
-  height: 60px;
-  width: 400px;
-  font-size: 8px;
-  border-top: #dadada 1px solid;
-}
-.tab_origines img {
-  box-shadow: none;
-  width: 20px;
-  height: 20px;
-}
-.uneAction {
-  display: flex;
-  flex-direction: row;
-  font-size:10px ;
-  height: 40px;
-  margin: auto;
-}
-.actions {
-  width: 200px;
-  border-top: #dadada 1px solid;
-}
-.recherche_exo input {
-  height: 60px;
-  width: 90%;
-  border-radius: 10px;
-  border: #8d8d8d solid 1px;
-  font-size: 18px;
-  color: gray;
-}
-.recherche_origines input {
-  height: 60px;
-  width: 90%;
-  border-radius: 10px;
-  border: #8d8d8d solid 1px;
-  font-size: 18px;
-  color: gray;
-}
-.recherche_exo button {
-  background-color: #dadada;
-  border: #dadada;
-  width: 150px;
-  height: 60px;
-  border-radius: 10px;
-  color: #757575;
-  font-size: 15px;
-  font-weight: bold;
-  margin-left: 30px;
-}
-.recherche_origines button {
-  background-color: #dadada;
-  border: #dadada;
-  width: 150px;
-  height: 60px;
-  border-radius: 10px;
-  color: #757575;
-  font-size: 15px;
-  font-weight: bold;
-  margin-left: 30px;
-}
-.tab_origines{
-  border: solid 1px #dadada;
-  border-radius: 10px;
-  border-spacing: 0;
-  width: 95%;
-  font-size: 10px;
-  margin-top: 80px;
-}
-.tab_origines img{
-  box-shadow: none;
-}
-.tab_origines thead{
-  background-color: #e8e8e8;
-  height: 40px;
-}
-.tab_origines .nom{
-  height: 60px;
-  width: 250px;
-  font-size: 10px;
-  border-top: #dadada 1px solid;
-}
-.actions_origines{
-  width: auto;
-  font-size: 10px;
-  border-top: #dadada 1px solid;
-  display: flex;
-}
-.actions_origines a{
-  text-decoration: none;
-  font-size: 10px;
-  color: #757575;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-}
-.actions_origines img{
-  margin-left: 20px;
-}
-.recherche_origines form{
-  display: flex;
-  width: 80%;
-}
-.recherche_origines {
-    display: flex;
-    flex-direction: column;
-    height: 80px;
-}
-.fichiers_exercices a{
-  font-size: 10px;
-}
-.recherche_origines .bouton_ajout {
-  background-color: rgb(58, 170, 77);
-  width: 200px;
-  height: 60px;
-  border-radius: 10px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin-left: 0px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 }
 
 /*-------------- Admin - Contenu onglet - Partie Ajouter --------------*/
@@ -1660,6 +1250,27 @@ left: 0%;
   color: gray;
 }
 
+.content input{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+
+.content select{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+
+.ranger{
+  margin: 30px;
+}
 
 .bouton_envoyer{
   background-color: #dadada;
