@@ -41,30 +41,38 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
         </div>
         <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
         <div class="navigation">
+            <ul>
                 <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg">Accueil</a></li>
                 <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg">Recherche</a></li>
                 <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions.svg"><strong>Exercices</strong></a></li>
+            </ul>
             <?php if(isset($_SESSION["account"])): ?>
                 <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
-                        <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                        <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
-                        <div class="deconnexion">
-                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
-                        </div>
+                <ul>
+                    <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                    <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg">Soumettre</a></li>
+                    <div class="deconnexion">
+                    <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                    </div>
+                </ul>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="nav_ipad">
-                <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"></a></li>
+            <ul>
+                <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home.svg"></a></li>
                 <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
-                <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions.svg"></a></li>
+                <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions_gris.svg"></a></li>
+            </ul>
             <?php if(isset($_SESSION["account"])): ?>
                 <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
-                    <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
-                    <li><a href="Soumettre-information_generales.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
-                    <div class="deconnexion">
-                        <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
-                    </div>
+                    <ul>
+                        <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
+                        <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
+                        <div class="deconnexion">
+                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                        </div>
+                    </ul>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
@@ -72,26 +80,26 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
     <header>
         <button onclick="AfficheMenu()" class='btn_menu_tel'><img src="assets/images/Hamburger_icon.png"></button>
         <div class="header-droite">
-        <?php
-          if (session_status() == PHP_SESSION_NONE) {
-          }
+            <?php
+                if (session_status() == PHP_SESSION_NONE) {
+                }
 
-          if(isset($_SESSION["account"])){
-            $lastname=$_SESSION['account']['last_name'];
-            $firstname=$_SESSION['account']['first_name'];
-            $role=$_SESSION['account']['role'];
-            $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-           echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
-            if($role == "Administrateur" ){
-              echo "<div class='cible' id='cible'>";
-              echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
-              echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone-logout-admin.svg'></a>";
-              echo "</div></div>";
-            }
-        } else {
-            echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
-        }
-      ?>
+                if(isset($_SESSION["account"])){
+                    $lastname=$_SESSION['account']['last_name'];
+                    $firstname=$_SESSION['account']['first_name'];
+                    $role=$_SESSION['account']['role'];
+                    $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
+                    echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+                    if($role == "Administrateur" ){
+                        echo "<div class='cible' id='cible'>";
+                        echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
+                        echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone-logout-admin.svg'></a>";
+                        echo "</div></div>";
+                    }
+                } else {
+                    echo "<a href='Connexion.php' class='connexion'><img src='assets/images/icone_login.svg' alt='login'>Connexion</a>";
+                }
+            ?>
         </div>
         
     </header>
@@ -134,25 +142,25 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . $row["exercise_name"] . "</td>";
-                                    echo "<td>" . $row["thematic_name"] . "</td>";
-                                    echo "<td>" . $row["difficulty"] . "</td>";
-                                    echo "<td>" . $row["duration"] . " h00</td>";
-                                    echo '<td>';
-                                    $keywords = explode(',', $row['keywords']);
-                                    foreach ($keywords as $keyword) {
-                                        echo '<span class="mot_cle">' . $keyword . '</span>';
-                                    }
-                                    echo '</td>';
-                                    echo "<td>";
-                                    echo "<img src='assets/images/icone_download.svg'>
-                                    <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "'>Exercice</a><br>";
+                                        echo "<td>" . $row["exercise_name"] . "</td>";
+                                        echo "<td>" . $row["thematic_name"] . "</td>";
+                                        echo "<td>" . $row["difficulty"] . "</td>";
+                                        echo "<td>" . $row["duration"] . " h00</td>";
+                                        echo '<td>';
+                                        $keywords = explode(',', $row['keywords']);
+                                        foreach ($keywords as $keyword) {
+                                            echo '<span class="mot_cle">' . $keyword . '</span>';
+                                        }
+                                        echo '</td>';
+                                        echo "<td>";
+                                            echo "<img src='assets/images/icone_download.svg'>
+                                            <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "'>Exercice</a><br>";
 
-                                    if ($row["correction_original_name"] && $row["correction_extension"]) {
-                                        echo "<img src='assets/images/icone_download.svg'>
-                                        <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
-                                    }
-                                echo "</td>";
+                                            if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                                echo "<img src='assets/images/icone_download.svg'>
+                                                <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                            }
+                                        echo "</td>";
                                     echo "</tr>";
                                 }
                             }
