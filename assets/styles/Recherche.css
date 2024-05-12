@@ -17,146 +17,169 @@ body {
   display: flex;
   flex-direction: column; 
 }
-.carre-blanc .mot_cle {
-  display: inline-block;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 20px;
-  background-color: #DBDBDB;
-  border:none;
-}
-.barre-navigation li {
-    list-style: none;
-    margin-left: 16px;
-    line-height:2;
-}
 
 .navigation{
-    padding-top:75px;
+  padding-top:75px;
 }
 
-.barre-navigation ul li {
-  padding: 10px 20px;
+.navigation ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
 }
 
-.barre-navigation strong{
-    margin-left:6px;
+.navigation ul li {
+padding: 10px;
 }
 
-.barre-navigation a.accueil-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
+.navigation strong{
+  margin-left:6px;
 }
-.barre-navigation a.recherche-liens {
+
+.navigation a.recherche-liens {
   background-color: #F6F6F6;
   color: #1B3168;
   width: 90%;
   height: 38.64px;
-  padding: 0px 7.32px 0px 7.32px;
   border-radius: 3.66px;
   display: flex;
   align-items: center;
-  text-decoration: none;
-  font-family: 'Popins', sans-serif;
-  font-weight: 700;
-}
-.barre-navigation a.exercices-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
+  text-decoration:none;
+  font-family:'Popins', sans-serif;
+  font-weight:700;
+  margin-left: 5px;
 }
 
-.barre-navigation a.mesexercices-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
+.navigation a.accueil-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
 }
 
-.barre-navigation a.soumettre-liens {
-    color: #757575;
-    display: flex;
-    align-items: center;
-    text-decoration:none;
-    font-family:'Popins', sans-serif;
-    font-weight:400;
+.navigation a.exercices-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a.mesexercices-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a.soumettre-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a img {
+margin-right: 10px;
+margin-left: 10px;
+}
+
+.navigation ul li a:hover {
+background-color: #F6F6F6;
+width: 90%;
+height: 38.64px;
+border-radius: 3.66px;
 }
 
 .deconnexion .deconnexion-liens{
-    color: #757575;
-    display: flex;
-    position: fixed;
-    align-items: center;
-    text-decoration:none;
-    font-size:14px;
-    background-color:#F6F6F6;
-    width:253px;
-    height:38px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    left : 20px;
-    bottom: 20px ;
+  color: #757575;
+  display: flex;
+  align-items: center;
+  text-decoration:none;
+  font-size:14px;
+  background-color:#F6F6F6;
+  width:253px;
+  height:38px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
 
 .deconnexion{
   position: fixed;
-  top : 94vh;
-  left: 0.5%;
+  left : 5px;
+  bottom: 20px;
 }
 
-.barre-navigation a img {
-    margin-right: 10px;
+.nav_ipad{
+  display: none;
 }
 
-.ensembles-logo  {
-    display: flex;
-    position: relative;
-    margin-left: 15px;
-}
 .btnFerme{
   display: none;
 }
+
 .btn_menu_tel{
   display: none;
 }
+
+.ensembles-logo  {
+  display: flex;
+  position: relative;
+  margin-left: 15px;
+}
+
 .ensembles-logo-titre img{
-    width: 32px;
-    height: 34px;
+  width: 32px;
+  height: 34px;
 }
 
 .ensembles-logo-titre {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 15px;
-    font-family:'Epilogue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+  font-family:'Epilogue', sans-serif;
 }
 
 .ensembles-logo-titre .titre{
-    color: #1B3168;
-    font-size: 26px;
-    font-weight: 600;
+  color: #1B3168;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .ensembles-logo-titre .sous-titre {
-    font-size: 16px;
-    color: #5D7285;
+  font-size: 16px;
+  color: #5D7285;
+}
+
+.ensembles-logo-titre .sous-titre {
+  font-size: 16px;
+  color: #5D7285;
+}
+
+.ensembles-logo-ipad  {
+  display: none;
 }
 
 header {
-    background-color: #FFFFFF;
-    position: relative;
-    width: 100%;
-    height: 96px;
+  background-color: #FFFFFF;
+  position: relative;
+  width: 100%;
+  height: 96px;
+}
+
+.header-droite {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
 }
 
 .header-droite {
@@ -166,23 +189,23 @@ header {
     transform: translateY(-50%);
 }
 
+.header-droite a.connexion {
+  text-decoration: none;
+  color: #000000;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
 .header-droite img {
   margin-right: 5px;
 } 
 
-.header-droite a {
-    text-decoration: none;
-    color: #333;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-}
-
 .header-droite .compte {
   text-decoration: none;
-  color: #333;
+  color: #000000;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -196,6 +219,7 @@ header {
   height: 39px;
   border-radius: 50%;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .contenu {
@@ -230,9 +254,6 @@ header {
     margin: 0 auto;
     margin-left: 42px;
     margin-top: 55px;
-}
-.ensembles-logo-ipad  {
-  display: none;
 }
 
 .carre-blanc label{
@@ -291,11 +312,7 @@ header {
     font-weight: 600;
     margin-top: 40px;
 }
-.barre-navigation a.exercices-liens:hover,a.accueil-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-  width: 90%;
-  background-color: #F6F6F6;
-  padding: 0px 7.32px 0px 7.32px;
-}
+
 .carre-blanc table {
   width: 95%;
   height: auto;
@@ -347,9 +364,16 @@ header {
     position: relative;
     top: 5px;
 }
-.nav_ipad{
-  display: none;
+
+.mot_cle {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: #DBDBDB;
+  border:none;
 }
+
 footer {
   position: fixed;
   bottom: 0;
@@ -377,14 +401,6 @@ footer {
   font-size: 20px;
 }
 
-.keyword {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 20px;
-    background-color: #DBDBDB;
-    border:none;
-}
 .menu_arriere{
   display: flex;
   flex-direction: row;
@@ -397,6 +413,43 @@ display: flex;
 flex-direction: row;
 width: 100%;
 height: 100%;
+}
+.cible{
+  background-color:#E7E7E7;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  height: 100px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.cible a{
+  text-decoration: none;
+  color: #757575;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  margin-left: 10px;
+}
+.cible img{
+  width: 20px;
+  height: 20px;
+  margin-top: 15px;
+}
+.img_logout{
+  margin-left: 25px;
+}
+.img_admin{
+  margin-left: 17px;
+}
+#cible {
+  display: none;
+}
+#bouton:focus + #cible {
+  display: block;
+}
+#cible:active{
+  display: block;
 }
 @media screen and (max-width: 1866px){
 .carre-blanc p{
@@ -587,11 +640,7 @@ font-weight:400;
 margin-right: auto;
 margin-left: auto;
 }
-.barre-navigation a.exercices-liens:hover,a.accueil-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-background-color: #F6F6F6;
-padding: 0px;
-width: 100%;
-}
+
 .ensembles-logo-ipad {
 display: flex;
 position: relative;

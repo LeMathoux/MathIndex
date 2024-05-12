@@ -18,105 +18,107 @@ body {
   flex-direction: column;  
 }
 
-.barre-navigation li {
-  list-style: none;
-  margin-left: 16px;
-  line-height:2;
-}
-
 .navigation{
   padding-top:75px;
 }
 
-.barre-navigation ul li {
-padding: 10px 20px;
+.navigation ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
 }
 
-.barre-navigation strong{
+.navigation ul li {
+padding: 10px;
+}
+
+.navigation strong{
   margin-left:6px;
 }
 
-.barre-navigation a.accueil-liens {
-  color: #757575;
-  display: flex;
-  align-items: center;
-  text-decoration:none;
-  font-family:'Popins', sans-serif;
-  font-weight:400;
-}
-
-.barre-navigation a.recherche-liens {
-  color: #757575;
-  display: flex;
-  align-items: center;
-  text-decoration:none;
-  font-family:'Popins', sans-serif;
-  font-weight:400;
-}
-
-.barre-navigation a.exercices-liens {
+.navigation a.exercices-liens {
   background-color: #F6F6F6;
   color: #1B3168;
   width: 90%;
   height: 38.64px;
-  padding: 0px 7.32px 0px 7.32px;
   border-radius: 3.66px;
   display: flex;
   align-items: center;
-  text-decoration: none;
-  font-family: 'Popins', sans-serif;
-  font-weight: 700;
-}
-
-.barre-navigation a.mesexercices-liens {
-  color: #757575;
-  display: flex;
-  align-items: center;
   text-decoration:none;
   font-family:'Popins', sans-serif;
-  font-weight:400;
+  font-weight:700;
+  margin-left: 5px;
 }
 
-.barre-navigation a.soumettre-liens {
-  color: #757575;
-  display: flex;
-  align-items: center;
-  text-decoration:none;
-  font-family:'Popins', sans-serif;
-  font-weight:400;
+.navigation a.accueil-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a.recherche-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a.mesexercices-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a.soumettre-liens {
+color: #757575;
+display: flex;
+align-items: center;
+text-decoration:none;
+font-family:'Popins', sans-serif;
+font-weight:400;
+}
+
+.navigation a img {
+margin-right: 10px;
+margin-left: 10px;
+}
+
+.navigation ul li a:hover {
+background-color: #F6F6F6;
+width: 90%;
+height: 38.64px;
+border-radius: 3.66px;
 }
 
 .deconnexion .deconnexion-liens{
   color: #757575;
   display: flex;
-  position: fixed;
   align-items: center;
   text-decoration:none;
   font-size:14px;
   background-color:#F6F6F6;
   width:253px;
   height:38px;
-  left: 20px;
-  bottom: 20px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 400;
+font-weight: 400;
 }
 
 .deconnexion{
   position: fixed;
-  left: 20px;
+  left : 5px;
   bottom: 20px;
 }
+
 .nav_ipad{
   display: none;
-}
-.barre-navigation a img {
-  margin-right: 10px;
-}
-.barre-navigation a.accueil-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-  width: 90%;
-  background-color: #F6F6F6;
-  padding: 0px 7.32px 0px 7.32px;
 }
 
 .ensembles-logo  {
@@ -168,9 +170,9 @@ header {
   transform: translateY(-50%);
 }
 
-.header-droite a {
+.header-droite a.connexion {
   text-decoration: none;
-  color: #333;
+  color: #000000;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -184,7 +186,7 @@ header {
 
 .header-droite .compte {
   text-decoration: none;
-  color: #333;
+  color: #000000;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -198,6 +200,7 @@ header {
   height: 39px;
   border-radius: 50%;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .contenu {
@@ -209,6 +212,7 @@ header {
   margin-left: auto;
   margin-right: auto;
 }
+
 .btn_menu_tel{
   display: none;
 }
@@ -218,6 +222,7 @@ header {
 .ensembles-logo-ipad  {
   display: none;
 }
+
 .contenu h1{
   margin-left: 3%;
   color: #1B3168;
@@ -419,6 +424,43 @@ flex-direction: row;
 width: 100%;
 height: 100%;
 }
+.cible{
+  background-color:#E7E7E7;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  height: 100px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.cible a{
+  text-decoration: none;
+  color: #757575;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  margin-left: 10px;
+}
+.cible img{
+  width: 20px;
+  height: 20px;
+  margin-top: 15px;
+}
+.img_logout{
+  margin-left: 25px;
+}
+.img_admin{
+  margin-left: 17px;
+}
+#cible {
+  display: none;
+}
+#bouton:focus + #cible {
+  display: block;
+}
+#cible:active{
+  display: block;
+}
 @media screen and (max-width: 1866px){
   .carre-blanc p{
     font-size: 21px;
@@ -608,11 +650,7 @@ height: 100%;
   margin-right: auto;
   margin-left: auto;
 }
-.barre-navigation a.exercices-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
-  background-color: #F6F6F6;
-  padding: 0px;
-  width: 100%;
-}
+
 .ensembles-logo-ipad {
   display: flex;
   position: relative;
