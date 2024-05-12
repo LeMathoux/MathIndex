@@ -139,7 +139,7 @@ if (isset($_GET['confirmed']) && $_GET['confirmed'] == 'true') {
           $iduser=$_SESSION['account']['id'];
           $role=$_SESSION['account']['role'];
           $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-         echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+         echo "<div class='compte' id='bouton' tabindex='0'>$firstname $lastname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
             if($role == "Administrateur" ){
               echo "<div class='cible' id='cible'>";
               echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
