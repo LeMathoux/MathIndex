@@ -87,6 +87,16 @@ margin-left: 5px;
     align-items: center;
     text-decoration:none;
   }
+  .uneAction {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    margin: auto;
+  }
+.actions {
+  width: 300px;
+  border-top: #dadada 1px solid;
+}
   .barre-navigation a.fonctions-liens {
     color: #757575;
     display: flex;
@@ -234,13 +244,30 @@ footer {
   height: auto;
   width: 15%;
 }
+.content select{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
 .grand_conteneur{
 display: flex;
 flex-direction: row;
 width: 100%;
 height: 100%;
 }
+
 /* Menu onglet */
+.content input{
+  height: 60px;
+  width: 520px;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
 
 #menu-tab  .label_onglet{
     font-family: 'trebuchet ms', geneva; 
@@ -256,10 +283,55 @@ font-style: normal;
 text-decoration: none;
 font-variant: normal;
 }
-
+.bouton-upload{
+  width: 40px;
+  background-image: url(../../assets/images/icone_upload.svg);
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  margin-left: auto;
+  margin-right: 10px;
+}
+input[class='bouton-upload']{
+  border: none;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+input[class='leFichier']{
+  width: 450px;
+  border: none;
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 20px;
+}
+.file{
+  display: flex;
+  height: 60px;
+  border: 2px solid #ccc;
+  margin-top: 10px;
+  width: 520px;
+  border-radius: 8px;
+}
+input[type='file']{
+  display: flex;
+  height: 40px;
+  width: 450px;
+  border: none;
+  margin: auto auto auto auto;
+  border-radius: 8px;
+}
 #menu-tab a:hover{
 color: green;
 
+}
+.ensembles-logo-ipad  {
+  display: none;
 }
 	
 /*--------------Dimensions tableau--------------*/
@@ -276,6 +348,8 @@ color: green;
       min-height: 500px; 
       clear: both;
       margin: 25px 0px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .tab {
       float: left;
@@ -298,6 +372,19 @@ color: green;
   .label_formu{
     color: black;
   }
+  .ligne{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+  }
+  .label_ajout{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    font-size: 20px;
+    margin: auto auto auto 20px;
+    color: #000000;
+  }
 	
 /*--------------Contenu article onglet--------------*/
     .content {
@@ -313,7 +400,7 @@ color: green;
       border: 1px solid #ccc; 
       border-radius: 0px 10px 10px 10px;
       overflow: hidden;
-	  overflow-y: auto;
+	    overflow-y: auto;
 	  margin-bottom: -20px;
     }
     .content > * {
@@ -384,7 +471,7 @@ color: green;
     display: flex;
     flex-direction: row;
     height: 100%;
-    width: 297px;
+    width: 15%;
 }
 
 #tab-exo p{
@@ -394,9 +481,10 @@ color: green;
     border: solid 1px #dadada;
     border-radius: 10px;
     border-spacing: 0;
-    width: 1240px;
+    width: 65%;
     margin-top: 50px;
 }
+
 .tab_exercice img{
     box-shadow: none;
 }
@@ -406,7 +494,7 @@ color: green;
   }
   .tab_exercice .nom{
     height: 60px;
-    width: 350px;
+    width: 450px;
     border-top: #dadada 1px solid;
   }
   .tab_exercice .thematiques {
@@ -602,7 +690,7 @@ justify-content: center;
 }
 .recherche_exo input{
     height: 60px;
-    width: 520px;
+    width: 100%;
     border-radius: 10px;
     border: #8d8d8d solid 1px;
     font-size: 18px;
@@ -610,6 +698,7 @@ justify-content: center;
 }
 .recherche_exo form{
     display: flex;
+    width: 50%;
 }
 .recherche_exo button{
     background-color: #dadada;
@@ -655,6 +744,25 @@ justify-content: center;
   height: 40px;
 }
 .tab_origines .nom{
+  height: 60px;
+  width: 350px;
+  border-top: #dadada 1px solid;
+}
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: 650px;
+  margin-top: 50px;
+}
+.tab_classe img{
+  box-shadow: none;
+}
+.tab_classe thead{
+  background-color: #e8e8e8;
+  height: 40px;
+}
+.tab_classe .nom{
   height: 60px;
   width: 350px;
   border-top: #dadada 1px solid;
@@ -716,6 +824,12 @@ justify-content: center;
   color: gray;
 }
 #tab-ori p{
+  color: gray;
+}
+#tab-contri p{
+  color: gray;
+}
+#tab-classe p{
   color: gray;
 }
 .btn_menu_tel{
@@ -839,6 +953,53 @@ justify-content: center;
 }
 }
 @media screen and (max-width: 1034px){
+  #menu-tab  .label_onglet{
+    position: relative;
+    width: 100%;
+    font-family: 'trebuchet ms', geneva; 
+    font-size: 8pt;
+    text-align: center;
+    color:white;
+	}
+  .tab {
+    width: 80px;
+    margin-left: 0px;
+    margin-right: 40px;
+  }
+  #menu-tab {
+    width: 100%;
+  }
+  .label_onglet {
+    display: flex;
+    width: 100px;
+    height: 40px;
+    background: #1B3190;
+    border: 1px solid #ccc; 
+    position: relative;
+    padding: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    align-items: center;
+    margin-left: 10px;
+    border-radius: 10px 10px 10px 10px; 
+  }
+  .content {
+    position: absolute;
+    top: 28px;
+    width: auto;
+    height: 570px;
+    left: 0;
+    background: white;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 0px 10px 10px 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
   .nav_ipad{
     padding-top: 75px;
     margin-left: auto;
@@ -932,6 +1093,121 @@ justify-content: center;
   font-size: 12px;
   font-family: 'Epilogue', sans-serif;
   font-weight: 400;
+}
+.recherche_exo input{
+  height: 60px;
+  width: 100%;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+.recherche_exo form{
+  display: flex;
+  width: 80%;
+}
+.recherche_exo {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+}
+.bouton_ajout {
+  background-color: rgb(58, 170, 77);
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.tab_exercice {
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: 100%;
+  margin-top: 80px;
+}
+.tab_exercice .nom {
+  height: 60px;
+  width: 400px;
+  border-top: #dadada 1px solid;
+}
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  margin-top: 80px;
+}
+.uneAction {
+  display: flex;
+  flex-direction: row;
+  font-size:16px ;
+  height: 40px;
+  margin: auto;
+}
+.actions {
+  width: 200px;
+  border-top: #dadada 1px solid;
+}
+.tab_origines{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  margin-top: 80px;
+}
+.tab_origines img{
+  box-shadow: none;
+}
+.tab_origines thead{
+  background-color: #e8e8e8;
+  height: 40px;
+}
+.tab_origines .nom{
+  height: 60px;
+  width: 250px;
+  border-top: #dadada 1px solid;
+}
+.actions_origines{
+  width: 300px;
+  border-top: #dadada 1px solid;
+  display: flex;
+}
+.actions_origines a{
+  text-decoration: none;
+  font-size: 18px;
+  color: #757575;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.actions_origines img{
+  margin-left: 20px;
+}
+.recherche_origines form{
+  display: flex;
+  width: 80%;
+}
+.recherche_origines {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+}
+.recherche_origines .bouton_ajout {
+  background-color: rgb(58, 170, 77);
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 }
 @media screen and (max-width: 1285px){
@@ -1080,6 +1356,74 @@ justify-content: center;
   }
 }
 @media screen and (max-width: 700px){
+  #menu-tab  .label_onglet{
+    position: relative;
+    width: 100%;
+    font-family: 'trebuchet ms', geneva; 
+    font-size: 6pt;
+    text-align: center;
+    color:white;
+	}
+  .ligne input {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    opacity: 0.7;
+  }
+  .ligne {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .label_ajout {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-size: 20px;
+    padding-top: 20px;
+    margin: auto auto auto 20px;
+    color: #000000;
+  }
+  .content select {
+    height: 60px;
+    width: 100%;
+    border-radius: 10px;
+    border: #8d8d8d solid 1px;
+    font-size: 18px;
+    color: gray;
+}
+  .label_ajout {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-size: 20px;
+    margin: auto auto auto 20px;
+    color: #000000;
+  }
+  .tab {
+    width: 45px;
+    margin-left: 0px;
+    margin-right: 20px;
+  }
+  #menu-tab {
+    width: 100%;
+  }
+  .label_onglet {
+    display: flex;
+    width: 45px;
+    height: 30px;
+    background: #1B3190;
+    border: 1px solid #ccc; 
+    position: relative;
+    padding: 0px;
+    padding-left: 5px;
+    padding-right: 10px;
+    align-items: center;
+    margin-left: 10px;
+    border-radius: 10px 10px 10px 10px; 
+  }
   .menu_arriere{
     display: none;
   }
@@ -1190,5 +1534,198 @@ position: fixed;
 top : 94vh;
 left: 0%;
 }
+.tab_exercice {
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: 95%;
+  margin: auto;
+  font-size: 10px;
+  margin-top: 80px;
+}
+.tab_exercice .nom {
+  height: 60px;
+  width: 400px;
+  font-size: 8px;
+  border-top: #dadada 1px solid;
+}
+.tab_exercice img {
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+}
+.tab_classe{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: auto;
+  font-size: 8px;
+  margin-top: 80px;
+}
+.tab_classe img{
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+}
+.tab_classe thead{
+  background-color: #e8e8e8;
+  font-size: 8px;
+  height: 40px;
+}
+.tab_classe .nom{
+  height: 60px;
+  width: 400px;
+  font-size: 8px;
+  border-top: #dadada 1px solid;
+}
+.tab_origines img {
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+}
+.uneAction {
+  display: flex;
+  flex-direction: row;
+  font-size:10px ;
+  height: 40px;
+  margin: auto;
+}
+.actions {
+  width: 200px;
+  border-top: #dadada 1px solid;
+}
+.recherche_exo input {
+  height: 60px;
+  width: 90%;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+.recherche_origines input {
+  height: 60px;
+  width: 90%;
+  border-radius: 10px;
+  border: #8d8d8d solid 1px;
+  font-size: 18px;
+  color: gray;
+}
+.recherche_exo button {
+  background-color: #dadada;
+  border: #dadada;
+  width: 150px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 30px;
+}
+.recherche_origines button {
+  background-color: #dadada;
+  border: #dadada;
+  width: 150px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 30px;
+}
+.tab_origines{
+  border: solid 1px #dadada;
+  border-radius: 10px;
+  border-spacing: 0;
+  width: 95%;
+  font-size: 10px;
+  margin-top: 80px;
+}
+.tab_origines img{
+  box-shadow: none;
+}
+.tab_origines thead{
+  background-color: #e8e8e8;
+  height: 40px;
+}
+.tab_origines .nom{
+  height: 60px;
+  width: 250px;
+  font-size: 10px;
+  border-top: #dadada 1px solid;
+}
+.actions_origines{
+  width: auto;
+  font-size: 10px;
+  border-top: #dadada 1px solid;
+  display: flex;
+}
+.actions_origines a{
+  text-decoration: none;
+  font-size: 10px;
+  color: #757575;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.actions_origines img{
+  margin-left: 20px;
+}
+.recherche_origines form{
+  display: flex;
+  width: 80%;
+}
+.recherche_origines {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+}
+.fichiers_exercices a{
+  font-size: 10px;
+}
+.recherche_origines .bouton_ajout {
+  background-color: rgb(58, 170, 77);
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 }
 
+/*-------------- Admin - Contenu onglet - Partie Ajouter --------------*/
+
+.content label{
+  font-size: 18px;
+  color: gray;
+}
+
+
+.bouton_envoyer{
+  background-color: #dadada;
+  border: #dadada;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
+
+.bouton_retour{
+  background-color: #dadada;
+  border:  #dadada;
+  width: 250px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
