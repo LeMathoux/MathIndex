@@ -78,7 +78,7 @@ session_start();
                     if($role == "Administrateur" ){
                       echo "<div class='cible' id='cible'>";
                       echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
-                      echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone-logout-admin.svg'></a>";
+                      echo "<a href='admin/authentification/logout.php'><p>Déconnexion</p><img class='img_logout' src='assets/images/icone_logout.svg'></a>";
                       echo "</div></div>";
                     }
                 }else {
