@@ -1684,7 +1684,7 @@ input[class='btn_retour']{
   display: flex;
   flex-direction: column;
   width: 95%;
-  height: 100vh;
+  height: 800px;
   padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
