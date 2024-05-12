@@ -180,9 +180,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `last_name`, `first_name`, `role`, `password`, `profile_photo_file`) VALUES
-(1, 'onana.melisande@gmail.com', 'Onana', 'Mélisande', 'Administrateur', 'motdepasse123', 'Melisande_Onana.jpg'),
+(1, 'onana.melisande@gmail.com', 'Onana', 'Mélisande', 'Administrateur', 'motdepasse123', 'Melisande_Onana.png'),
 (2, 'dauguet.mathis@gmail.com', 'Dauguet', 'Mathis', 'Administrateur', 'Mathis123#', 'Mathis_Dauguet.jpg'),
-(3, 'morel.quentin@gmail.com', 'Morel', 'Quentin', 'Contributeur', 'password3', 'Quentin_Morel.jpg'),
+(3, 'morel.quentin@gmail.com', 'Morel', 'Quentin', 'Contributeur', 'password3', 'Quentin_Morel.png'),
 (4, 'decaux.allan@gmail.com', 'Decaux', 'Allan', 'Administrateur', 'password', 'Allan_Decaux.jpg');
 
 --
