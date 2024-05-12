@@ -110,7 +110,10 @@ body {
     font-family: 'Poppins', sans-serif;
   font-weight: 400;
   }
-  
+  .deconnexion .deconnexion-liens:hover{
+  width: 253px;
+  background-color:#eae9e9;
+}
   .deconnexion{
     position: fixed;
     left : 5px;
