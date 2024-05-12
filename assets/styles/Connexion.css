@@ -181,6 +181,11 @@ header {
     color: #1B3168;
     font-size:28px;
 }
+.nav_ipad ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  }
 
 .carre-blanc {
   display: flex;
@@ -195,6 +200,7 @@ header {
 .carre-blanc p{
     font-size: 22px;
     padding-top: 24px;
+    margin-left: 30px;
     width: 93%;
    
 }
