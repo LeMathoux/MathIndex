@@ -71,15 +71,15 @@ CREATE TABLE `exercise` (
 
 INSERT INTO `exercise` (`id`, `name`, `classroom_id`, `thematic_id`, `chapter`, `keywords`, `difficulty`, `duration`, `origin_name`, `origin_information`, `created_by_id`, `date`, `exercice_file_id`, `correction_file_id`, `origin_id`) VALUES
 (1, 'Systèmes d\'équations linéaires', 2, 1, 'Algèbre', 'systèmes d\'équations linéaires, algèbre linéaire', 2, 1, 'Livre de Mathématique', 'Exercice sur la résolution de systèmes d\'équations linéaires.', 1, '2024-04-01', 1, 2, 1),
-(2, 'Fractales et auto-similarité', 3, 2, 'Géométrie', 'fractales, auto-similarité, géométrie fractale', 5, 2, 'Manuel scolaire', 'Exercice sur les fractales et l\'auto-similarité en géométrie.', 1, '2024-04-02', 3, 4, 2),
+(2, 'Fractales et auto-similarité', 3, 2, 'Géométrie', 'fractales, auto-similarité, géométrie fractale', 5, 2, 'Manuel scolaire', 'Exercice sur les fractales et l\'auto-similarité en géométrie.', 2, '2024-04-02', 3, 4, 2),
 (3, 'Congruences modulo n', 2, 2, 'Arithmétique', 'congruences, arithmétique modulaire, théorie des nombres', 6, 1, 'Livre de Mathématique', 'Exercice sur les congruences modulo n en théorie des nombres.', 1, '2024-04-02', 1, 2, 1),
-(4, 'Tenseurs métriques', 3, 3, 'Analyse', 'tenseurs métriques, calcul différentiel, variétés différentielles', 8, 3, 'Manuel scolaire', 'Exercice sur les tenseurs métriques en calcul différentiel sur les variétés.', 1, '2024-03-11', 3, 4, 2),
+(4, 'Tenseurs métriques', 3, 3, 'Analyse', 'tenseurs métriques, calcul différentiel, variétés différentielles', 8, 3, 'Manuel scolaire', 'Exercice sur les tenseurs métriques en calcul différentiel sur les variétés.', 3, '2024-03-11', 3, 4, 2),
 (5, 'Opérations sur les matrices', 2, 5, 'Algèbre linéaire', 'matrices, opérations, algèbre linéaire', 4, 2, 'Livre de Mathématique', 'Exercice sur les opérations de base sur les matrices.', 1, '2024-03-03', 1, 2, 1),
 (6, 'Géométrie hyperbolique', 3, 6, 'Géométrie', 'géométrie hyperbolique, espaces non euclidiens', 7, 2, 'Manuel scolaire', 'Exercice sur la géométrie non euclidienne et les espaces hyperboliques.', 1, '2024-03-18', 3, 4, 2),
-(7, 'Intégrales généralisées', 1, 7, 'Analyse', 'intégrales, analyse fonctionnelle', 6, 1, 'Livre de Mathématique', 'Exercice sur les intégrales généralisées en analyse fonctionnelle.', 1, '2024-04-01', 1, 2, 1),
+(7, 'Intégrales généralisées', 1, 7, 'Analyse', 'intégrales, analyse fonctionnelle', 6, 1, 'Livre de Mathématique', 'Exercice sur les intégrales généralisées en analyse fonctionnelle.', 2, '2024-04-01', 1, 2, 1),
 (8, 'Algorithmes de parcours de graphe', 2, 8, 'Algorithmes', 'graphes, algorithmes, théorie des graphes', 5, 1, 'Manuel scolaire', 'Exercice sur les algorithmes de parcours de graphe.', 1, '2024-04-03', 3, 4, 2),
 (9, 'Cryptographie à clé publique', 3, 9, 'Cryptographie', 'cryptographie, sécurité, clé publique', 7, 2, 'Livre de Mathématique', 'Exercice sur la cryptographie à clé publique.', 1, '2024-04-06', 1, 2, 1),
-(10, 'Fonctions holomorphes avancées', 1, 10, 'Fonctions holomorphes', 'fonctions, analyse complexe, holomorphes', 8, 3, 'Manuel scolaire', 'Exercice sur les fonctions holomorphes avancées.', 1, '2024-04-07', 3, 4, 2),
+(10, 'Fonctions holomorphes avancées', 1, 10, 'Fonctions holomorphes', 'fonctions, analyse complexe, holomorphes', 8, 3, 'Manuel scolaire', 'Exercice sur les fonctions holomorphes avancées.', 3, '2024-04-07', 3, 4, 2),
 (11, 'Processus de Poisson', 2, 11, 'Processus stochastiques', 'processus de Poisson, probabilité, stochastique', 6, 2, 'Livre de Mathématique', 'Exercice sur les processus de Poisson en calcul stochastique.', 1, '2024-04-08', 1, 2, 1),
 (12, 'Catégories abéliennes', 3, 12, 'Algèbre', 'catégories abéliennes, algèbre, théorie des catégories', 8, 4, 'Manuel scolaire', 'Exercice sur les catégories abéliennes.', 1, '2024-04-08', 3, 4, 2),
 (13, 'Systèmes flous', 1, 13, 'Logique', 'logique floue, systèmes flous', 7, 1, 'Livre de Mathématique', 'Exercice sur les systèmes flous en logique floue.', 1, '2024-04-08', 1, 2, 1);
@@ -180,7 +180,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `last_name`, `first_name`, `role`, `password`, `profile_photo_file`) VALUES
-(1, 'mail@gmail.com', 'Onana', 'Mélisande', 'Administrateur', 'motdepasse123', NULL);
+(1, 'onana.melisande@gmail.com', 'Onana', 'Mélisande', 'Administrateur', 'motdepasse123', 'Melisande_Onana.png'),
+(2, 'dauguet.mathis@gmail.com', 'Dauguet', 'Mathis', 'Administrateur', 'Mathis123#', 'Mathis_Dauguet.jpg'),
+(3, 'morel.quentin@gmail.com', 'Morel', 'Quentin', 'Contributeur', 'password3', 'Quentin_Morel.png'),
+(4, 'decaux.allan@gmail.com', 'Decaux', 'Allan', 'Administrateur', 'password', 'Allan_Decaux.jpg');
 
 --
 -- Index pour les tables déchargées
