@@ -50,7 +50,7 @@
 
             
              // Adresse e-mail de destination
-             $to = 'dauguet.mathis@gmail.com';
+             $to = 'contact@lyceestvincent.net';
 
              // Sujet de l'e-mail
              $subject = 'MathIndex : '. $result['last_name'] .' '. $result['first_name']. ' demande un changement de mot de passe';
