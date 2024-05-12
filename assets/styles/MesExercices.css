@@ -101,23 +101,26 @@ body {
   
   .deconnexion .deconnexion-liens{
     color: #757575;
+    position: fixed;
     display: flex;
     align-items: center;
     text-decoration:none;
+    border-radius: 8px;
     font-size:14px;
     background-color:#F6F6F6;
+    left : 20px;
+    bottom: 20px ;
     width:253px;
     height:38px;
-    font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  }
-  
-  .deconnexion{
-    position: fixed;
-    left : 5px;
-    bottom: 20px;
-  }
-  
+}
+
+.deconnexion{
+  position: fixed;
+  left : 5px;
+  bottom: 20px;
+    pointer-events: none;
+}
+
   .nav_ipad{
     display: none;
   }
