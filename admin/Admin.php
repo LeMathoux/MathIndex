@@ -15,6 +15,7 @@
     if(!isset($_GET['onglet'])){
         $_GET['onglet'] = 'contributeurs';
     }
+    
     var_dump($_POST);
 ?>
 <body>
