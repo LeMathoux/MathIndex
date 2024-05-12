@@ -363,8 +363,8 @@
 
                                     $nb_exercices = $stmt->fetchAll();
                                     echo "<tr>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["first_name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["last_name"] . "</p></td>";
+                                    echo "<td class='nom'><p>" . $row_contributeurs["first_name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["email"] . "</p></td>";
                                     echo "<td class='actions'>";
