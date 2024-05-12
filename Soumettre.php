@@ -49,7 +49,6 @@ if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['s
   $stmt->execute();
   $informations = $stmt->fetchAll();
   
-
   $stmt = $mysqlClient->prepare("SELECT * FROM file WHERE id=:id;");
   $stmt->bindParam(":id", $informations[0]['correction_file_id']);
   $stmt->execute();
@@ -85,11 +84,9 @@ if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['s
       $_SESSION['stockage']['difficulte'] = 'Niveau 2';
       break;
 
-
     case '3': 
       $_SESSION['stockage']['difficulte'] = 'Niveau 3';
       break;
-
 
     case '4': 
       $_SESSION['stockage']['difficulte'] = 'Niveau 4';
@@ -241,7 +238,6 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   $stmt->execute();
   $id_origine = $stmt->fetchAll();
 
-  
   $stmt = $mysqlClient->prepare("SELECT id FROM file WHERE original_name=:name_ori or name=:name_ori;");
   $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
   $stmt->execute();
@@ -333,7 +329,6 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     
     $id_exo = intval($_GET['info']);
     $stmt->bindParam(":id", $id_exo);
-
     $stmt->execute();
 
   }
@@ -425,7 +420,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 
             <div id="menu-tab"><!----------------tableau-01---------------------------------->
             <div id="page-wrap">
-            <div class="tabs"><!----------------onglet-01-accueil-------------------------->
+            <div class="tabs"><!----------------onglet-01-Informations_Générales-------------------------->
             <div class="tab"><input id="tab-1" checked name="tab-group-1" type="radio" /> <label class='label1' for="tab-1">Informations generales</label>
               <div class="onglets">
                 <h1>Informations générales</h1>
@@ -500,7 +495,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 </form>
               </div>
             </div>
-            <!----------------onglet-02-articles-------------------------->
+            <!----------------onglet-02-Sources-------------------------->
             <div class="tab"><input id="tab-2" name="tab-group-1" type="radio" <?php if($_POST['suivant1'] === "true"){echo 'checked';}?> /> <label class='label1' for="tab-2">Sources</label>
             <div class="onglets">
                 <h1>Sources</h1>
@@ -531,7 +526,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 </form>
             </div>
             </div>
-            <!----------------onglet-04-libre-------------------------->
+            <!----------------onglet-04-Fichiers-------------------------->
             <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if($_POST['suivant2'] === "true"){echo 'checked';}?>/> <label class='label1' for="tab-4">Fichiers</label>
                 <div class="onglets">
                   <h2>Fichiers</h2>
