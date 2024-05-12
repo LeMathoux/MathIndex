@@ -750,7 +750,7 @@
                                 <?php
 
                                 if (isset($_GET["recherche_class"])) {
-                                    $sql_search_classes = "SELECT  name FROM classroom
+                                    $sql_search_classes = "SELECT  id,name FROM classroom
                                                         WHERE name LIKE '%" . $_GET["recherche_class"] . "%'
                                                         LIMIT $classes_par_page OFFSET $offset";
                                     $result_all_classes = $conn->query($sql_search_classes);
