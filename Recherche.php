@@ -243,11 +243,11 @@ session_start();
                                             echo "<td>" . $row["duration"] . 'h00' . "</td>";
                                             echo "<td>";
                                                 echo "<img src='assets/images/icone_download.svg'>
-                                                    <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a></div>";
+                                                    <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a></div>";
 
                                                     if ($row["correction_original_name"] && $row["correction_extension"]) {
                                                         echo "<img src='assets/images/icone_download.svg'>
-                                                        <a href='assets/Corrige/" . $row["correction_name"]. "." . $row["correction_extension"] . "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                                        <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
                                                     }
                                                 echo "</td>";
                                         echo "</tr>";
