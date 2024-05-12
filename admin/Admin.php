@@ -16,8 +16,6 @@
     if(!isset($_GET['onglet'])){
         $_GET['onglet'] = 'contributeurs';
     }
-    
-    var_dump($_POST);
 ?>
 <body>
   <nav class="barre-navigation hidden">
@@ -127,7 +125,6 @@
 
         //script d'insertion classe
         if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classe'] === 'true'){
-            var_dump($_POST['nom_classe']);
             $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
             $stmt->bindParam(":name", $_POST['nom_classe']);
             $stmt->execute();
@@ -154,7 +151,6 @@
 
         //script d'insertion thematique
         if(isset($_POST['nom_thematique']) && !empty($_POST['nom_thematique']) && $_GET['add_thematique'] === 'true'){
-            var_dump($_POST['nom_thematique']);
             $stmt = $mysqlClient->prepare("INSERT INTO thematic(name) VALUES(:name);");
             $stmt->bindParam(":name", $_POST['nom_thematique']);
             $stmt->execute();
@@ -181,7 +177,6 @@
 
         //script d'insertion origine
         if(isset($_POST['nom_origine']) && !empty($_POST['nom_origine']) && $_GET['add_origine'] === 'true'){
-            var_dump($_POST['nom_origine']);
             $stmt = $mysqlClient->prepare("INSERT INTO origin(name) VALUES(:name);");
             $stmt->bindParam(":name", $_POST['nom_origine']);
             $stmt->execute();
@@ -208,7 +203,6 @@
 
          //script d'insertion classe
          if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classes'] === 'true'){
-            var_dump($_POST['nom_classe']);
             $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
             $stmt->bindParam(":name", $_POST['nom_classe']);
             $stmt->execute();
