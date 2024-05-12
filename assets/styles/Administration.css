@@ -1,5 +1,5 @@
 html{
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 body {
     margin: 0;
@@ -33,82 +33,97 @@ margin-left: 5px;
   background-color: #FFFFFF;
   padding-top: 15px;
   box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
-  z-index: 3;
+  z-index: 1;
   display: flex;
   flex-direction: column; 
 }
-.barre-navigation li {
-    list-style: none;
-    margin-left: 16px;
-    line-height:2;
-}
+
 .navigation{
-    padding-top:75px;
-} 
-.barre-navigation ul li {
-    padding: 10px 20px;
+  padding-top:75px;
 }
-.barre-navigation strong{
-    margin-left:6px;
+
+.navigation ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
 }
-.barre-navigation a.accueil-liens {
-    background-color: #F6F6F6;
-    color: #1B3168;
-    width: 253.38px;
-    height: 38.64px;
-    padding: 0px 7.32px 0px 7.32px;
-    border-radius: 3.66px;
+
+.navigation ul li {
+padding: 10px;
+}
+
+.navigation strong{
+  margin-left:6px;
+}
+
+.navigation a.accueil-liens {
+    color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
   }
   
-  .barre-navigation a.recherche-liens {
+  .navigation a.recherche-liens {
     color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
   }
-  .barre-navigation a.mesexercices-liens {
+  .navigation a.mesexercices-liens {
     color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
   }
+
   .nav_ipad{
     display: none;
   }
+
   .btnFerme{
     display: none;
   }
-  .barre-navigation a.soumettre-liens {
+
+  .navigation a.soumettre-liens {
     color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
   }
+  
+.navigation ul li a:hover {
+  background-color: #F6F6F6;
+  width: 90%;
+  height: 38.64px;
+  border-radius: 3.66px;
+  }
+  
   .uneAction {
     display: flex;
     flex-direction: row;
     height: 40px;
     margin: auto;
   }
+
 .actions {
   width: 300px;
   border-top: #dadada 1px solid;
 }
-  .barre-navigation a.fonctions-liens {
+
+.barre-navigation a.exercices-liens {
     color: #757575;
     display: flex;
     align-items: center;
     text-decoration:none;
-  }
+}
+
 .deconnexion .deconnexion-liens{
     color: #757575;
     position: fixed;
     display: flex;
     align-items: center;
     text-decoration:none;
+    border-radius: 8px;
     font-size:14px;
     background-color:#F6F6F6;
     left : 20px;
@@ -116,48 +131,65 @@ margin-left: 5px;
     width:253px;
     height:38px;
 }
+
 .deconnexion{
-    margin-top: 175%;
+  position: fixed;
+  left : 5px;
+  bottom: 20px;
+    pointer-events: none;
 }
+
 .barre-navigation a img {
     margin-right: 10px;
 }
+
 .ensembles-logo  {
     display: flex;
     position: relative;
     margin-left: 15px;
 }
+
 .ensembles-logo-titre img{
     width: 32px;
     height: 34px;
 }
+
 .ensembles-logo-titre {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 15px;
 }
+
 .ensembles-logo-titre .titre{
     color: #1B3168;
     font-size: 26px;
 }
+
 .ensembles-logo-titre .sous-titre {
     font-size: 17px;
     font-weight: 500;
     color: #5D7285;
 }
+
 header {
     background-color: #FFFFFF;
     position: relative;
     width: 100%;
     height: 96px;
 }
+
 .header-droite {
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
 }
+
+.header-droite img {
+  margin-right: 5px;
+} 
+
 .header-droite a {
     text-decoration: none;
     color: #333;
@@ -165,15 +197,24 @@ header {
     display: flex;
     align-items: center;
 }
-.header-droite img{
-    margin-right: 10px;
-    width: 21px;
-    height: 20px;
+
+.header-droite .compte {
+  text-decoration: none;
+  color: #000000;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
-.profil-image {
-    width: 30px; /* ou la taille que vous souhaitez */
-    height: 30px; /* ou la taille que vous souhaitez */
-    border-radius: 50%; /* rend l'image ronde */
+
+.header-droite .profil-image {
+margin-right: 10px;
+width: 39px;
+height: 39px;
+border-radius: 50%;
+margin-left: 5px;
+cursor: pointer;
 }
 .contenu {
   display: flex;
