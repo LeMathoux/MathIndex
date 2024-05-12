@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Administration</title>
-    <script src="requetes/menu_tel.js"></script>
+    <script src="../requetes/menu_tel.js"></script>
     <link href="../assets/styles/Administration.css" rel="stylesheet">
 </head>
 <?php 
