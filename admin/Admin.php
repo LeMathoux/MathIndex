@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Administration</title>
+    <script src="requetes/menu_tel.js"></script>
     <link href="../assets/styles/Administration.css" rel="stylesheet">
 </head>
 <?php 
@@ -19,7 +20,7 @@
     var_dump($_POST);
 ?>
 <body>
-  <nav class="barre-navigation">
+  <nav class="barre-navigation hidden">
     <div class="ensembles-logo">
         <img alt="logo" src="../assets/images/Logo.svg">
         <div class="ensembles-logo-titre ">
@@ -27,19 +28,20 @@
           <span class="sous-titre">Lycée Saint-Vincent -Senlis</span>
         </div>
     </div>
+    <div class="ensembles-logo-ipad">
+        <img alt="logo" src="../assets/images/Logo.svg">
+    </div>
     <button onclick='CachecheMenu()' class='btnFerme'>fermer le menu</button>
     <div class="navigation">
-        <ul>
-            <li><a href="../Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home_gris.svg">Accueil</a></li>
-            <li><a href="../Recherche.php" class="recherche-liens"><img src="../assets/images/icone_search_gris.svg">Recherche</a></li>
-            <li><a href="../Exercices.php" class="exercices-liens"><img src="../assets/images/icone_fonctions_gris.svg">Exercices</a></li>
-            <?php 
-                if(isset($_SESSION["account"]) &&(($_SESSION["account"]['role'] === 'Administrateur') || ($_SESSION["account"]['role'] === 'Contributeur'))){
-                    echo '<li><a href="../MesExercices.php" class="mesexercices-liens"><img src="../assets/images/icone_liste_gris.svg">Mes exercices</a></li>
-                    <li><a href="../Soumettre.php" class="soumettre-liens"><img src="../assets/images/icone_soumettre_gris.svg">Soumettre</a></li>';
-                } 
-            ?>
-        </ul>
+        <li><a href="../Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home.svg"><strong>Accueil</strong></a></li>
+        <li><a href="../Recherche.php" class="recherche-liens"><img src="../assets/images/icone_search_gris.svg">Recherche</a></li>
+        <li><a href="../Exercices.php" class="fonctions-liens"><img src="../assets/images/icone_fonctions_gris.svg">Exercices</a></li>
+        <?php 
+            if(isset($_SESSION["account"]) &&(($_SESSION["account"]['role'] === 'Administrateur') || ($_SESSION["account"]['role'] === 'Contributeur'))){
+                echo '<li><a href="../MesExercices.php" class="mesexercices-liens"><img src="../assets/images/icone_liste_gris.svg">Mes exercices</a></li>
+                <li><a href="../Soumettre-information_generales.php" class="soumettre-liens"><img src="../assets/images/icone_soumettre_gris.svg">Soumettre</a></li>';
+              } 
+        ?>
         <div class="deconnexion">
           <?php if(isset($_SESSION["account"])): ?>
             <li><a href="../requetes/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg">Déconnexion</a></li>
@@ -47,21 +49,17 @@
         </div>
     </div>
     <div class="nav_ipad">
-      <ul>
-        <li><a href="Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home_gris.svg"></a></li>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="../assets/images/icone_home.svg"></a></li>
         <li><a href="Recherche.php" class="recherche-liens"><img src="../assets/images/icone_search_gris.svg"></a></li>
         <li><a href="Exercices.php" class="exercices-liens"><img src="../assets/images/icone_fonctions_gris.svg"></a></li>
-      </ul>
 
       <?php if(isset($_SESSION["account"])): ?>
         <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
-          <ul>
             <li><a href="MesExercices.php" class="mesexercices-liens"><img src="../assets/images/icone_liste_gris.svg"></a></li>
             <li><a href="Soumettre.php" class="soumettre-liens"><img src="../assets/images/icone_soumettre_gris.svg"></a></li>
             <div class="deconnexion">
-              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg">Déconnexion</a></li>
+              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg"></a></li>
             </div>
-          </ul>
         <?php endif; ?>
       <?php endif; ?>
     </div>
@@ -275,6 +273,7 @@
                     <?php if(isset($_GET['add_contributeurs'])){ ?>
                     <div class="content">
                                 <h1> Ajouter un contributeurs </h1>
+                                
                                 <form enctype="multipart/form-data" method='post' name='Fichiers'>
                                     <div class='ligne'>
                                         <label class='label_ajout' for='nom_contributeur'>Nom du contributeurs :
@@ -352,7 +351,9 @@
                 
                                 }
                                 else {
+
                                     $sql_all_contributeurs = "SELECT * FROM user LIMIT $contributeurs_par_page OFFSET $offset";
+
                                     $result_all_contributeurs = $conn->query($sql_all_contributeurs);
                                 }
                     
@@ -361,20 +362,22 @@
                                     $stmt->bindParam(":id", $row_contributeurs["id"]);
                                     $stmt->execute();
 
+                                    $nb_exercices = $stmt->fetchAll();
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["first_name"] . "</p></td>";
                                     echo "<td class='nom'><p>" . $row_contributeurs["last_name"] . "</p></td>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["role"]. "</p></td>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["email"]. "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
+                                    echo "<td class='nom'><p>" . $row_contributeurs["email"] . "</p></td>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
+
                                     if (isset($_GET['page_contributeurs'])) {
-                                        echo "<p><a href='?onglet=contributeurs&page_contributeurs=".$_GET['page_contributeurs']."&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=contributeurs&page_contributeurs=".$_GET['page_contributeurs']."&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=contributeurs&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=contributeurs&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -562,15 +565,15 @@
                         <a href='../assets/Corriges/" . $row["correction_original_name"]."' download>Corrigé</a>";
                       }
                       echo "</td>";
-                      echo "<td class='actions_exercices'>";
-                      echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p>";
-                      echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                      echo "<td class='actions'>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                            <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p></div>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_exercice'])) {
-                        echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p></div>";
                       }
                       else {
-                        echo "<p><a href='?onglet=exercices&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=exercices&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p></div>";
                       }
                       echo "</td>";
                      echo "</tr>";
@@ -704,9 +707,9 @@
                             <h1> Ajouter une Classe </h1>
                             
                             <form action='' method='post'>
-                                <div class="ranger">
-                                    <label class='' for='nom_classe'>Nom de la classe :</label>
-                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" />
+                                <div class="ligne">
+                                    <label class='label_ajout' for='nom_classe'>Nom de la classe :
+                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" /></label>
                                 </div>
                                 <a href="Admin.php?onglet=classes"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
                                 <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
@@ -768,16 +771,18 @@
                                 
                                     echo "<tr>";
                                     echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
+
                                     echo "<td class='nom'><p>" . $nb_exercices. "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
+
                                     if (isset($_GET['page_classes'])) {
-                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -901,18 +906,18 @@
                         <div class="content">
                             <h1> Ajouter une thematique </h1>
                             <form action='' method='post'>
-                                <div class="ranger">
-                                    <label class='' for='nom_thematique'>Nom de la thematique :</label>
-                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" />
+                                <div class="ligne">
+                                    <label class='label_ajout' for='nom_thematique'>Nom de la thematique :
+                                    <input type='text' name='nom_thematique' id='nom_thematique' value="<?php if(isset($thematique)){echo $thematique;}?>" /></label>
                                 </div>
-                                <div class="ranger">
-                                    <label for="thematique">Choisir la matière :</label>
+                                <div class="ligne">
+                                    <label class='label_ajout' for="thematique">Choisir la matière :
                                     <select name="thematique" id="thematique">
                                         <option value="Suites">Suites</option>
                                         <option value="Primitives">Primitives</option>
                                         <option value="Continuite">Continuité</option>
                                         <option value="Geométrie">Géométrie</option>
-                                    </select>
+                                    </select></label>
                                 </div>
                             <a href="Admin.php?onglet=thematiques"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
                             <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
@@ -976,15 +981,15 @@
                                     echo "<td class='nom'><p>" . $row_thematiques["name"] . "</p></td>";
                                     echo "<td class='nom'><p>Mathematiques</p></td>";
                                     echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
-                                    echo "<td class='actions_exercices'>";
-                                    echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p>";
-                                    echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                                    echo "<td class='actions'>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                                            <p><a href='Admin.php?onglet=thematiques&add_thematique=modify&id=".$row_thematiques["id"]."'>Modifier</a></p></div>";
+                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                                     if (isset($_GET['page_thematiques'])) {
-                                        echo "<p><a href='?onglet=thematiques&page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&page_thematiques=".$_GET['page_thematiques']."&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p></div>";
                                     }
                                     else {
-                                        echo "<p><a href='?onglet=thematiques&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p>";
+                                        echo "<p><a href='?onglet=thematiques&action_thematiques=delete&id=".$row_thematiques["id"]."'>Supprimer</a></p></div>";
                                     }
                                     echo "</td>";
                                     echo "</tr>";
@@ -1165,15 +1170,15 @@
                     while ($row_origines = $result_all_origines->fetch_assoc()) {
                       echo "<tr>";
                       echo "<td class='nom'><p>" . $row_origines["name"] . "</p></td>";
-                      echo "<td class='actions_origines'>";
-                      echo "<img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href='Admin.php?onglet=origines&add_origine=modify&id=".$row_origines["id"]."'>Modifier</a></p>";
-                      echo "<img src='../assets/images/icone_poubelle_gris.svg'>";
+                      echo "<td class='actions'>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
+                            <p><a href='Admin.php?onglet=origines&add_origine=modify&id=".$row_origines["id"]."'>Modifier</a></p></div>";
+                      echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_origines'])) {
-                        echo "<p><a href='?page_origines=".$_GET['page_origines']."&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?page_origines=".$_GET['page_origines']."&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p></div>";
                       }
                       else {
-                        echo "<p><a href='?onglet=origines&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p>";
+                        echo "<p><a href='?onglet=origines&action_origines=delete&id=".$row_origines["id"]."'>Supprimer</a></p></div>";
                       }
                       echo "</td>";
                      echo "</tr>";
@@ -1278,18 +1283,15 @@
                 </div>
                 </div>
                 </div>
-                <p><br /><br /><br /></p>
-            
+                <p><br /><br /><br /></p>   
         </div>
-        <footer>
-            <div class="mentionlegales">
+        <div class="mentionlegales">
             <div class="mentionlegales-text">Mentions légales</div>
             <div class="mentionlegales-text">•</div>
             <div class="mentionlegales-text">Contact</div>
             <div class="mentionlegales-text">•</div>
             <div class="mentionlegales-text">Lycée Saint-Vincent</div>
-            </div>
-        </footer>
+        </div>
     </div>
 </body>
 </html>
