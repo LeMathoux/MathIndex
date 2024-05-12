@@ -27,6 +27,11 @@ list-style-type: none;
 padding: 0;
 margin: 0;
 }
+.nav_ipad ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  }
 
 .navigation ul li {
 padding: 10px;
@@ -577,7 +582,7 @@ font-weight:400;
 
 .barre-navigation a img{
 margin-right: auto;
-margin-left: auto;
+margin-left: 35%;
 }
 
 .ensembles-logo-ipad {

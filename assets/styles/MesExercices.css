@@ -32,7 +32,11 @@ body {
   .navigation ul li {
   padding: 10px;
   }
-  
+  .nav_ipad ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    }
   .navigation strong{
     margin-left:6px;
   }
@@ -661,7 +665,7 @@ justify-content: center;
 }
 .barre-navigation  a.accueil-liens img{
 
-  margin-left: auto;
+  margin-left: 30%;
   margin-right: auto;
 }
 .deconnexion .deconnexion-liens{
@@ -700,7 +704,7 @@ justify-content: center;
 }
 .barre-navigation a img{
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 35%;
 }
 .barre-navigation a.exercices-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
   background-color: #F6F6F6;

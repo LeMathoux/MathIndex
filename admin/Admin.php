@@ -60,7 +60,7 @@
                 <li><a href="../MesExercices.php" class="mesexercices-liens"><img src="../assets/images/icone_liste_gris.svg"></a></li>
                 <li><a href="../Soumettre.php" class="soumettre-liens"><img src="../assets/images/icone_soumettre_gris.svg"></a></li>
                 <div class="deconnexion">
-                    <li><a href="../admin/authentification/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg">Déconnexion</a></li>
+                    <li><a href="../admin/authentification/logout.php" class="deconnexion-liens"><img src="../assets/images/icone_logout.svg"></a></li>
                 </div>
             </ul>
         <?php endif; ?>

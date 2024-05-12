@@ -17,7 +17,11 @@ body {
   display: flex;
   flex-direction: column; 
 }
-
+.nav_ipad ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  }
 .navigation{
   padding-top:75px;
 }
@@ -604,7 +608,7 @@ height: 100%;
 }
 .barre-navigation  a.accueil-liens img{
 
-margin-left: auto;
+margin-left: 30%;
 margin-right: auto;
 }
 .deconnexion .deconnexion-liens{
@@ -643,7 +647,7 @@ font-weight:400;
 }
 .barre-navigation a img{
 margin-right: auto;
-margin-left: auto;
+margin-left: 35%;
 }
 
 .ensembles-logo-ipad {

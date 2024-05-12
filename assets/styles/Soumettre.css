@@ -231,7 +231,11 @@ body {
     color: #1B3168;
     font-size:28px;
 }
-  
+.nav_ipad ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  }
   .carre-blanc {
       display: flex;
       flex-direction: column;
@@ -734,7 +738,7 @@ color: green;
 }
 .barre-navigation  a.accueil-liens img{
 
-  margin-left: auto;
+  margin-left: 30%;
   margin-right: auto;
 }
 .deconnexion .deconnexion-liens{
@@ -773,7 +777,7 @@ color: green;
 }
 .barre-navigation a img{
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 35%;
 }
 .barre-navigation a.fonctions-liens:hover,a.recherche-liens:hover,a.mesexercices-liens:hover,a.soumettre-liens:hover{
   background-color: #F6F6F6;

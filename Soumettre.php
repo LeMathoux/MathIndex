@@ -374,7 +374,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     </div>
     <div class="nav_ipad">
       <ul>
-        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_gris_home.svg"></a></li>
+        <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"></a></li>
         <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
         <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions_gris.svg"></a></li>
       </ul>
@@ -384,7 +384,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
             <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
             <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre.svg"></a></li>
             <div class="deconnexion">
-              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+              <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
             </div>
           </ul>
         <?php endif; ?>

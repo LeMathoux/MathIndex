@@ -638,7 +638,11 @@ display:flex;
 align-items:center;
 justify-content: center;
 }
-
+.nav_ipad ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  }
 span.pagination-bouton-droite{
 border:none;
 margin: 0 5px;
@@ -1107,7 +1111,7 @@ input[class='btn_retour']{
 }
 .barre-navigation  a.accueil-liens img{
 
-  margin-left: auto;
+  margin-left: 35%;
   margin-right: auto;
 }
 .deconnexion .deconnexion-liens{
@@ -1146,7 +1150,7 @@ input[class='btn_retour']{
 }
 .barre-navigation a img{
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 35%;
 }
 
 .ensembles-logo-ipad {

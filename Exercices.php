@@ -60,9 +60,9 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
         </div>
         <div class="nav_ipad">
             <ul>
-                <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home.svg"></a></li>
+                <li><a href="Accueil.php" class="accueil-liens"><img src="assets/images/icone_home_gris.svg"></a></li>
                 <li><a href="Recherche.php" class="recherche-liens"><img src="assets/images/icone_search_gris.svg"></a></li>
-                <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions_gris.svg"></a></li>
+                <li><a href="Exercices.php" class="exercices-liens"><img src="assets/images/icone_fonctions.svg"></a></li>
             </ul>
             <?php if(isset($_SESSION["account"])): ?>
                 <?php if($_SESSION["account"]["role"] == "Administrateur" || $_SESSION["account"]["role"] == "Contributeur"): ?>
@@ -70,7 +70,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                         <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
                         <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
                         <div class="deconnexion">
-                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
                         </div>
                     </ul>
                 <?php endif; ?>
