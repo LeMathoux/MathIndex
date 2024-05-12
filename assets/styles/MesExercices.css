@@ -113,12 +113,14 @@ body {
     width:253px;
     height:38px;
 }
-
+.deconnexion .deconnexion-liens:hover{
+  width: 253px;
+  background-color:#eae9e9;
+}
 .deconnexion{
   position: fixed;
   left : 5px;
   bottom: 20px;
-    pointer-events: none;
 }
 
   .nav_ipad{
