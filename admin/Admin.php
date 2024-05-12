@@ -80,7 +80,7 @@
             $role=$_SESSION['account']['role'];
             $iduser=$_SESSION['account']['id'];
             $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-            echo "<div class='compte'>$lastname $firstname <img src='../assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+            echo "<div class='compte'>$firstname $lastname <img src='../assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
         } else {
             echo "<a href='../Connexion.php' class='connexion'><img src='../assets/images/icone_login.svg' alt='login'>Connexion</a>";
         }
