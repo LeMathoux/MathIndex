@@ -835,7 +835,39 @@ justify-content: center;
 .btn_menu_tel{
   display: none;
 }
+input[class='bouton_envoyer']{
+  width: 200px;
+  height: 60px;
+}
+input[class='btn_retour']{
+  width: 250px;
+  height: 60px;
+}
+.bouton_envoyer{
+  background-color: #dadada;
+  border: #dadada;
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
 
+.btn_retour{
+  background-color: #dadada;
+  border:  #dadada;
+  width: 250px;
+  height: 60px;
+  border-radius: 10px;
+  color: #757575;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px;
+  cursor: pointer;
+}
 @media screen and (max-width: 1866px){
   .carre-blanc p{
     font-size: 21px;
@@ -1701,31 +1733,4 @@ left: 0%;
 .content label{
   font-size: 18px;
   color: gray;
-}
-
-
-.bouton_envoyer{
-  background-color: #dadada;
-  border: #dadada;
-  width: 200px;
-  height: 60px;
-  border-radius: 10px;
-  color: #757575;
-  font-size: 20px;
-  font-weight: bold;
-  margin: 30px;
-  cursor: pointer;
-}
-
-.bouton_retour{
-  background-color: #dadada;
-  border:  #dadada;
-  width: 250px;
-  height: 60px;
-  border-radius: 10px;
-  color: #757575;
-  font-size: 20px;
-  font-weight: bold;
-  margin: 30px;
-  cursor: pointer;
 }
