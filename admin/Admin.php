@@ -8,8 +8,6 @@
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Administration</title>
     <script src="requetes/menu_tel.js"></script>
-    <title>Administration</title>
-    <script src="requetes/menu_tel.js"></script>
     <link href="../assets/styles/Administration.css" rel="stylesheet">
 </head>
 <?php 
@@ -18,10 +16,10 @@
     if(!isset($_GET['onglet'])){
         $_GET['onglet'] = 'contributeurs';
     }
+    
     var_dump($_POST);
 ?>
 <body>
-  <nav class="barre-navigation hidden">
   <nav class="barre-navigation hidden">
     <div class="ensembles-logo">
         <img alt="logo" src="../assets/images/Logo.svg">
@@ -29,9 +27,6 @@
           <span class="titre">Math Index</span>
           <span class="sous-titre">Lycée Saint-Vincent -Senlis</span>
         </div>
-    </div>
-    <div class="ensembles-logo-ipad">
-        <img alt="logo" src="../assets/images/Logo.svg">
     </div>
     <div class="ensembles-logo-ipad">
         <img alt="logo" src="../assets/images/Logo.svg">
@@ -85,76 +80,6 @@
             echo "<div class='compte'>$lastname $firstname <img src='../assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
         } else {
             echo "<a href='../Connexion.php' class='connexion'><img src='../assets/images/icone_login.svg' alt='login'>Connexion</a>";
-        }
-
-        //script d'insertion contributeurs
-        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && isset($_POST['prenom_contributeur']) && !empty($_POST['prenom_contributeur']) && isset($_POST['email_contributeur']) && !empty($_POST['email_contributeur']) && isset($_POST['mdp_contributeur']) && !empty($_POST['mdp_contributeur']) && isset($_POST['role_contributeur']) && !empty($_POST['role_contributeur']) &&  $_GET['add_contributeurs'] === 'true'){
-            if(!empty($_FILES['photo_profil'])){
-                $uploads_dir = '../assets/photos_de_profil';
-                $tmp_name = $_FILES["photo_profil"]["tmp_name"];
-                $name = basename($_FILES["photo_profil"]["name"]);
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
-                $stmt = $mysqlClient->prepare("INSERT INTO user(last_name,first_name,email,role,password,profile_photo_file) VALUES(:last_name,:first_name,:email,:role,:password,:profile_photo_file);");
-                $stmt->bindParam(":last_name", $_POST['nom_contributeur']);
-                $stmt->bindParam(":first_name", $_POST['prenom_contributeur']);
-                $stmt->bindParam(":email", $_POST['email_contributeur']);
-                $stmt->bindParam(":role", $_POST['role_contributeur']);
-                $stmt->bindParam(":password", $_POST['mdp_contributeur']);
-                $stmt->bindParam(":profile_photo_file", $_FILES['photo_profil']['name']);
-                $stmt->execute();
-            }else{
-                $stmt = $mysqlClient->prepare("INSERT INTO user(last_name,first_name,email,role,password) VALUES(:last_name,:first_name,:email,:role,:password);");
-                $stmt->bindParam(":last_name", $_POST['nom_contributeur']);
-                $stmt->bindParam(":first_name", $_POST['prenom_contributeur']);
-                $stmt->bindParam(":email", $_POST['email_contributeur']);
-                $stmt->bindParam(":role", $_POST['role_contributeur']);
-                $stmt->bindParam(":password", $_POST['mdp_contributeur']);
-                $stmt->execute();
-            }
-            header("location: admin.php?onglet=contributeurs");
-        }
-        //script de modification contributeur
-        if(isset($_POST['nom_contributeur']) && !empty($_POST['nom_contributeur']) && $_GET['add_contributeur'] === 'modify'){
-            $stmt = $mysqlClient->prepare("UPDATE user SET name=:name WHERE id=:id");
-            $stmt->bindParam(":name", $_POST['nom_contributeur']);
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-
-            header("location: admin.php?onglet=contributeurs");
-        }
-        //script de recuperation du nom contributeur a modifier
-        if(isset($_GET['id']) && isset($_GET['add_contributeur']) && $_GET['add_contributeur'] === 'modify'){
-            $stmt = $mysqlClient->prepare("SELECT * FROM user WHERE id=:id");
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-            $contributeur = $stmt -> fetchAll();
-        }
-
-        //script d'insertion classe
-        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classe'] === 'true'){
-            var_dump($_POST['nom_classe']);
-            $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
-            $stmt->bindParam(":name", $_POST['nom_classe']);
-            $stmt->execute();
-
-            header("location: admin.php?onglet=classes");
-        }
-        //script de modification classe
-        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classe'] === 'modify'){
-            $stmt = $mysqlClient->prepare("UPDATE classroom SET name=:name WHERE id=:id");
-            $stmt->bindParam(":name", $_POST['nom_classe']);
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-
-            header("location: admin.php?onglet=classes");
-        }
-        //script de recuperation du nom classe a modifier
-        if(isset($_GET['id']) && isset($_GET['add_classe']) && $_GET['add_classe'] === 'modify'){
-            $stmt = $mysqlClient->prepare("SELECT name FROM classroom WHERE id=:id");
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-            $classe = $stmt -> fetchAll();
-            $classe = $classe[0][0];
         }
 
         //script d'insertion contributeurs
@@ -308,33 +233,6 @@
             $classe = $classe[0][0];
         }
 
-         //script d'insertion classe
-         if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classes'] === 'true'){
-            var_dump($_POST['nom_classe']);
-            $stmt = $mysqlClient->prepare("INSERT INTO classroom(name) VALUES(:name);");
-            $stmt->bindParam(":name", $_POST['nom_classe']);
-            $stmt->execute();
-
-            header("location: admin.php?onglet=classes");
-        }
-        //script de modification classe
-        if(isset($_POST['nom_classe']) && !empty($_POST['nom_classe']) && $_GET['add_classes'] === 'modify'){
-            $stmt = $mysqlClient->prepare("UPDATE classroom SET name=:name WHERE id=:id");
-            $stmt->bindParam(":name", $_POST['nom_classe']);
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-
-            header("location: admin.php?onglet=classes");
-        }
-        //script de recuperation du nom classe a modifier
-        if(isset($_GET['id']) && isset($_GET['add_classes']) && $_GET['add_classes'] === 'modify'){
-            $stmt = $mysqlClient->prepare("SELECT name FROM classroom WHERE id=:id");
-            $stmt->bindParam(":id", $_GET['id']);
-            $stmt->execute();
-            $classe = $stmt -> fetchAll();
-            $classe = $classe[0][0];
-        }
-
       ?>
     </div>
     
@@ -347,6 +245,7 @@
         document.getElementById('selectedfile').value=document.getElementById('hiddenfile').value;
     }
 </script>
+
   <div class='grand_conteneur'>
         <div class='menu_arriere'></div>
         <div class="contenu">
@@ -356,233 +255,6 @@
                 <div id="menu-tab"><!----------------tableau-01---------------------------------->
                 <div id="page-wrap">
                 <div class="tabs"><!----------------onglet-01-contributeurs-------------------------->
-                <div class="tab" id="tab-contri"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
-                    <?php
-                        $contributeurs_par_page = 4;
-                        $page_contributeurs = isset($_GET['page_contributeurs']) ? $_GET['page_contributeurs'] : 1;
-                        $offset = ($page_contributeurs - 1) * $contributeurs_par_page;
-
-                        // Requête pour obtenir le nombre total d'exercices
-                        $sql_total_contributeurs = "SELECT COUNT(*) AS total FROM user";
-                        $result_total_contributeurs = $conn->query($sql_total_contributeurs);
-                        $row_total_contributeurs = $result_total_contributeurs->fetch_assoc();
-                        $total_contributeurs = $row_total_contributeurs['total'];
-
-                        // Calculer le nombre total de pages
-                        $total_pages_contributeurs = ceil($total_contributeurs / $contributeurs_par_page);
-                    ?>
-                    <?php if(isset($_GET['add_contributeurs'])){ ?>
-                    <div class="content">
-                                <h1> Ajouter un contributeurs </h1>
-                                
-                                <form enctype="multipart/form-data" method='post' name='Fichiers'>
-                                    <div class='ligne'>
-                                        <label class='label_ajout' for='nom_contributeur'>Nom du contributeurs :
-                                        <input type='text' name='nom_contributeur' id='nom_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['last_name'];}?>" /></label>
-                                        <label class='label_ajout' for='role_contributeur'>Role du contributeurs :
-                                        <input type='text' name='role_contributeur' id='role_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['role'];}?>" /></label>
-                                    </div>
-                                    <div class='ligne'>
-                                        <label class='label_ajout' for='prenom_contributeur'>Prénom du contributeurs :
-                                        <input type='text' name='prenom_contributeur' id='prenom_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['first_name'];}?>" /></label>
-                                        <label name='photo_profil' class='label_ajout'> Photo de profil (png ou jpeg) :
-                                            <div class='file'>
-                                                <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="photo_profil" onChange="getvalue();"/>
-                                                <input class="leFichier" type="text" id="selectedfile" name='NewNamePhoto' value='Sélectionner un fichier à télécharger'/>
-                                                <input class='bouton-upload' type="button" onclick="getfile();"/>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class='ligne'>
-                                        <label class='label_ajout' for='email_contributeur'>Email du contributeurs :
-                                        <input type='text' name='email_contributeur' id='email_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['email'];}?>" /></label>
-                                    </div>
-                                    <div class='ligne'>
-                                        <label class='label_ajout' for='mdp_contributeur'>Mot de passe du contributeurs :
-                                        <input type='text' name='mdp_contributeur' id='mdp_contributeur' value="<?php if(isset($contributeurs)){echo $contributeurs['password'];}?>" /></label>
-                                    </div>
-                                    <a href="Admin.php"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
-                                    <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
-                                </form>
-                    </div>
-
-
-                    <?php }else{?>
-                        <div class="content">
-                            <h2>Gestion des contributeurs</h2>
-                            <p>Rechercher un contributeurs par son nom, prénom ou email :</p>
-                            <div class="recherche_origines">
-                            <form action="Admin.php"  method="get">
-                                <input type='hidden' name='onglet' value='contributeurs'>
-                                <input type="text" id="recherche_contrib" name="recherche_contrib"
-                                <?php
-                                if (isset($_GET["recherche_contrib"])) {
-                                    echo 'value="'.$_GET["recherche_contrib"].'"';
-                                }
-                                ?>
-                                >
-                                <button type="submit">Rechercher</button>
-                            </form>
-                            <?php 
-                                if (isset($_GET["recherche_contrib"])) {
-                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=contributeurs"><p>X</p></a>';
-                                }
-                            ?>
-                                <div class="bouton_ajout">
-                                    <a href="Admin.php?onglet=contributeurs&add_contributeurs=true"><p style="color: white;">Ajouter +</p></a>
-                                </div> 
-                            </div>
-                            <table class="tab_exercice">
-                                <thead>
-                                    <td><p>Nom</p></td>
-                                    <td><p>Prénom</p></td>
-                                    <td><p>Rôle</p></td>
-                                    <td><p>Email</p></td>
-                                    <td><p>Actions</p></td>
-                                </thead>
-                                <?php
-
-                                if (isset($_GET["recherche_contrib"])) {
-                                    $sql_search_contributeurs = "SELECT * FROM user
-                                                        WHERE last_name LIKE '%" . $_GET["recherche_contrib"] . "%'
-                                                        OR  first_name LIKE '%" . $_GET["recherche_contrib"] . "%'
-                                                        OR email LIKE '%" . $_GET["recherche_contrib"] . "%'
-                                                        LIMIT $contributeurs_par_page OFFSET $offset";
-                                    $result_all_contributeurs = $conn->query($sql_search_contributeurs);
-                
-                                }
-                                else {
-
-                                    $sql_all_contributeurs = "SELECT * FROM user LIMIT $contributeurs_par_page OFFSET $offset";
-
-                                    $result_all_contributeurs = $conn->query($sql_all_contributeurs);
-                                }
-                    
-                                while ($row_contributeurs = $result_all_contributeurs->fetch_assoc()) {
-                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE thematic_id=:id;");
-                                    $stmt->bindParam(":id", $row_contributeurs["id"]);
-                                    $stmt->execute();
-
-                                    $nb_exercices = $stmt->fetchAll();
-                                    echo "<tr>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["first_name"] . "</p></td>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["last_name"] . "</p></td>";
-                                    echo "<td class='nom'><p>" . $nb_exercices[0][0]. "</p></td>";
-                                    echo "<td class='nom'><p>" . $row_contributeurs["email"] . "</p></td>";
-                                    echo "<td class='actions'>";
-                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=contributeurs&add_contributeurs=modify&id=".$row_contributeurs["id"]."'>Modifier</a></p></div>";
-                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
-
-                                    if (isset($_GET['page_contributeurs'])) {
-                                        echo "<p><a href='?onglet=contributeurs&page_contributeurs=".$_GET['page_contributeurs']."&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
-                                    }
-                                    else {
-                                        echo "<p><a href='?onglet=contributeurs&action_contributeurs=delete&id=".$row_contributeurs["id"]."'>Supprimer</a></p></div>";
-                                    }
-                                    echo "</td>";
-                                    echo "</tr>";
-                                }
-                            echo "</table>";
-                            ?>
-                            <div class="pagination">
-                                <?php
-                                    if ($page_contributeurs > 1) {
-                                        echo "<a href='Admin.php?onglet=contributeurs&page_contributeurs=".($page_contributeurs - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
-                                    } else {
-                                        echo "<span class='pagination-bouton-gauche'>&lt;</span>";
-                                    }
-
-                                    for ($i=1; $i<=$total_pages_contributeurs; $i++) {
-                                        if ($i == $page_contributeurs) {
-                                        echo "<span class='page-actuel'>$i</span>";
-                                        } else {
-                                            echo "<a href='Admin.php?onglet=contributeurs&page_contributeurs=".$i."' class='pagination-lien'>$i</a>";
-                                        }
-                                    }
-
-                                    if ($page_contributeurs < $total_pages_contributeurs) {
-                                        echo "<a href='Admin.php?onglet=contributeurs&page_contributeurs=".($page_contributeurs + 1)."' class='pagination-bouton-droite'>&gt;</a>";
-                                    } else {
-                                        echo "<span class='pagination-bouton-droite'>&gt;</span>";
-                                    }
-                                ?>
-                            </div>
-                        </div>
-
-                    <?php } ?>
-                    <?php
-                if (isset($_GET['action_contributeurs']) && $_GET['action_contributeurs'] === 'delete') {
-                    // verifiaction si la thematique est utilisée sur des exercice
-                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE created_by_id=:id;");
-                    $stmt->bindParam(":id", $_GET['id']);
-                    $stmt->execute();
-                    $nb_exercices = $stmt->fetchAll();
-                    $nb_exercices = $nb_exercices[0][0];
-
-                    if($nb_exercices === "0" && $_GET['id'] != $iduser){
-                    ?>
-                    
-                    <div class="confirmation">
-                    <div class="contenu_confirmation">
-                        <div class="info_confirmation">
-                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
-                        <div>
-                            <h2>Confirmez la suppression</h2>
-                            <p>Êtes-vous certain de vouloir supprimer ce contributeur ?</p>
-                        </div>
-                        </div>
-                        <?php
-                        if (isset($_GET['page_contributeurs'])) {
-                        echo '<a href="?onglet=contributeurs&page_contributeurs='.$_GET['page_contributeurs'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                        echo '<a href="?onglet=contributeurs&page_contributeurs='.$_GET['page_contributeurs'].'&confirmed_contributeurs=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                        }
-                        else {
-                        echo '<a href="./Admin.php?onglet=contributeurs" class="annuler_btn" style="color: black;">Annuler</a>';
-                        echo '<a href="?onglet=contributeurs&confirmed_contributeurs=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                        } 
-                        ?>
-                    </div>
-                    </div>
-                    <?php
-                        }
-                        else{
-                    ?>
-                    <div class="confirmation">
-                    <div class="contenu_confirmation">
-                        <div class="info_confirmation">
-                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
-                        <div>
-                            <h2>Suppression impossible</h2>
-                            <p>Le contributeurs est utilisée.</p>
-                        </div>
-                        </div>
-                        <?php
-                        if (isset($_GET['page_contributeurs'])) {
-                        echo '<a href="?onglet=contributeurs&page_contributeurs='.$_GET['page_contributeurs'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                        }
-                        else {
-                        echo '<a href="./Admin.php?onglet=contributeurs" class="annuler_btn" style="color: black;">Annuler</a>';
-                        } 
-                        ?>
-                    </div>
-                    </div>
-                    <?php
-                        }
-                    }
-                    if (isset($_GET['confirmed_contributeurs']) && $_GET['confirmed_contributeurs'] == 'true') {
-                        $id_contributeurs = $_GET['id'];
-                        $sql_supp = "DELETE FROM user WHERE id = $id_contributeurs";
-                        $stmt_supp = $conn->prepare($sql_supp);
-                        $stmt_supp->execute();
-                        
-                    
-                        header("location: Admin.php?onglet=contributeurs");
-                        
-                    }
-                    ?> 
-                </div>
-                    
                 <div class="tab" id="tab-contri"><input id="tab-1" checked="checked" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'contributeurs'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-1">Contributeurs</label>
                     <?php
                         $contributeurs_par_page = 4;
@@ -897,10 +569,6 @@
                       echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
                             <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p></div>";
                       echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
-                      echo "<td class='actions'>";
-                      echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
-                            <p><a href='../Soumettre.php?info=".$row["exercise_id"]."'>Modifier</a></p></div>";
-                      echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
                       if (isset($_GET['page_exercice'])) {
                         echo "<p><a href='?onglet=exercices&page_exercice=".$_GET['page_exercice']."&action_exercice=delete&id=".$row["exercise_id"]."'>Supprimer</a></p></div>";
                       }
@@ -1012,213 +680,13 @@
                           
                                 if (isset($_GET['page_exercice'])) {
                                   header("location: ./Admin.php?page_exercice=" . $_GET['page_exercice']);
-                                  header("location: ./Admin.php?page_exercice=" . $_GET['page_exercice']);
                               } else {
-                                  header("location: ./Admin.php");
                                   header("location: ./Admin.php");
                               }
                             }
                           }
                         ?>
                 <!----------------onglet-03-classes-------------------------->
-                <div class="tab" id="tab-classe"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
-                    <?php
-                        $classes_par_page = 4;
-                        $page_classes = isset($_GET['page_classes']) ? $_GET['page_classes'] : 1;
-                        $offset = ($page_classes - 1) * $classes_par_page;
-
-                        // Requête pour obtenir le nombre total de classes
-                        $sql_total_classes = "SELECT COUNT(*) AS total FROM classroom";
-                        $result_total_classes = $conn->query($sql_total_classes);
-                        $row_total_classes = $result_total_classes->fetch_assoc();
-                        $total_classes = $row_total_classes['total'];
-
-                        // Calculer le nombre total de pages
-                        $total_pages_classes = ceil($total_classes / $classes_par_page);
-                    ?>
-                    <?php if(isset($_GET['add_classes'])){ ?>
-                        <div class="content">
-                            <h1> Ajouter une Classe </h1>
-                            
-                            <form action='' method='post'>
-                                <div class="ligne">
-                                    <label class='label_ajout' for='nom_classe'>Nom de la classe :
-                                    <input type='text' name='nom_classe' id='nom_classe' value="<?php if(isset($classe)){echo $classe;}?>" /></label>
-                                </div>
-                                <a href="Admin.php?onglet=classes"><input class='btn_retour' type='button' value='◄ Retour à la liste' class="bouton_retour"></input></a>
-                                <input type='submit' class="bouton_envoyer" value='Enregistrer'></input>
-                            </form>
-                        </div>
-
-
-                    <?php }else{?>
-                        <div class="content">
-                            <h2>Gestion des classes</h2>
-                            <p>Rechercher une classe par son nom :</p>
-                            <div class="recherche_origines">
-                            <form action="Admin.php"  method="get">
-                                <input type='hidden' name='onglet' value='classes'>
-                                <input type="text" id="recherche_class" name="recherche_class"
-                                <?php
-                                if (isset($_GET["recherche_class"])) {
-                                    echo 'value="'.$_GET["recherche_class"].'"';
-                                }
-                                ?>
-                                >
-                                <button type="submit">Rechercher</button>
-                            </form>
-                            <?php 
-                                if (isset($_GET["recherche_class"])) {
-                                    echo '<a class="annuler_recherche" href="Admin.php?onglet=classes"><p>X</p></a>';
-                                }
-                            ?>
-                                <div class="bouton_ajout">
-                                    <a href="Admin.php?onglet=classes&add_classes=true"><p style="color: white;">Ajouter +</p></a>
-                                </div> 
-                            </div>
-                            <table class="tab_classe">
-                                <thead>
-                                    <td><p>Nom</p></td>
-                                    <td><p>Nombre d'exercices</p></td>
-                                    <td><p>Actions</p></td>
-                                </thead>
-                                <?php
-
-                                if (isset($_GET["recherche_class"])) {
-                                    $sql_search_classes = "SELECT  name FROM classroom
-                                                        WHERE name LIKE '%" . $_GET["recherche_class"] . "%'
-                                                        LIMIT $classes_par_page OFFSET $offset";
-                                    $result_all_classes = $conn->query($sql_search_classes);
-                
-                                }
-                                else {
-                                    $sql_all_classes = "SELECT id, name FROM classroom LIMIT $classes_par_page OFFSET $offset";
-                                    $result_all_classes = $conn->query($sql_all_classes);
-
-                                }
-                    
-                                while ($row_classes = $result_all_classes->fetch_assoc()) {
-                                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE classroom_id=:id;");
-                                    $stmt->bindParam(":id", $row_classes["id"]);
-                                    $stmt->execute();
-                                    $nb_exercices = $stmt->fetchColumn();
-                                
-                                    echo "<tr>";
-                                    echo "<td class='nom'><p>" . $row_classes["name"] . "</p></td>";
-
-                                    echo "<td class='nom'><p>" . $nb_exercices. "</p></td>";
-                                    echo "<td class='actions'>";
-                                    echo "<div class='uneAction'><img src='../assets/images/icone_modifier_gris.svg'>
-                                            <p><a href='Admin.php?onglet=classes&add_classes=modify&id=".$row_classes["id"]."'>Modifier</a></p></div>";
-                                    echo "<div class='uneAction'><img src='../assets/images/icone_poubelle_gris.svg'>";
-
-                                    if (isset($_GET['page_classes'])) {
-                                        echo "<p><a href='?onglet=classes&page_classes=".$_GET['page_classes']."&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
-                                    }
-                                    else {
-                                        echo "<p><a href='?onglet=classes&action_classes=delete&id=".$row_classes["id"]."'>Supprimer</a></p></div>";
-                                    }
-                                    echo "</td>";
-                                    echo "</tr>";
-                                }
-                            echo "</table>";
-                            ?>
-                            <div class="pagination">
-                                <?php
-                                    if ($page_classes > 1) {
-                                        echo "<a href='Admin.php?onglet=classes&page_classes=".($page_classes - 1)."' class='pagination-bouton-gauche'>&lt;</a>";
-                                    } else {
-                                        echo "<span class='pagination-bouton-gauche'>&lt;</span>";
-                                    }
-
-                                    for ($i=1; $i<=$total_pages_classes; $i++) {
-                                        if ($i == $page_classes) {
-                                        echo "<span class='page-actuel'>$i</span>";
-                                        } else {
-                                            echo "<a href='Admin.php?onglet=classes&page_classes=".$i."' class='pagination-lien'>$i</a>";
-                                        }
-                                    }
-
-                                    if ($page_classes < $total_pages_classes) {
-                                        echo "<a href='Admin.php?onglet=classes&page_classes=".($page_classes + 1)."' class='pagination-bouton-droite'>&gt;</a>";
-                                    } else {
-                                        echo "<span class='pagination-bouton-droite'>&gt;</span>";
-                                    }
-                                ?>
-                            </div>
-                        </div>
-
-                    <?php } ?>
-                    <?php
-                if (isset($_GET['action_classes']) && $_GET['action_classes'] === 'delete') {
-                    // verifiaction si la thematique est utilisée sur des exercice
-                    $stmt = $mysqlClient->prepare("SELECT count(*) FROM exercise WHERE classroom_id=:id;");
-                    $stmt->bindParam(":id", $_GET['id']);
-                    $stmt->execute();
-                    $nb_exercices = $stmt->fetchAll();
-                    $nb_exercices = $nb_exercices[0][0];
-
-                    if($nb_exercices === "0"){
-                    ?>
-                    
-                    <div class="confirmation">
-                    <div class="contenu_confirmation">
-                        <div class="info_confirmation">
-                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
-                        <div>
-                            <h2>Confirmez la suppression</h2>
-                            <p>Êtes-vous certain de vouloir supprimer cette classe ?</p>
-                        </div>
-                        </div>
-                        <?php
-                        if (isset($_GET['page_classes'])) {
-                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'&confirmed_classe=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                        }
-                        else {
-                        echo '<a href="./Admin.php?onglet=classes" class="annuler_btn" style="color: black;">Annuler</a>';
-                        echo '<a href="?onglet=classes&confirmed_classe=true&id='.$_GET['id'].'"class="confirmer_btn" style="color: white;">Confirmer</a>';
-                        } 
-                        ?>
-                    </div>
-                    </div>
-                    <?php
-                        }
-                        else{
-                    ?>
-                    <div class="confirmation">
-                    <div class="contenu_confirmation">
-                        <div class="info_confirmation">
-                        <div class="fond_image"><img src="../assets/images/icone_valider.svg"></div>
-                        <div>
-                            <h2>Suppression impossible</h2>
-                            <p>La classe est utilisée sur au moins un exerice.</p>
-                        </div>
-                        </div>
-                        <?php
-                        if (isset($_GET['page_classes'])) {
-                        echo '<a href="?onglet=classes&page_classes='.$_GET['page_classes'].'"class="annuler_btn" style="color: black;">Annuler</a>';
-                        }
-                        else {
-                        echo '<a href="./Admin.php?onglet=classes" class="annuler_btn" style="color: black;">Annuler</a>';
-                        } 
-                        ?>
-                    </div>
-                    </div>
-                    <?php
-                        }
-                    }
-                    if (isset($_GET['confirmed_classe']) && $_GET['confirmed_classe'] == 'true') {
-                        $id_classe = $_GET['id'];
-                        $sql_supp = "DELETE FROM classroom WHERE id = $id_classe";
-                        $stmt_supp = $conn->prepare($sql_supp);
-                        $stmt_supp->execute();
-                        
-                    
-                        header("location: Admin.php?onglet=classes");
-                        
-                    }
-                    ?> 
                 <div class="tab" id="tab-classe"><input id="tab-4" name="tab-group-1" type="radio" <?php if( $_GET['onglet'] === 'classes'){ echo 'checked';} ?>/> <label class='label_onglet' for="tab-4">Classes</label>
                     <?php
                         $classes_par_page = 4;
