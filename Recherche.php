@@ -247,7 +247,7 @@ session_start();
 
                                                 if ($row["correction_original_name"] && $row["correction_extension"]) {
                                                     echo "<img src='assets/images/icone_download.svg'>
-                                                    <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                                    <a href='assets/Corriges/" . $row["correction_name"] . "." . $row["extension"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
                                                 }
                                             echo "</td>";
                                         echo "</tr>";
