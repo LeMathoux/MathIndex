@@ -55,7 +55,7 @@ session_start();
                         <li><a href="MesExercices.php" class="mesexercices-liens"><img src="assets/images/icone_liste_gris.svg"></a></li>
                         <li><a href="Soumettre.php" class="soumettre-liens"><img src="assets/images/icone_soumettre_gris.svg"></a></li>
                         <div class="deconnexion">
-                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg">Déconnexion</a></li>
+                            <li><a href="admin/authentification/logout.php" class="deconnexion-liens"><img src="assets/images/icone_logout.svg"></a></li>
                         </div>
                     </ul>
                 <?php endif; ?>
@@ -74,7 +74,7 @@ session_start();
                     $firstname=$_SESSION['account']['first_name'];
                     $role=$_SESSION['account']['role'];
                     $profile_picture = isset($_SESSION['account']['profile_photo_file']) ? $_SESSION['account']['profile_photo_file'] : 'chemin/vers/image_par_defaut.jpg';
-                   echo "<div class='compte' id='bouton' tabindex='0'>$lastname $firstname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
+                   echo "<div class='compte' id='bouton' tabindex='0'>$firstname $lastname <img src='assets/photos_de_profil/$profile_picture' alt='photo de profil' class='profil-image'></div>";
                     if($role == "Administrateur" ){
                       echo "<div class='cible' id='cible'>";
                       echo "<a href='admin/Admin.php'><p>Administration</p><img class='img_admin' src='assets/images/icone-admin.svg'></a>";
@@ -161,7 +161,7 @@ session_start();
                             <th>Difficulté</th>
                             <th>Mots clés</th>
                             <th>Durée</th>
-                            <th>Fichier</th>
+                            <th>Fichiers</th>
                         </tr>
                         <?php
                         
@@ -243,13 +243,13 @@ session_start();
                                             echo "<td>" . $row["duration"] . 'h00' . "</td>";
                                             echo "<td>";
                                                 echo "<img src='assets/images/icone_download.svg'>
-                                                    <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a></div>";
+                                                <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
 
-                                                    if ($row["correction_original_name"] && $row["correction_extension"]) {
-                                                        echo "<img src='assets/images/icone_download.svg'>
-                                                        <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
-                                                    }
-                                                echo "</td>";
+                                                if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                                    echo "<img src='assets/images/icone_download.svg'>
+                                                    <a href='assets/Corriges/" . $row["correction_name"] . "." . $row["extension"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                                }
+                                            echo "</td>";
                                         echo "</tr>";
                                     }
                                 }else {
