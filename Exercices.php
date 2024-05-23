@@ -116,7 +116,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             <th>Difficulté</th>
                             <th>Durée</th>
                             <th>Mots clés</th>
-                            <th style="border-right: 1px solid #DBDBDB;">Fichier</th>
+                            <th style="border-right: 1px solid #DBDBDB;">Fichiers</th>
                         </tr>
             
                         <?php
@@ -145,7 +145,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                         echo "<td>" . $row["exercise_name"] . "</td>";
                                         echo "<td>" . $row["thematic_name"] . "</td>";
                                         echo "<td>" . $row["difficulty"] . "</td>";
-                                        echo "<td>" . $row["duration"] . " h00</td>";
+                                        echo "<td>" . $row["duration"] . "h00</td>";
                                         echo '<td>';
                                         $keywords = explode(',', $row['keywords']);
                                         foreach ($keywords as $keyword) {
@@ -153,14 +153,14 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                         }
                                         echo '</td>';
                                         echo "<td>";
-                                            echo "<img src='assets/images/icone_download.svg'>
-                                            <a href='assets/Exercices/" . $row["exercice_name"] . "' download='" . $row["exercice_original_name"] . "'>Exercice</a><br>";
+                                        echo "<img src='assets/images/icone_download.svg'>
+                                        <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
 
-                                            if ($row["correction_original_name"] && $row["correction_extension"]) {
-                                                echo "<img src='assets/images/icone_download.svg'>
-                                                <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
-                                            }
-                                        echo "</td>";
+                                        if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                            echo "<img src='assets/images/icone_download.svg'>
+                                            <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                        }
+                                    echo "</td>";
                                     echo "</tr>";
                                 }
                             }
@@ -175,7 +175,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                             <th>Difficulté</th>
                             <th>Durée</th>
                             <th>Mots clés</th>
-                            <th style="border-right: 1px solid #DBDBDB;">Fichier</th>
+                            <th style="border-right: 1px solid #DBDBDB;">Fichiers</th>
                         </tr>
             
                         <?php
@@ -205,7 +205,7 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                     echo "<td>" . $row["exercise_name"] . "</td>";
                                     echo "<td>" . $row["thematic_name"] . "</td>";
                                     echo "<td>" . $row["difficulty"] . "</td>";
-                                    echo "<td>" . $row["duration"] . " h00</td>";
+                                    echo "<td>" . $row["duration"] . "h00</td>";
                                     echo '<td>';
                                     $keywords = explode(',', $row['keywords']);
                                     foreach ($keywords as $keyword) {
@@ -213,14 +213,14 @@ $total_pages = ceil($total_exercices / $exercices_par_page);
                                     }
                                     echo '</td>';
                                     echo "<td>";
-                                    echo "<img src='assets/images/icone_download.svg'>
-                                    <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
-
-                                    if ($row["correction_original_name"] && $row["correction_extension"]) {
                                         echo "<img src='assets/images/icone_download.svg'>
-                                        <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
-                                    }
-                                echo "</td>";
+                                        <a href='assets/Exercices/" . $row["exercice_name"] . "." . $row["extension"] . "' download='" . $row["exercice_original_name"] . "." . $row["extension"] . "'>Exercice</a><br>";
+
+                                        if ($row["correction_original_name"] && $row["correction_extension"]) {
+                                            echo "<img src='assets/images/icone_download.svg'>
+                                            <a href='assets/Corrige/" . $row["correction_name"]. "' download='" . $row["correction_original_name"] . "." . $row["correction_extension"] . "'>Corrigé</a>";
+                                        }
+                                    echo "</td>";
                                     echo "</tr>";
                                 }
                             }
