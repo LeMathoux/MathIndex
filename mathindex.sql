@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 12 mai 2024 à 20:17
+-- Généré le : jeu. 23 mai 2024 à 16:58
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -103,10 +103,10 @@ CREATE TABLE `file` (
 --
 
 INSERT INTO `file` (`id`, `name`, `original_name`, `extension`, `size`) VALUES
-(1, 'exercice-1', 'exercice-1-la-fonction-exponentielle-terminale', 'pdf', 123456),
-(2, 'fractales-et-auto-similarite', 'exercice-1-second-degre-et-polynomes-premiere-2603', 'pdf', 123456),
+(1, 'exercice-1', 'exercice-1-la-fonction-exponentielle-premiere', 'pdf', 123456),
+(2, 'correction-fractales-et-auto-similarite', 'correction-exercice-1-second-degre-et-polynomes-premiere-2603', 'pdf', 123456),
 (3, 'congruences-modulo-n', 'exercice-2-la-fonction-exponentielle-terminale-pdf', 'pdf', 123456),
-(4, 'correction-congruences-modulo-n', 'exercice-2-second-degre-et-polynomes-premiere-2604', 'pdf', 123456);
+(4, 'correction-congruences-modulo-n', 'correction-exercice-2-second-degre-et-polynomes-terminale-2604', 'pdf', 123456);
 
 -- --------------------------------------------------------
 
