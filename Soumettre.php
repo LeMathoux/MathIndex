@@ -1,5 +1,6 @@
 <?php 
 session_start();
+var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,7 +28,6 @@ session_start();
 <?php
 include_once("requetes/configdb.php");
 if (!isset($_GET['info'])){
-  $_SESSION['stockage'] = array();
   $_SESSION['stockage']['mode'] = 'ajout';
 }
 else{
@@ -283,7 +283,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   $correction_id = $elements;
 
   if($_SESSION['stockage']['mode'] === 'ajout'){
-
+    var_dump($correction_id[0][0]);
     $id_classe = intval($id_classe[0][0]);
     $id_origine = intval($id_origine[0][0]);
     $correction_id = intval($correction_id[0][0]);
@@ -537,16 +537,29 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                   <h2>Fichiers</h2>
                   <form enctype="multipart/form-data" method='post' name='Fichiers'>
                     <div class="fichier">
-                      <label for="fiche">Fiche exercice(PDF, word) <span>*</span> :</label>
-                      <input type="file" id="fiche" name="fiche">
-                      <button type="button" class="bouton-telechargement" onclick="document.getElementById('fiche').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
-                      <span class="selected-file" id="fiche-selected"></span>
+                      <label for="hiddenfile">Fiche exercice(PDF, word) <span>*</span> :</label>
+                      <div class='file'>
+                        <input type="file" id="hiddenfile" class="label-upload" style="display:none" name="exercice" onChange="getvalue();"/>
+                        <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value=<?= !empty($_SESSION['stockage']['exercice']) === true ? $_SESSION['stockage']['exercice'] :  "'Sélectionner un fichier à télécharger'"?>/>
+                        <input class='bouton-upload' type="button" onclick="getfile();"/>
+                      </div>
+                      <!--
+                      <input type="file" id="hiddenfile" name="exercice">
+                      <button type="button" class="bouton-telechargement" onclick="document.getElementById('hiddenfile').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
+                      <span class="selected-file" id="exercice-selected"></span>-->
                     </div>
                     <div class="fichier">
-                        <label for="exercice">Fiche exercice(PDF, word) <span>*</span> :</label>
-                        <input type="file" id="exercice" name="exercice">
-                        <button type="button" class="bouton-telechargement" onclick="document.getElementById('exercice').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
-                        <span class="selected-file" id="exercice-selected"></span>
+                        <label for="corrige">Fiche corrige(PDF, word) <span>*</span> :</label>
+                        <div class='file'>
+                          <input type="file" id="hiddenfile2" class="label-upload" style="display:none" name="corrige" onChange="getvalue2();"/>
+                          <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value=<?= !empty($_SESSION['stockage']['corrige']) === true ? $_SESSION['stockage']['corrige'] :   "'Sélectionner un fichier à télécharger'"?>/>
+                          <input class='bouton-upload' type="button" onclick="getfile2();"/>
+                        </div>
+                        <!--
+                        <input type="file" id="corrige" name="corrige" value=''>
+                        <button type="button" class="bouton-telechargement" onclick="document.getElementById('corrige').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
+                        <span class="selected-file" id="corrige-selected"></span>
+                          -->
                     </div>
                     <input type='submit' value='Enregistrer'></input>
                   </form>

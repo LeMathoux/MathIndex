@@ -343,6 +343,67 @@ textarea{
   border: 2px solid #ccc; 
   resize: none; 
 }
+.label-upload{
+  width: 25%;
+  }
+  textarea{
+  width: 500px;
+  height: 200px;
+  margin-top: 10px;
+  }
+  .leFichier{
+  width: 55%;
+  height: 40px;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: 10px;
+  margin-right: auto;
+  text-align: start;
+  border: none;
+  text-align: center;
+  }
+  .bouton-upload{
+  width: 40px;
+  height: 40px;
+  background-image: url(../../assets/images/icone_upload.svg);
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  margin: auto;
+  margin-left: auto;
+  margin-right: 10px;
+  }
+  .file{
+  display: flex;
+  height: 40px;
+  border: 2px solid #ccc;
+  margin-top: 10px;
+  width: 400px;
+  border-radius: 8px;
+  }
+  input[type='file']{
+  display: flex;
+  height: 40px;
+  width: 480px;
+  margin: auto auto auto auto;
+  border-radius: 8px;
+  }
+  input[type=submit]{
+  width: 172px;
+  height: 56px;
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #F6F6F6;
+  color: #757575;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 40px;
+  margin-top: 30px;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 700;
+  }
 
 .fichier {
   margin-bottom: 20px;
