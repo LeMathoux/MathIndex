@@ -1,6 +1,6 @@
 <?php 
 session_start();
-var_dump($_SESSION);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -283,7 +283,6 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
   $correction_id = $elements;
 
   if($_SESSION['stockage']['mode'] === 'ajout'){
-    var_dump($correction_id[0][0]);
     $id_classe = intval($id_classe[0][0]);
     $id_origine = intval($id_origine[0][0]);
     $correction_id = intval($correction_id[0][0]);
