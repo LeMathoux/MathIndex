@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https : //fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Administration</title>
-    <script src="requetes/menu_tel.js"></script>
+    <script src="../requetes/menu_tel.js"></script>
     <link href="../assets/styles/Administration.css" rel="stylesheet">
 </head>
 <?php 
@@ -557,11 +557,12 @@
                       echo "<td class='nom'><p>" . $row["exercise_name"] . "</p></td>";
                       echo "<td class='thematiques'><p>" . $row["thematic_name"] . "</p></td>";
                       echo "<td class='fichiers_exercices'>";
+                      echo '<div>';
                       echo "<img src='../assets/images/icone_download.svg'>
-                            <a href='../assets/Exercices/" . $row["exercice_original_name"] . "' download>Exercice</a>";
+                            <a href='../assets/Exercices/" . $row["exercice_original_name"] . "' download>Exercice</a></div>";
                       if ($row["correction_original_name"] && $row["correction_extension"]) {
-                        echo "<img src='../assets/images/icone_download.svg'>
-                        <a href='../assets/Corriges/" . $row["correction_original_name"]."' download>Corrigé</a>";
+                        echo "<div><img src='../assets/images/icone_download.svg'>
+                        <a href='../assets/Corriges/" . $row["correction_original_name"]."' download>Corrigé</a></div>";
                       }
                       echo "</td>";
                       echo "<td class='actions'>";
