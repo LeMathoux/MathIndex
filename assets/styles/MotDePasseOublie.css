@@ -76,6 +76,7 @@ body {
   }
 .barre-navigation a img {
   margin-right: 10px;
+  margin-left:10px;
 }
 .ensembles-logo  {
   display: flex;

@@ -156,8 +156,10 @@ bottom: 20px;
 
 .ensembles-logo-titre .sous-titre {
   font-size: 16px;
+  font-weight: 500;
   color: #5D7285;
 }
+
 
 .ensembles-logo-titre .sous-titre {
   font-size: 16px;
@@ -493,6 +495,16 @@ height: 100%;
 }
 }
 @media screen and (max-width: 1775px){
+  .ensembles-logo-titre .titre{
+    color: #1B3168;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.ensembles-logo-titre .sous-titre {
+    font-size: 12px;
+    color: #5D7285;
+}
   .carre-blanc p{
     font-size: 19px;
     width: 93%;
@@ -551,6 +563,15 @@ height: 100%;
 }
 }
 @media screen and (max-width: 1445px){
+  .ensembles-logo-titre .sous-titre {
+    font-size: 10px;
+    color: #5D7285;
+}
+.ensembles-logo-titre .titre{
+  color: #1B3168;
+  font-size: 22px;
+  font-weight: 600;
+}
   .carre-blanc p{
     font-size: 15px;
     width: 93%;
@@ -682,6 +703,16 @@ height: 100%;
 }
 }
 @media screen and (max-width: 1285px){
+  .ensembles-logo-titre .titre{
+    color: #1B3168;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ensembles-logo-titre .sous-titre {
+    font-size: 8px;
+    color: #5D7285;
+}
   .carre-blanc p{
     font-size: 15px;
     width: 93%;
