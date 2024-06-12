@@ -33,7 +33,7 @@ if (!isset($_GET['info'])){
 else{
   $_SESSION['stockage'] = [];
 }
-if(isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info']){
+if(isset($_GET['info']) && isset($_SESSION['stockage']['numExe']) && $_SESSION['stockage']['numExe'] !== $_GET['info']){
   $_SESSION['stockage'] = [];
 }
 ;
