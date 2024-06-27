@@ -295,6 +295,9 @@ body {
   display: flex;
   flex-direction: row;
 }
+.erreurs{
+  color:red;
+}
 
 form{
   width: 100%;

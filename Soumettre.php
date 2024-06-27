@@ -1,5 +1,6 @@
 <?php 
 session_start();
+var_dump($_SESSION);
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +27,27 @@ session_start();
   }
 </script>
 <?php
+function SupExt ($file_name) {
+  // met le point '.' dans la variable $trouve_moi
+  $trouve_moi = ".";
+  
+  // cherche la postion du '.'  
+  $position = strpos($file_name, $trouve_moi);
+  
+  // enleve l'extention, tout ce qui se trouve apres le '.'
+  return substr($file_name, 0, $position);
+}
+function GetExt ($file_name) {
+  // met le point '.' dans la variable $trouve_moi
+  $trouve_moi = "\\";
+  
+  // cherche la postion du '.'  
+  $position = strpos($file_name, $trouve_moi);
+  
+  // enleve l'extention, tout ce qui se trouve apres le '.'
+  return substr($file_name,1, $position);
+}
+
 include_once("requetes/configdb.php");
 if (!isset($_GET['info'])){
   $_SESSION['stockage']['mode'] = 'ajout';
@@ -130,6 +152,7 @@ if((isset($_GET['info']) && empty($_SESSION['stockage'])) || (isset($_SESSION['s
 
 $_POST['suivant1'] = "none";
 $_POST['suivant2'] = "none";
+$erreurs = [];
 
 if(!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficulte']) && !empty($_POST['thematique']) && !empty($_POST['chapitre'])){
   $_POST['suivant1'] = "true";
@@ -140,17 +163,44 @@ if(!empty($_POST['name']) && !empty($_POST['classe']) && !empty($_POST['difficul
   $_SESSION['stockage']['difficulte'] = $_POST['difficulte'];
   $_SESSION['stockage']['thematique'] =$_POST['thematique'];
   $_SESSION['stockage']['chapitre'] = $_POST['chapitre'];
-
+  $_SESSION['erreur'] = $erreurs;
+}
+else{
+  if(isset($_POST['name']) && empty($_POST['name'])){
+    $erreurs['name'] = 'champ obligatoire';
+  }
+  if(isset($_POST['classe']) && empty($_POST['classe'])){
+    $erreurs['classe'] = 'champ obligatoire';
+  }
+  if(isset($_POST['thematique']) && empty($_POST['thematique'])){
+    $erreurs['thematique'] = 'champ obligatoire';
+  }
+  if(isset($_POST['difficulte']) && empty($_POST['difficulte'])){
+    $erreurs['difficulte'] = 'champ obligatoire';
+  }
+  if(isset($_POST['chapitre']) && empty($_POST['chapitre'])){
+    $erreurs['chapitre'] = 'champ obligatoire';
+  }
+  $_SESSION['erreur'] = $erreurs;
 }
 
-if(!empty($_POST['origine']) && !empty($_POST['Nom_source']) && !empty($_POST['information_sup'])){
+if(!empty($_POST['origine']) && !empty($_POST['Nom_source'])){
 
   $_POST['suivant2'] = "true";
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['origine']=$_POST['origine'];
   $_SESSION['stockage']['Nom_source']=$_POST['Nom_source'];
   $_SESSION['stockage']['information_sup']=$_POST['information_sup'];
-
+  $_SESSION['erreur'] = $erreurs;
+}
+else{
+  if(isset($_POST['origine']) && empty($_POST['origine'])){
+    $erreurs['origine'] = 'champ obligatoire';
+  }
+  if(isset($_POST['Nom_source']) && empty($_POST['Nom_source'])){
+    $erreurs['Nom_source'] = 'champ obligatoire';
+  }
+  $_SESSION['erreur'] = $erreurs;
 }
 
 if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['NewNameExercice']) && !empty($_POST['NewNameCorrige'])){
@@ -158,7 +208,16 @@ if(!empty($_POST['corrige']) && !empty($_POST['exercice']) && !empty($_POST['New
   $_POST['suivant1'] = "none";
   $_SESSION['stockage']['exercice']=$_POST['exercice'];
   $_SESSION['stockage']['corrige']=$_POST['corrige'];
-
+  $_SESSION['erreur'] = $erreurs;
+}
+else{
+  if(isset($_POST['NewNameCorrige']) && empty($_FILES['corrige'])){
+    $erreurs['corrige'] = 'champ obligatoire';
+  }
+  if(isset($_POST['NewNameExercice']) && empty($_FILES['exercice'])){
+    $erreurs['exercice'] = 'champ obligatoire';
+  }
+  $_SESSION['erreur'] = $erreurs;
 }
 
 
@@ -178,8 +237,18 @@ $listeorigines = $result_no_exercice->fetch_all();
 if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom_source']) && !empty($_SESSION['stockage']['name']) && !empty($_SESSION['stockage']['classe']) && !empty($_SESSION['stockage']['difficulte']) && !empty($_SESSION['stockage']['thematique']) && !empty($_SESSION['stockage']['chapitre']) && !empty($_FILES['exercice']) && !empty($_FILES['corrige'])){
 
   if(!empty($_FILES)){
-    $_SESSION['stockage']['NameExercice']= $_POST['NewNameExercice'];
-    $_SESSION['stockage']['NameCorrige']= $_POST['NewNameCorrige'];
+    $filename = $_FILES["exercice"]["name"];
+    $extensionExer=strrchr($filename,'.');
+    $extensionExer=substr($extensionExer,1) ;
+    $filename = $_FILES["corrige"]["name"];
+    $extensionCor=strrchr($filename,'.');
+    $extensionCor=substr($extensionCor,1) ;
+    $NewNameExercice = SupExt($_POST['NewNameExercice']);
+    $NewNameCorrige = SupExt($_POST['NewNameCorrige']);
+    $NewNameCorrige = basename($NewNameCorrige);
+    $NewNameExercice = basename($NewNameExercice);
+    $_SESSION['stockage']['NameExercice']= $NewNameExercice;
+    $_SESSION['stockage']['NameCorrige']= $NewNameCorrige;
     $uploads_dir = './assets/Corriges';
     $tmp_name = $_FILES["corrige"]["tmp_name"];
     $name = basename($_FILES["corrige"]["name"]);
@@ -251,7 +320,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     $stmt = $mysqlClient->prepare("INSERT INTO file (name, original_name, extension, size) VALUES(:name, :original_name, :extension, :size);");
     $stmt->bindParam(":name", $_SESSION['stockage']['NameExercice']);
     $stmt->bindParam(":original_name", $_FILES['exercice']['name']);
-    $stmt->bindParam(":extension", $_FILES['exercice']['type']);
+    $stmt->bindParam(":extension",$extensionExer);
     $stmt->bindParam(":size", $_FILES['exercice']['size']);
     $stmt->execute();
 
@@ -259,6 +328,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     $stmt->bindParam(":name_ori", $_FILES['exercice']['name']);
     $stmt->execute();
     $elements = $stmt;
+    $exercice_id = $elements;
   }
   $exercice_id = $elements;
 
@@ -271,7 +341,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     $stmt = $mysqlClient->prepare("INSERT INTO file (name, original_name, extension, size) VALUES(:name, :original_name, :extension, :size);");
     $stmt->bindParam(":name", $_SESSION['stockage']['NameCorrige']);
     $stmt->bindParam(":original_name", $_FILES['corrige']['name']);
-    $stmt->bindParam(":extension", $_FILES['corrige']['type']);
+    $stmt->bindParam(":extension", $extensionCor);
     $stmt->bindParam(":size", $_FILES['corrige']['size']);
     $stmt->execute();
 
@@ -279,6 +349,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     $stmt->bindParam(":name_ori", $_FILES['corrige']['name']);
     $stmt->execute();
     $elements = $stmt->fetchAll();
+    $correction_id = $elements;
   }
   $correction_id = $elements;
 
@@ -305,8 +376,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
     $stmt->bindParam(":date", $date);
     $stmt->execute();
 
+    ///detruit la session de stockage des valeurs.
+  $_SESSION['stockage'] = [];
+
   }
-  if($_SESSION['stockage']['mode'] === 'modification'){
+  if(isset($_SESSION['stockage']['mode']) && $_SESSION['stockage']['mode'] === 'modification'){
 
 
     $id_classe = intval($id_classe[0][0]);
@@ -335,9 +409,10 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
 
     $stmt->execute();
 
+    ///detruit la session de stockage des valeurs.
+    $_SESSION['stockage'] = [];
+
   }
-  ///detruit la session de stockage des valeurs.
-  $_SESSION['stockage'] = [];
 }
 ?>
 <body>
@@ -424,7 +499,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 
             <div id="menu-tab"><!----------------tableau-01---------------------------------->
             <div id="page-wrap">
-            <div class="tabs"><!----------------onglet-01-accueil-------------------------->
+            <div class="tabs"><!----------------onglet-01-Informations générales-------------------------->
             <div class="tab"><input id="tab-1" checked name="tab-group-1" type="radio" /> <label class='label1' for="tab-1">Informations generales</label>
               <div class="onglets">
                 <h1>Informations générales</h1>
@@ -434,6 +509,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                       <div class="information-groupe">
                         <label for="name">Nom de l'exercice <span>*</span> :</label><br>
                         <input type="text" id="name" name="name" value="<?php if(isset($_SESSION['stockage']['name'])){echo $_SESSION['stockage']['name'];}?>">
+                        <?php 
+                        if(isset($erreurs['name']) && !empty($erreurs['name'])){
+                          echo '<p class="erreurs">'.$erreurs['name'].'</p>';
+                        }
+                        ?>
                       </div>
                       <br>
                       <div class="information-groupe">
@@ -448,6 +528,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                               }
                             ?>
                         </select>
+                        <?php 
+                        if(isset($erreurs['classe']) && !empty($erreurs['classe'])){
+                          echo '<p class="erreurs">'.$erreurs['classe'].'</p>';
+                        }
+                        ?>
                       </div>
                       <br>
                       <div class="information-groupe">
@@ -462,11 +547,21 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                             }
                           ?>
                         </select>
+                        <?php 
+                        if(isset($erreurs['thematique']) && !empty($erreurs['thematique'])){
+                          echo '<p class="erreurs">'.$erreurs['thematique'].'</p>';
+                        }
+                        ?>
                       </div>
                       <br>
                       <div class="information-groupe">
                         <label for="chapitre">Chapitre du cours <span>*</span> :</label><br>
                         <input type="text" id="chapitre" name="chapitre" value="<?php if(isset($_SESSION['stockage']['chapitre'])){echo $_SESSION['stockage']['chapitre'];}?>">
+                        <?php 
+                        if(isset($erreurs['chapitre']) && !empty($erreurs['chapitre'])){
+                          echo '<p class="erreurs">'.$erreurs['chapitre'].'</p>';
+                        }
+                        ?>
                       </div>
                     </div>
                     <div>
@@ -499,7 +594,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 </form>
               </div>
             </div>
-            <!----------------onglet-02-articles-------------------------->
+            <!----------------onglet-02-Sources-------------------------->
             <div class="tab"><input id="tab-2" name="tab-group-1" type="radio" <?php if($_POST['suivant1'] === "true"){echo 'checked';}?> /> <label class='label1' for="tab-2">Sources</label>
             <div class="onglets">
                 <h1>Sources</h1>
@@ -516,12 +611,22 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                             }
                             ?>
                           </select>
+                          <?php 
+                          if(isset($erreurs['origine']) && !empty($erreurs['origine'])){
+                            echo '<p class="erreurs">'.$erreurs['origine'].'</p>';
+                          }
+                          ?>
                         </label>
                     </div>
                     <br> 
                     <div class='ligne'>
                         <label name='Nom_source'> Nom de la source/lien du site <span>*</span> :<br><input class="inputTexte" type='text' name='Nom_source' value="<?php if(isset($_SESSION['stockage']['Nom_source'])){echo $_SESSION['stockage']['Nom_source'];}?>"></input></label>
                     </div>
+                    <?php 
+                      if(isset($erreurs['Nom_source']) && !empty($erreurs['Nom_source'])){
+                        echo '<p class="erreurs">'.$erreurs['Nom_source'].'</p>';
+                      }
+                    ?>
                     <br> 
                     <div class='ligne'>
                         <label name='information_sup'> Informations complémentaires :<br><textarea name='information_sup'><?php if(isset($_SESSION['stockage']['information_sup'])){echo $_SESSION['stockage']['information_sup'];}?></textarea></label>
@@ -530,7 +635,7 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                 </form>
             </div>
             </div>
-            <!----------------onglet-04-libre-------------------------->
+            <!----------------onglet-03-Fichiers-------------------------->
             <div class="tab"><input id="tab-4" name="tab-group-1" type="radio" <?php if($_POST['suivant2'] === "true"){echo 'checked';}?>/> <label class='label1' for="tab-4">Fichiers</label>
                 <div class="onglets">
                   <h2>Fichiers</h2>
@@ -542,6 +647,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                         <input class="leFichier" type="text" id="selectedfile" name='NewNameExercice' value=<?= !empty($_SESSION['stockage']['exercice']) === true ? $_SESSION['stockage']['exercice'] :  "'Sélectionner un fichier à télécharger'"?>/>
                         <input class='bouton-upload' type="button" onclick="getfile();"/>
                       </div>
+                      <?php 
+                        if(isset($erreurs['exercice']) && !empty($erreurs['exercice'])){
+                          echo '<p class="erreurs">'.$erreurs['exercice'].'</p>';
+                        }
+                        ?>
                       <!--
                       <input type="file" id="hiddenfile" name="exercice">
                       <button type="button" class="bouton-telechargement" onclick="document.getElementById('hiddenfile').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
@@ -554,6 +664,11 @@ if(!empty($_SESSION['stockage']['origine']) && !empty($_SESSION['stockage']['Nom
                           <input class="leFichier" type="text" id="selectedfile2"  name='NewNameCorrige' value=<?= !empty($_SESSION['stockage']['corrige']) === true ? $_SESSION['stockage']['corrige'] :   "'Sélectionner un fichier à télécharger'"?>/>
                           <input class='bouton-upload' type="button" onclick="getfile2();"/>
                         </div>
+                        <?php 
+                        if(isset($erreurs['exercice']) && !empty($erreurs['exercice'])){
+                          echo '<p class="erreurs">'.$erreurs['exercice'].'</p>';
+                        }
+                        ?>
                         <!--
                         <input type="file" id="corrige" name="corrige" value=''>
                         <button type="button" class="bouton-telechargement" onclick="document.getElementById('corrige').click()">Sélectionner un fichier à télécharger<img src="assets/images/icone_upload.svg"></button>
